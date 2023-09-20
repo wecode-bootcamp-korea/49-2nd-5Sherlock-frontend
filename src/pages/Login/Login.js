@@ -12,7 +12,7 @@ const Login = () => {
   };
 
   const navgoToJoinBtn = () => {
-    navigate('/join');
+    navigate('/signup');
   };
 
   const [userInfo, setUserInfo] = useState({
@@ -57,7 +57,7 @@ const Login = () => {
         // navigate('/');
       })
       .catch(error => {
-        setErrorMessage('계정정보가 틀렸습니다');
+        setErrorMessage('아이디 또는 비밀번호가 맞지 않습니다.');
       });
   };
 
@@ -69,7 +69,7 @@ const Login = () => {
   return (
     <div className="Login">
       <header className="header">
-        <div className="headerText">로그인</div>
+        <span className="headerText">로그인</span>
         <img
           className="deleteBtn"
           src="/images/login-img1.png"
@@ -102,6 +102,8 @@ const Login = () => {
           />
           {/* {errorMessage &&   */}
           <div className="error">{errorMessage}</div>
+
+          {/* <input type="checkbox">아이디저장</input> */}
 
           <button
             className="loginButton"
