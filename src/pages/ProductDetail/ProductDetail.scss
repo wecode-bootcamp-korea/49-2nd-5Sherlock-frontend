@@ -1,3 +1,237 @@
-.ProductDetail {
-  font-size: 20px;
+@import '/src/styles/reset.scss';
+
+.productDetail {
+  width: 100%;
+  padding-top: 80px;
+  line-height: 1.2;
+  .productDetailInner {
+    margin: auto;
+    width: 1280px;
+  }
+  .orderWrapper {
+    .leftWrapper {
+      width: 47%;
+      .productImgWrapper {
+        .relationTo {
+          width: 100%;
+          ul {
+            display: flex;
+            flex-wrap: wrap;
+            li {
+              color: #505051;
+              font-size: 14px;
+              text-align: left;
+              margin-top: 22px;
+              width: 160px;
+            }
+          }
+        }
+        width: 100%;
+        background-color: #f8f9fb;
+        padding: 30px 43px;
+        .productImg {
+          .badge {
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: #798b66;
+            padding: 0 8px;
+            line-height: 1.5;
+            color: #fff;
+            font-size: 14px;
+          }
+
+          position: relative;
+          overflow: hidden;
+          max-width: 480px;
+          height: 480px;
+          img {
+            height: 100%;
+            object-fit: fill;
+          }
+        }
+      }
+      .reviewWrapper {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        .reviewGrade {
+          display: flex;
+          align-items: center;
+          p {
+            font-size: 40px;
+            color: #798b66;
+            .countStar {
+              margin-left: 12px;
+            }
+          }
+          .reviewText {
+            margin-right: 20px;
+            font-size: 30px;
+            color: #555;
+          }
+        }
+        .goReview {
+          button {
+            font-size: 20px;
+            color: #9e9e9e;
+            .reviewNum {
+              color: #2f2f2f;
+            }
+          }
+        }
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+    .rightWrapper {
+      .category {
+        a {
+          color: #9d9d9d;
+        }
+        margin-bottom: 10px;
+        font-size: 16px;
+        color: #9d9d9d;
+      }
+      .productInfo {
+        .productName {
+          font-size: 36px;
+          margin-bottom: 10px;
+        }
+        .origin {
+          font-size: 28px;
+          margin-bottom: 10px;
+        }
+        .productStory {
+          font-size: 20px;
+          color: #656565;
+        }
+      }
+      .iconAndPriceBox {
+        margin-top: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        padding-bottom: 17px;
+        border-bottom: 1px solid #ccc;
+        .btnBox {
+          display: flex;
+          button {
+            img {
+              width: 100%;
+            }
+            background-color: #ccc;
+            margin-right: 10px;
+            display: block;
+            overflow: hidden;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+          }
+        }
+        .productPriceInfo {
+          position: relative;
+          padding-top: 28px;
+          font-size: 28px;
+          .price {
+            color: #7b7b7b;
+          }
+          .price span {
+            font-weight: bold;
+            color: #000;
+          }
+          .discount {
+            color: #fd5c5c;
+          }
+          .lineText {
+            position: absolute;
+            top: 0;
+            right: 0;
+            font-size: 20px;
+            color: #b8b8b8;
+            text-decoration: line-through;
+          }
+        }
+      }
+      .productSeletWrapper {
+        margin-top: 17px;
+        .AdditionalSelect {
+          width: 100%;
+          margin-bottom: 10px;
+          select {
+            width: 100%;
+            height: 50px;
+            padding: 0 125px 0 22px;
+          }
+        }
+        .buyNumWrapper {
+          width: 100%;
+          background-color: #f8f9fb;
+          padding: 14px 10px;
+          line-height: 61px;
+          .buyNumCount {
+            .countButton {
+              span {
+                background-color: #fff;
+                padding: 10px 24px;
+              }
+            }
+            display: flex;
+            justify-content: space-between;
+            span {
+              font-size: 18px;
+            }
+            button {
+              font-size: 20px;
+            }
+          }
+          .packagingSelect {
+            width: 100%;
+            select {
+              width: 100%;
+              height: 50px;
+            }
+          }
+        }
+      }
+      .priceSum {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        margin-top: 46px;
+        align-items: end;
+        height: 86px;
+        color: #6c801a;
+        .sumText {
+          font-size: 24px;
+        }
+        .sum {
+          font-size: 24px;
+          span {
+            font-size: 46px;
+            font-weight: bold;
+          }
+        }
+        .freeDelivery {
+          position: absolute;
+          right: 0;
+          top: 0;
+          padding: 4px 6px;
+          color: #fff;
+          background-color: #6c801a;
+        }
+      }
+      .btnDecision {
+        margin-top: 24px;
+        .btnGift {
+          width: 60px;
+          border: 1px solid #000;
+        }
+      }
+      width: 47%;
+    }
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+  }
 }
