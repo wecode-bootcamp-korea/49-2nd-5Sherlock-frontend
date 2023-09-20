@@ -1,0 +1,119 @@
+.productList {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+
+  .bannerBox {
+    width: 100%;
+    height: 380px;
+    position: relative;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .bannerName {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 48px;
+      font-weight: 500;
+    }
+  }
+
+  .container {
+    padding: 40px 60px 40px 60px;
+  }
+
+  .productListBox {
+    margin-top: 10px;
+    display: flex;
+    // background-color: pink;
+  }
+
+  .leftMenu {
+    width: 220px;
+    font-size: 18px;
+    color: #363535;
+  }
+
+  .leftMenuTitle {
+    height: 50px;
+  }
+
+  .leftMenuCategory {
+    padding-left: 35px;
+  }
+
+  .leftMenuTeaBtn {
+    margin-bottom: 35px;
+  }
+
+  .rightMenu {
+    width: 100%;
+  }
+  .rigthMenuTitleBox {
+    display: flex;
+    height: 49px;
+    .rightMenuTitle {
+      flex: 1;
+      font-size: 18px;
+      height: 100%;
+    }
+
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 2px solid #ececec;
+  }
+  .rightMenuFilterBox {
+    display: flex;
+  }
+
+  .rightMenuFilter {
+    font-size: 18px;
+    margin-left: 42px;
+    // font-weight: 700;
+    text-align: center;
+    border-bottom: 3px solid #6c801a;
+    padding-bottom: 30px;
+    margin-bottom: -2px;
+  }
+
+  .rightMenuInfoBox {
+    margin-top: 20px;
+    display: flex;
+    margin-bottom: 30px;
+  }
+
+  .rightMenuInfo {
+    flex: 1;
+  }
+
+  .rigthMenuInfoNumber {
+    color: #6c801a;
+  }
+
+  .rightMenuTeaFilterBox {
+    display: flex;
+  }
+
+  .rightMenuTeaFilter {
+    width: 84px;
+    height: 38px;
+    font-size: 18px;
+    background-color: #6c801a;
+    margin-left: 9px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 38px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
