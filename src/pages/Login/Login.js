@@ -1,70 +1,57 @@
 import React, { useState } from 'react';
-import './Login.scss';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
+import './Login.scss';
+
+const idReg = /^[a-zA-Z0-9]{4,12}$/;
+const pwReg = /^[a-zA-Z0-9]{6,16}$/;
 
 const Login = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
-
-  const navdeleteBtn = () => {
-    navigate('/');
-  };
-
-  const navgoToJoinBtn = () => {
-    navigate('/signup');
-  };
-
   const [userInfo, setUserInfo] = useState({
     id: '',
     password: '',
   });
-  const { id, password } = userInfo;
 
   const saveUserInfo = event => {
     const { name, value } = event.target;
 
+    clearErrorMessage();
     setUserInfo({ ...userInfo, [name]: value });
   };
 
-  let idReg = /^[a-zA-Z0-9]{1,10}$/;
-  let pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
-
-  const activeBtn = idReg.test(id) && pwReg.test(password);
-
-  const loginBtn = e => {
+  const handleLogin = e => {
     e.preventDefault();
+
     fetch('http://localhost:8000/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        // authorization: 'token',
       },
       body: JSON.stringify({
-        id: id,
-        password: password,
+        id,
+        password,
       }),
     })
       .then(res => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error('로그인 실패');
-        }
+        return res.json();
       })
       .then(data => {
-        console.log(data);
-        // navigate('/');
-      })
-      .catch(error => {
-        setErrorMessage('아이디 또는 비밀번호가 맞지 않습니다.');
+        if (data.message === 'login succses') {
+          // localStorage.setItem('token', data.token);
+          navigate('/Main');
+        } else {
+          setErrorMessage('아이디 또는 비밀번호가 맞지 않습니다.');
+        }
       });
   };
-
   const clearErrorMessage = () => {
     setErrorMessage('');
   };
-  console.log(userInfo);
+
+  const { id, password } = userInfo;
+  const isUserInputValid = idReg.test(id) && pwReg.test(password);
 
   return (
     <div className="Login">
@@ -74,8 +61,8 @@ const Login = () => {
           className="deleteBtn"
           src="/images/login-img1.png"
           alt="취소버튼"
-          onClick={navdeleteBtn}
-        ></img>
+          onClick={() => navigate('/')}
+        />
       </header>
       <div className="container">
         <span className="loginGuideText">
@@ -86,8 +73,7 @@ const Login = () => {
         <form className="loginForm">
           <Input
             scale="first"
-            placeholder="아이디 입력"
-            type="id"
+            placeholder="이메일 입력"
             name="id"
             onChange={saveUserInfo}
             onFocus={clearErrorMessage}
@@ -97,8 +83,8 @@ const Login = () => {
             placeholder="패스워드 입력(영문, 숫자, 특수문자 조합)"
             type="password"
             name="password"
-            onFocus={clearErrorMessage}
             onChange={saveUserInfo}
+            onFocus={clearErrorMessage}
           />
           {/* {errorMessage &&   */}
           <div className="error">{errorMessage}</div>
@@ -107,12 +93,16 @@ const Login = () => {
 
           <button
             className="loginButton"
-            onClick={loginBtn}
-            disabled={activeBtn ? false : true}
+            onClick={handleLogin}
+            disabled={!isUserInputValid}
           >
             로그인
           </button>
-          <button type="button" className="joinButton" onClick={navgoToJoinBtn}>
+          <button
+            type="button"
+            className="joinButton"
+            onClick={() => navigate('/signup')}
+          >
             아직 회원이 아니세요? 회원가입
           </button>
         </form>
