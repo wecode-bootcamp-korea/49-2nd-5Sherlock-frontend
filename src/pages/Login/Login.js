@@ -3,14 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import './Login.scss';
 
-const idReg = /^[a-zA-Z0-9]{4,12}$/;
+const idReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const pwReg = /^[a-zA-Z0-9]{6,16}$/;
 
 const Login = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
   const [userInfo, setUserInfo] = useState({
-    id: '',
+    email: '',
     password: '',
   });
 
@@ -24,23 +24,23 @@ const Login = () => {
   const handleLogin = e => {
     e.preventDefault();
 
-    fetch('http://localhost:8000/login', {
+    fetch('http://10.58.52.229:8000/users/signIn', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
       body: JSON.stringify({
-        id,
+        email,
         password,
       }),
     })
       .then(res => {
         return res.json();
       })
-      .then(data => {
-        if (data.message === 'login succses') {
-          // localStorage.setItem('token', data.token);
-          navigate('/Main');
+      .then(result => {
+        if (result.message === 'signInSuccess' && result.token) {
+          localStorage.setItem('token', result.token);
+          navigate('/');
         } else {
           setErrorMessage('아이디 또는 비밀번호가 맞지 않습니다.');
         }
@@ -50,13 +50,13 @@ const Login = () => {
     setErrorMessage('');
   };
 
-  const { id, password } = userInfo;
-  const isUserInputValid = idReg.test(id) && pwReg.test(password);
+  const { email, password } = userInfo;
+  const isUserInputValid = idReg.test(email) && pwReg.test(password);
 
   return (
     <div className="Login">
       <header className="header">
-        <span className="headerText">로그인</span>
+        <div className="headerText">로그인</div>
         <img
           className="deleteBtn"
           src="/images/login-img1.png"
@@ -74,13 +74,13 @@ const Login = () => {
           <Input
             scale="first"
             placeholder="이메일 입력"
-            name="id"
+            name="email"
             onChange={saveUserInfo}
             onFocus={clearErrorMessage}
           />
           <Input
             scale="first"
-            placeholder="패스워드 입력(영문, 숫자, 특수문자 조합)"
+            placeholder="패스워드 입력"
             type="password"
             name="password"
             onChange={saveUserInfo}

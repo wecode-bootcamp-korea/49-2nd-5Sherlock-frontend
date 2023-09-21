@@ -3,16 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import './SignUp.scss';
 
-const idReg = /^[a-zA-Z0-9]{4,12}$/;
+const idReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const pwReg = /^[a-zA-Z0-9]{6,16}$/;
 
 const SignUp = () => {
   const navigate = useNavigate();
   const [joinUserInfo, setJoinUserInfo] = useState({
-    username: '',
+    name: '',
     phoneNumber: '',
     birthday: '',
-    id: '',
+    email: '',
     password: '',
     confirmPassword: '',
   });
@@ -23,15 +23,16 @@ const SignUp = () => {
   };
 
   const handleSignUp = e => {
-    fetch('http://localhost:8000/signup', {
+    console.log('clicked');
+    fetch('http://10.58.52.229:8000/users/signUp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
       },
       body: JSON.stringify({
-        username,
+        name,
         phoneNumber,
-        id,
+        email,
         password,
       }),
     })
@@ -39,23 +40,22 @@ const SignUp = () => {
         return res.json();
       })
       .then(data => {
-        if (data.message === 'sign-up succses') {
-          // localStorage.setItem('token', data.token);
+        if (data.message === 'userCreated') {
           navigate('/login');
         } else {
           alert('회원가입에 실패했습니다.');
-        } //조건 걸어야함,, 왜 실패했는지
+        }
       });
   };
 
-  const { username, phoneNumber, birthday, id, password, confirmPassword } =
+  const { name, phoneNumber, birthday, email, password, confirmPassword } =
     joinUserInfo;
 
   const isUserInputValid =
-    username.length > 0 &&
+    name.length > 0 &&
     phoneNumber.length > 0 &&
     birthday.length === 8 &&
-    idReg.test(id) &&
+    idReg.test(email) &&
     pwReg.test(password) &&
     password === confirmPassword;
 
@@ -73,12 +73,12 @@ const SignUp = () => {
         />
       </header>
       <div className="container">
-        <span className="loginGuideText">
+        <span className="joinGuideText">
           뷰티포인트 통합멤버십 회원가입을
           <br />
           환영합니다!
         </span>
-        <span className="loginGuideTextSmall">
+        <span className="joinGuideTextSmall">
           아모레퍼시픽 통합멤버십 뷰티포인트에 가입하시면 오설록 쇼핑몰 외
           <br />
           모든 브랜드 온/오프 매장에서 상품을 구매할 때마다 현금처럼 사용할 수
@@ -86,12 +86,12 @@ const SignUp = () => {
           있는 포인트 적립과 사용 등 다양한 혜택을 받으실 수 있습니다.
         </span>
 
-        <form className="loginForm">
+        <form className="joinForm">
           <Input
             scale="first"
             placeholder="이름(실명으로 입력해주세요)"
             type="text"
-            name="username"
+            name="name"
             onChange={saveJoinUserInfo}
           />
           <Input
@@ -114,7 +114,7 @@ const SignUp = () => {
             scale="first"
             placeholder="이메일"
             type="text"
-            name="id"
+            name="email"
             onChange={saveJoinUserInfo}
           />
           <Input
