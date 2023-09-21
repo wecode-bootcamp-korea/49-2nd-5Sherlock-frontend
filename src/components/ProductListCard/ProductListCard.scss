@@ -1,14 +1,8 @@
-.productListContainer {
-  display: grid;
-  grid-template-columns: repeat(4, 25%);
-  grid-auto-rows: minmax(500px, auto);
+.productListCard {
+  border-right: 2px #f6f6f6 solid;
+  padding: 0 22px 0 22px;
 
-  .productListCard {
-    border-right: 2px #f6f6f6 solid;
-    padding: 0 22px 0 22px;
-  }
-
-  .productListCard div:nth-child(4n) {
+  .productListCardBox div:nth-child(4n) {
     border-right: 0;
   }
 

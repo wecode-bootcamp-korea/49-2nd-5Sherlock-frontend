@@ -1,0 +1,15 @@
+.whiteFilterButton {
+  font-size: 18px;
+  margin-left: 42px;
+  // font-weight: 700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    border-bottom: 3px solid #6c801a;
+    margin-bottom: -2px;
+    color: #6c801a;
+  }
+}
