@@ -15,7 +15,7 @@ const ProductListCard = props => {
     console.log(id);
     console.log(isLike);
     if (!localStorage.getItem('accessToken')) {
-      return alert('로그인부터 하고와~');
+      return alert('로그인이 필요합니다.');
     }
 
     if (props.isLike === false) {
