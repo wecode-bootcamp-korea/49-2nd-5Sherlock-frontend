@@ -8,5 +8,7 @@
   "javascript.format.enable": false,
   "prettier.eslintIntegration": true,
   "eslint.alwaysShowStatus": true,
-  "files.autoSave": "onFocusChange"
+  "files.autoSave": "onFocusChange",
+  "vscode-pets.position": "explorer",
+  "vscode-pets.petSize": "medium"
 }
