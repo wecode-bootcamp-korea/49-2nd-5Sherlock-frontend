@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './ProductList.scss';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import ProductListContainer from '../../../components/ProductListContainer/ProductListContainer';
 import WhiteFilterButton from '../../../components/WhiteFilterButton/WhiteFilterButton';
 import GreenFilterButton from '../../../components/GreenFilterButton/GreenFilterButton';
 import { useSearchParams } from 'react-router-dom';
 
 const ProductList = () => {
+  const location = useLocation();
   const navigate = useNavigate();
-
+  const [mainTitle, setMainTitle] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
   const data = {
     message: 'querySuccess',
@@ -66,16 +67,39 @@ const ProductList = () => {
   };
 
   const [dataList, setDataList] = useState(data);
-  const page = searchParams.get('p');
+  const offset = searchParams.get('offset');
+  const limit = searchParams.get('limit');
   const category = searchParams.get('c');
   const sort = searchParams.get('sort');
-  const teaSort = searchParams.get('teasort');
+  const product_type = searchParams.get('product_type');
 
   // category 설명
   let categoryImg;
-
+  let categoryTitle;
   if (category) {
     categoryImg = `/images/${category}.jpg`;
+  } else {
+    categoryImg = '/images/tea.jpg';
+  }
+
+  if (category === '1') {
+    categoryTitle = '티 세트';
+  } else if (category === '2') {
+    categoryTitle = '명차';
+  } else if (category === '3') {
+    categoryTitle = '녹차/말차';
+  } else if (category === '4') {
+    categoryTitle = '발효차/홍차';
+  } else if (category === 'teafood') {
+    categoryTitle = '티푸드';
+  } else if (category === '5') {
+    categoryTitle = '과자/초콜릿';
+  } else if (category === '6') {
+    categoryTitle = '베이커리';
+  } else if (category === '7') {
+    categoryTitle = '아이스크림';
+  } else {
+    categoryTitle = '티제품';
   }
 
   // sort 설명
@@ -85,9 +109,7 @@ const ProductList = () => {
   let highPriceFilter = 'unclicked';
   let lowPriceFilter = 'unclicked';
 
-  if (sort === '추천순') {
-    recommendFilter = 'clicked';
-  } else if (sort === '판매순') {
+  if (sort === '판매순') {
     saleFilter = 'clicked';
   } else if (sort === '신상품순') {
     newFilter = 'clicked';
@@ -95,6 +117,8 @@ const ProductList = () => {
     highPriceFilter = 'clicked';
   } else if (sort === '낮은가격순') {
     lowPriceFilter = 'clicked';
+  } else {
+    recommendFilter = 'clicked';
   }
 
   // teaSort 설명
@@ -104,82 +128,94 @@ const ProductList = () => {
   let teaBagFilter = 'unclicked';
   let powderFilter = 'unclicked';
 
-  if (teaSort === '전체') {
-    teaTotalFilter = 'clicked';
-  } else if (teaSort === '잎차') {
+  if (product_type === '잎차') {
     leafTeaFilter = 'clicked';
-  } else if (teaSort === '피라미드') {
+  } else if (product_type === '피라미드') {
     pyramidFilter = 'clicked';
-  } else if (teaSort === '티백') {
+  } else if (product_type === '티백') {
     teaBagFilter = 'clicked';
-  } else if (teaSort === '파우더') {
+  } else if (product_type === '파우더') {
     powderFilter = 'clicked';
+  } else {
+    teaTotalFilter = 'clicked';
   }
 
-  // const getLIst = async () => {
-  //   return await fetch(`http://10.58.52.244:8000/product?c=${category}&p=${page}&sort=${sort}}&teasort=${teaSort}`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       // authorization: window.sessionStorage.getItem('token'),
-  //     },
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       const result = data;
-  //       setDataList(result);
-  //     });
-  // };
-  // useEffect(() => {
-  //   getLIst();
-  // }, []);
+  const getLIst = async () => {
+    const queryStringKey = {
+      category: 'c',
+      sort: 'sort',
+      product_type: 'product_type',
+      limit: 'limit',
+      offset: 'offset',
+    };
 
-  const goToRecommend = () => {
-    searchParams.set('sort', '추천순');
+    const queryStringBuilder = () => {
+      let string = '?';
+      if (category) {
+        if (string[-1] !== '?') string += '&';
+        string += `c=${category}`;
+      }
+      if (limit) {
+        if (string[-1] !== '?') string += '&';
+        string += `limit=${limit}&offset=${offset}`;
+      }
+      if (product_type) {
+        if (string[-1] !== '?') string += '&';
+        string += `product_type=${product_type}`;
+      }
+      if (sort) {
+        if (string[-1] !== '?') string += '&';
+        string += `sort=${sort}`;
+      }
+      return string;
+    };
+    const queryString = queryStringBuilder();
+    // return await fetch(`http://10.58.52.244:8000/product${queryString}`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     // authorization: window.sessionStorage.getItem('token'),
+    //   },
+    // })
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     const result = data;
+    //     setDataList(result);
+    //   });
+  };
+  useEffect(() => {
+    getLIst();
+  }, []);
+
+  //////////////////////////// 필터
+  const goToSort = param => {
+    searchParams.set('sort', param);
     setSearchParams(searchParams);
     // getList();
   };
-  const goToSale = () => {
-    searchParams.set('sort', '판매순');
-    setSearchParams(searchParams);
-  };
-  const goToNew = () => {
-    searchParams.set('sort', '신상품순');
-    setSearchParams(searchParams);
-  };
-  const goToHigh = () => {
-    searchParams.set('sort', '높은가격순');
-    setSearchParams(searchParams);
-  };
-  const goToLow = () => {
-    searchParams.set('sort', '낮은가격순');
-    setSearchParams(searchParams);
-  };
-  const goToTeaTotal = () => {
-    searchParams.set('teasort', '전체');
-    setSearchParams(searchParams);
-  };
-  const goToLeafTea = () => {
-    searchParams.set('teasort', '잎차');
-    setSearchParams(searchParams);
-  };
-  const goToPyramid = () => {
-    searchParams.set('teasort', '피라미드');
-    setSearchParams(searchParams);
-  };
-  const goToTeaBag = () => {
-    searchParams.set('teasort', '티백');
-    setSearchParams(searchParams);
-  };
-  const goToPowder = () => {
-    searchParams.set('teasort', '파우더');
+
+  ////////////////////제품필터
+  const goToProductType = param => {
+    searchParams.set('product_type', param);
     setSearchParams(searchParams);
   };
 
+  /////////////////////////카테고리
+  const goToCategory = param => {
+    searchParams.delete('c');
+    searchParams.delete('sort');
+    searchParams.delete('product_type');
+    searchParams.delete('limit');
+    searchParams.delete('offset');
+    searchParams.set('c', param);
+    setSearchParams(searchParams);
+    // getList();
+  };
+  // console.log(window.history);
   return (
     <div className="productList">
       <div className="bannerBox">
-        <h2 className="bannerName">{category}</h2>
+        <h2 className="bannerName">{categoryTitle}</h2>
         <img src={process.env.PUBLIC_URL + categoryImg} />
       </div>
       <div className="container">
@@ -187,43 +223,100 @@ const ProductList = () => {
           <div className="leftMenu">
             <div className="leftMenuTitle">제품</div>
             <div className="leftMenuCategory">
-              <div className="leftMenuTeaProductBox">
-                <div className="leftMenuTeaProduct leftMenuTeaBtn">티 제품</div>
+              <div className="leftMenuTeaProduct leftMenuTeaBtn">
+                티 제품
+                <div className="leftMenuTeaSubBox">
+                  <div
+                    className="leftMenuTeaSubContent"
+                    onClick={() => goToCategory('tea')}
+                  >
+                    <div>전체상품</div>
+                  </div>
+                  <div
+                    className="leftMenuTeaSubContent"
+                    onClick={() => goToCategory('1')}
+                  >
+                    <div>티세트</div>
+                  </div>
+                  <div
+                    className="leftMenuTeaSubContent"
+                    onClick={() => goToCategory('2')}
+                  >
+                    <div>명차</div>
+                  </div>
+                  <div
+                    className="leftMenuTeaSubContent"
+                    onClick={() => goToCategory('3')}
+                  >
+                    <div>녹차/말차</div>
+                  </div>
+                  <div
+                    className="leftMenuTeaSubContent"
+                    onClick={() => goToCategory('4')}
+                  >
+                    <div>발효차/홍차</div>
+                  </div>
+                </div>
               </div>
-              <div className="leftMenuTeaFood leftMenuTeaBtn">티푸드</div>
-              <div className="leftMenuTeaLifeStyle leftMenuTeaBtn">
-                라이프 스타일
+              <div className="leftMenuTeaFood leftMenuTeaBtn">
+                티푸드
+                <div className="leftMenuTeaSubBox">
+                  <div
+                    className="leftMenuTeaSubContent"
+                    onClick={() => goToCategory('teafood')}
+                  >
+                    <div>전체상품</div>
+                  </div>
+                  <div
+                    className="leftMenuTeaSubContent"
+                    onClick={() => goToCategory('5')}
+                  >
+                    <div>과자/초콜릿</div>
+                  </div>
+                  <div
+                    className="leftMenuTeaSubContent"
+                    onClick={() => goToCategory('6')}
+                  >
+                    <div>베이커리</div>
+                  </div>
+                  <div
+                    className="leftMenuTeaSubContent"
+                    onClick={() => goToCategory('7')}
+                  >
+                    <div>아이스크림</div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div className="rightMenu">
             <div className="rigthMenuTitleBox">
-              <div className="rightMenuTitle">{category}</div>
+              <div className="rightMenuTitle">{categoryTitle}</div>
               <div className="rightMenuFilterBox">
                 <WhiteFilterButton
                   text="추천순"
                   clicked={recommendFilter}
-                  onClick={goToRecommend}
+                  onClick={() => goToSort('추천순')}
                 />
                 <WhiteFilterButton
                   text="판매순"
                   clicked={saleFilter}
-                  onClick={goToSale}
+                  onClick={() => goToSort('판매순')}
                 />
                 <WhiteFilterButton
                   text="신상품순"
                   clicked={newFilter}
-                  onClick={goToNew}
+                  onClick={() => goToSort('신상품순')}
                 />
                 <WhiteFilterButton
                   text="높은 가격순"
                   clicked={highPriceFilter}
-                  onClick={goToHigh}
+                  onClick={() => goToSort('높은가격순')}
                 />
                 <WhiteFilterButton
                   text="낮은 가격순"
                   clicked={lowPriceFilter}
-                  onClick={goToLow}
+                  onClick={() => goToSort('낮은가격순')}
                 />
               </div>
             </div>
@@ -239,27 +332,27 @@ const ProductList = () => {
                 <GreenFilterButton
                   text="전체"
                   clicked={teaTotalFilter}
-                  onClick={goToTeaTotal}
+                  onClick={() => goToProductType('전체')}
                 />
                 <GreenFilterButton
                   text="잎차"
                   clicked={leafTeaFilter}
-                  onClick={goToLeafTea}
+                  onClick={() => goToProductType('잎차')}
                 />
                 <GreenFilterButton
                   text="피라미드"
                   clicked={pyramidFilter}
-                  onClick={goToPyramid}
+                  onClick={() => goToProductType('피라미드')}
                 />
                 <GreenFilterButton
                   text="티백"
                   clicked={teaBagFilter}
-                  onClick={goToTeaBag}
+                  onClick={() => goToProductType('티백')}
                 />
                 <GreenFilterButton
                   text="파우더"
                   clicked={powderFilter}
-                  onClick={goToPowder}
+                  onClick={() => goToProductType('파우더')}
                 />
               </div>
             </div>

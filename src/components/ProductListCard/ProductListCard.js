@@ -7,14 +7,13 @@ const ProductListCard = props => {
 
   const navigate = useNavigate();
   const { data } = props;
+  const [productImg, setProductImg] = useState(data.productImg[1].url);
   const goToDetail = id => {
     navigate(`/productdetail/${id}`);
   };
 
   const clickLike = (id, isLike) => {
-    console.log(id);
-    console.log(isLike);
-    if (!localStorage.getItem('accessToken')) {
+    if (!localStorage.getItem('token')) {
       return alert('로그인이 필요합니다.');
     }
 
@@ -47,6 +46,17 @@ const ProductListCard = props => {
     }
   };
 
+  const showSecondPage = () => {
+    setProductImg(data.productImg[1].url);
+  };
+  const showFirstPage = () => {
+    setProductImg(data.productImg[0].url);
+  };
+
+  const goToOrderBox = () => {
+    navigate('/orderbox');
+  };
+
   return (
     <div className="productListCard">
       <div
@@ -54,22 +64,20 @@ const ProductListCard = props => {
         onClick={() => {
           goToDetail(data.id);
         }}
+        onMouseEnter={showSecondPage}
+        onMouseLeave={showFirstPage}
       >
-        <img
-          className="picFirst"
-          src={data.productImg[1].url}
-          alt="cardImage"
-        />
-        <img
+        <img className="pic" src={productImg} alt="cardImage" />
+        {/* <img
           className="picSecond"
           src={data.productImg[0].url}
           alt="cardImage"
-        />
+        /> */}
         <div
           className="picCartBox"
           onClick={e => {
             e.stopPropagation();
-            goToDetail('cart');
+            goToOrderBox();
           }}
         >
           <img

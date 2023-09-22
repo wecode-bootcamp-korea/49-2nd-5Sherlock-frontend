@@ -55,6 +55,40 @@
 
   .leftMenuTeaBtn {
     margin-bottom: 35px;
+    position: relative;
+    padding: 10px 0 10px 0;
+    cursor: pointer;
+    &:hover {
+      color: #6c801a;
+      .leftMenuTeaSubBox {
+        display: block;
+      }
+    }
+
+    .leftMenuTeaSubBox {
+      position: absolute;
+      right: -65px;
+      top: -15px;
+      border: 1px solid #363535;
+      z-index: 9;
+      background-color: #fff;
+      display: none;
+
+      .leftMenuTeaSubContent {
+        padding: 20px 35px 20px 15px;
+        color: #363535;
+
+        div {
+          display: inline-block;
+          padding-bottom: 5px;
+          cursor: pointer;
+          &:hover {
+            border-bottom: 1px solid #363535;
+            margin-bottom: -1px;
+          }
+        }
+      }
+    }
   }
 
   .rightMenu {

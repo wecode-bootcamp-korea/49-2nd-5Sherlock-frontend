@@ -13,7 +13,7 @@ const Main = () => {
   };
 
   const goToProductList = () => {
-    navigate('/productlist?c=티제품&p=1&sort=추천순&teasort=전체');
+    navigate('/productlist');
   };
 
   return (
