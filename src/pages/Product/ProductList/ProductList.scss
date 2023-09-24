@@ -39,6 +39,10 @@
     width: 220px;
     font-size: 18px;
     color: #363535;
+    cursor: pointer;
+    .clicked {
+      color: #6c801a;
+    }
   }
 
   .leftMenuTitle {
@@ -51,6 +55,10 @@
   .leftMenuCategory {
     padding-left: 35px;
     margin-top: 20px;
+
+    .clicked {
+      color: #6c801a;
+    }
   }
 
   .leftMenuTeaBtn {
@@ -58,6 +66,7 @@
     position: relative;
     padding: 10px 0 10px 0;
     cursor: pointer;
+
     &:hover {
       color: #6c801a;
       .leftMenuTeaSubBox {
@@ -86,6 +95,12 @@
             border-bottom: 1px solid #363535;
             margin-bottom: -1px;
           }
+        }
+
+        .clicked {
+          border-bottom: 1px solid #363535;
+          margin-bottom: -1px;
+          color: #363535;
         }
       }
     }
@@ -165,5 +180,9 @@
       background-color: #6c801a;
       color: white;
     }
+  }
+
+  .pagination {
+    margin-top: 30px;
   }
 }

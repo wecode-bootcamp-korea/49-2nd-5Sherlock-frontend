@@ -5,6 +5,7 @@ import ProductListContainer from '../../../components/ProductListContainer/Produ
 import WhiteFilterButton from '../../../components/WhiteFilterButton/WhiteFilterButton';
 import GreenFilterButton from '../../../components/GreenFilterButton/GreenFilterButton';
 import { useSearchParams } from 'react-router-dom';
+import Pagination from '../../../components/Pagination/Pagination';
 
 const ProductList = () => {
   const location = useLocation();
@@ -63,7 +64,7 @@ const ProductList = () => {
         name: '과자 세트',
       },
     ],
-    productCount: 20,
+    productCount: 150,
   };
 
   const [dataList, setDataList] = useState(data);
@@ -73,81 +74,14 @@ const ProductList = () => {
   const sort = searchParams.get('sort');
   const product_type = searchParams.get('product_type');
 
-  // category 설명
-  let categoryImg;
-  let categoryTitle;
-  if (category) {
-    categoryImg = `/images/${category}.jpg`;
-  } else {
-    categoryImg = '/images/tea.jpg';
-  }
-
-  if (category === '1') {
-    categoryTitle = '티 세트';
-  } else if (category === '2') {
-    categoryTitle = '명차';
-  } else if (category === '3') {
-    categoryTitle = '녹차/말차';
-  } else if (category === '4') {
-    categoryTitle = '발효차/홍차';
-  } else if (category === 'teafood') {
-    categoryTitle = '티푸드';
-  } else if (category === '5') {
-    categoryTitle = '과자/초콜릿';
-  } else if (category === '6') {
-    categoryTitle = '베이커리';
-  } else if (category === '7') {
-    categoryTitle = '아이스크림';
-  } else {
-    categoryTitle = '티제품';
-  }
-
-  // sort 설명
-  let recommendFilter = 'unclicked';
-  let saleFilter = 'unclicked';
-  let newFilter = 'unclicked';
-  let highPriceFilter = 'unclicked';
-  let lowPriceFilter = 'unclicked';
-
-  if (sort === '판매순') {
-    saleFilter = 'clicked';
-  } else if (sort === '신상품순') {
-    newFilter = 'clicked';
-  } else if (sort === '높은가격순') {
-    highPriceFilter = 'clicked';
-  } else if (sort === '낮은가격순') {
-    lowPriceFilter = 'clicked';
-  } else {
-    recommendFilter = 'clicked';
-  }
-
-  // teaSort 설명
-  let teaTotalFilter = 'unclicked';
-  let leafTeaFilter = 'unclicked';
-  let pyramidFilter = 'unclicked';
-  let teaBagFilter = 'unclicked';
-  let powderFilter = 'unclicked';
-
-  if (product_type === '잎차') {
-    leafTeaFilter = 'clicked';
-  } else if (product_type === '피라미드') {
-    pyramidFilter = 'clicked';
-  } else if (product_type === '티백') {
-    teaBagFilter = 'clicked';
-  } else if (product_type === '파우더') {
-    powderFilter = 'clicked';
-  } else {
-    teaTotalFilter = 'clicked';
-  }
-
-  const getLIst = async () => {
-    const queryStringKey = {
-      category: 'c',
-      sort: 'sort',
-      product_type: 'product_type',
-      limit: 'limit',
-      offset: 'offset',
-    };
+  const getList = async () => {
+    // const queryStringKey = {
+    //   category: 'c',
+    //   sort: 'sort',
+    //   product_type: 'product_type',
+    //   limit: 'limit',
+    //   offset: 'offset',
+    // };
 
     const queryStringBuilder = () => {
       let string = '?';
@@ -184,8 +118,124 @@ const ProductList = () => {
     //   });
   };
   useEffect(() => {
-    getLIst();
+    getList();
   }, []);
+
+  // 배너 Img 설명
+  let categoryImg;
+
+  if (category) {
+    categoryImg = `/images/${category}.jpg`;
+  } else {
+    categoryImg = '/images/teatotal.jpg';
+  }
+
+  // 타이틀 설명
+  let categoryTitle;
+  if (category === 'tea') {
+    categoryTitle = '티 제품';
+  } else if (category === '1') {
+    categoryTitle = '티 세트';
+  } else if (category === '2') {
+    categoryTitle = '명차';
+  } else if (category === '3') {
+    categoryTitle = '녹차/말차';
+  } else if (category === '4') {
+    categoryTitle = '발효차/홍차';
+  } else if (category === 'teafood') {
+    categoryTitle = '티푸드';
+  } else if (category === '5') {
+    categoryTitle = '과자/초콜릿';
+  } else if (category === '6') {
+    categoryTitle = '베이커리';
+  } else if (category === '7') {
+    categoryTitle = '아이스크림';
+  } else {
+    categoryTitle = '전체 상품';
+  }
+
+  // category clicked 설명
+  let teaCategory = 'unclicked';
+  let teaSetCategory = 'unclicked';
+  let myungTeaCategory = 'unclicked';
+  let greenTeaCategory = 'unclicked';
+  let redTeaCategory = 'unclicked';
+  let teaFoodCategory = 'unclicked';
+  let chocolateCategory = 'unclicked';
+  let bakeryCategory = 'unclicked';
+  let iceCreamCategory = 'unclicked';
+  let bigTeaCategory = 'unclicked';
+  let bigTeaFoodCategory = 'unclicked';
+  let total = 'unclicked';
+
+  if (category === 'tea') {
+    teaCategory = 'clicked';
+    bigTeaCategory = 'clicked';
+  } else if (category === '1') {
+    teaSetCategory = 'clicked';
+    bigTeaCategory = 'clicked';
+  } else if (category === '2') {
+    myungTeaCategory = 'clicked';
+    bigTeaCategory = 'clicked';
+  } else if (category === '3') {
+    greenTeaCategory = 'clicked';
+    bigTeaCategory = 'clicked';
+  } else if (category === '4') {
+    redTeaCategory = 'clicked';
+    bigTeaCategory = 'clicked';
+  } else if (category === 'teafood') {
+    teaFoodCategory = 'clicked';
+    bigTeaFoodCategory = 'clicked';
+  } else if (category === '5') {
+    chocolateCategory = 'clicked';
+    bigTeaFoodCategory = 'clicked';
+  } else if (category === '6') {
+    bakeryCategory = 'clicked';
+    bigTeaFoodCategory = 'clicked';
+  } else if (category === '7') {
+    iceCreamCategory = 'clicked';
+    bigTeaFoodCategory = 'clicked';
+  } else {
+    total = 'clicked';
+  }
+
+  // sort clicked 설명
+  let recommendFilter = 'unclicked';
+  let saleFilter = 'unclicked';
+  let newFilter = 'unclicked';
+  let highPriceFilter = 'unclicked';
+  let lowPriceFilter = 'unclicked';
+
+  if (sort === 'review') {
+    saleFilter = 'clicked';
+  } else if (sort === 'created_at') {
+    newFilter = 'clicked';
+  } else if (sort === 'price') {
+    highPriceFilter = 'clicked';
+  } else if (sort === '-price') {
+    lowPriceFilter = 'clicked';
+  } else {
+    recommendFilter = 'clicked';
+  }
+
+  // teaSort clicked 설명
+  let teaTotalFilter = 'unclicked';
+  let leafTeaFilter = 'unclicked';
+  let pyramidFilter = 'unclicked';
+  let teaBagFilter = 'unclicked';
+  let powderFilter = 'unclicked';
+
+  if (product_type === '1') {
+    leafTeaFilter = 'clicked';
+  } else if (product_type === '2') {
+    pyramidFilter = 'clicked';
+  } else if (product_type === '3') {
+    teaBagFilter = 'clicked';
+  } else if (product_type === '4') {
+    powderFilter = 'clicked';
+  } else {
+    teaTotalFilter = 'clicked';
+  }
 
   //////////////////////////// 필터
   const goToSort = param => {
@@ -198,6 +248,8 @@ const ProductList = () => {
   const goToProductType = param => {
     searchParams.set('product_type', param);
     setSearchParams(searchParams);
+    setSearchParams(searchParams);
+    // getList();
   };
 
   /////////////////////////카테고리
@@ -208,10 +260,14 @@ const ProductList = () => {
     searchParams.delete('limit');
     searchParams.delete('offset');
     searchParams.set('c', param);
+    if (!param) {
+      searchParams.delete('c');
+    }
+
     setSearchParams(searchParams);
     // getList();
   };
-  // console.log(window.history);
+
   return (
     <div className="productList">
       <div className="bannerBox">
@@ -221,69 +277,111 @@ const ProductList = () => {
       <div className="container">
         <div className="productListBox">
           <div className="leftMenu">
-            <div className="leftMenuTitle">제품</div>
+            <div
+              className={`leftMenuTitle ${total}`}
+              onClick={() => {
+                goToCategory();
+              }}
+            >
+              제품
+            </div>
             <div className="leftMenuCategory">
-              <div className="leftMenuTeaProduct leftMenuTeaBtn">
+              <div
+                className={`leftMenuTeaProduct leftMenuTeaBtn ${bigTeaCategory}`}
+                onClick={() => {
+                  goToCategory('tea');
+                }}
+              >
                 티 제품
                 <div className="leftMenuTeaSubBox">
                   <div
                     className="leftMenuTeaSubContent"
-                    onClick={() => goToCategory('tea')}
+                    onClick={e => {
+                      e.stopPropagation();
+                      goToCategory('tea');
+                    }}
                   >
-                    <div>전체상품</div>
+                    <div className={teaCategory}>전체상품</div>
                   </div>
                   <div
                     className="leftMenuTeaSubContent"
-                    onClick={() => goToCategory('1')}
+                    onClick={e => {
+                      e.stopPropagation();
+                      goToCategory('1');
+                    }}
                   >
-                    <div>티세트</div>
+                    <div className={teaSetCategory}>티세트</div>
                   </div>
                   <div
                     className="leftMenuTeaSubContent"
-                    onClick={() => goToCategory('2')}
+                    onClick={e => {
+                      e.stopPropagation();
+                      goToCategory('2');
+                    }}
                   >
-                    <div>명차</div>
+                    <div className={myungTeaCategory}>명차</div>
                   </div>
                   <div
                     className="leftMenuTeaSubContent"
-                    onClick={() => goToCategory('3')}
+                    onClick={e => {
+                      e.stopPropagation();
+                      goToCategory('3');
+                    }}
                   >
-                    <div>녹차/말차</div>
+                    <div className={greenTeaCategory}>녹차/말차</div>
                   </div>
                   <div
                     className="leftMenuTeaSubContent"
-                    onClick={() => goToCategory('4')}
+                    onClick={e => {
+                      e.stopPropagation();
+                      goToCategory('4');
+                    }}
                   >
-                    <div>발효차/홍차</div>
+                    <div className={redTeaCategory}>발효차/홍차</div>
                   </div>
                 </div>
               </div>
-              <div className="leftMenuTeaFood leftMenuTeaBtn">
+              <div
+                className={`leftMenuTeaFood leftMenuTeaBtn ${bigTeaFoodCategory}`}
+                onClick={() => goToCategory('teafood')}
+              >
                 티푸드
                 <div className="leftMenuTeaSubBox">
                   <div
                     className="leftMenuTeaSubContent"
-                    onClick={() => goToCategory('teafood')}
+                    onClick={e => {
+                      e.stopPropagation();
+                      goToCategory('teafood');
+                    }}
                   >
-                    <div>전체상품</div>
+                    <div className={teaFoodCategory}>전체상품</div>
                   </div>
                   <div
                     className="leftMenuTeaSubContent"
-                    onClick={() => goToCategory('5')}
+                    onClick={e => {
+                      e.stopPropagation();
+                      goToCategory('5');
+                    }}
                   >
-                    <div>과자/초콜릿</div>
+                    <div className={chocolateCategory}>과자/초콜릿</div>
                   </div>
                   <div
                     className="leftMenuTeaSubContent"
-                    onClick={() => goToCategory('6')}
+                    onClick={e => {
+                      e.stopPropagation();
+                      goToCategory('6');
+                    }}
                   >
-                    <div>베이커리</div>
+                    <div className={bakeryCategory}>베이커리</div>
                   </div>
                   <div
                     className="leftMenuTeaSubContent"
-                    onClick={() => goToCategory('7')}
+                    onClick={e => {
+                      e.stopPropagation();
+                      goToCategory('7');
+                    }}
                   >
-                    <div>아이스크림</div>
+                    <div className={iceCreamCategory}>아이스크림</div>
                   </div>
                 </div>
               </div>
@@ -296,27 +394,27 @@ const ProductList = () => {
                 <WhiteFilterButton
                   text="추천순"
                   clicked={recommendFilter}
-                  onClick={() => goToSort('추천순')}
+                  onClick={() => goToSort()}
                 />
                 <WhiteFilterButton
                   text="판매순"
                   clicked={saleFilter}
-                  onClick={() => goToSort('판매순')}
+                  onClick={() => goToSort('review')}
                 />
                 <WhiteFilterButton
                   text="신상품순"
                   clicked={newFilter}
-                  onClick={() => goToSort('신상품순')}
+                  onClick={() => goToSort('created_at')}
                 />
                 <WhiteFilterButton
                   text="높은 가격순"
                   clicked={highPriceFilter}
-                  onClick={() => goToSort('높은가격순')}
+                  onClick={() => goToSort('price')}
                 />
                 <WhiteFilterButton
                   text="낮은 가격순"
                   clicked={lowPriceFilter}
-                  onClick={() => goToSort('낮은가격순')}
+                  onClick={() => goToSort('-price')}
                 />
               </div>
             </div>
@@ -332,31 +430,36 @@ const ProductList = () => {
                 <GreenFilterButton
                   text="전체"
                   clicked={teaTotalFilter}
-                  onClick={() => goToProductType('전체')}
+                  onClick={() => goToProductType()}
                 />
                 <GreenFilterButton
                   text="잎차"
                   clicked={leafTeaFilter}
-                  onClick={() => goToProductType('잎차')}
+                  onClick={() => goToProductType('1')}
                 />
                 <GreenFilterButton
                   text="피라미드"
                   clicked={pyramidFilter}
-                  onClick={() => goToProductType('피라미드')}
+                  onClick={() => goToProductType('2')}
                 />
                 <GreenFilterButton
                   text="티백"
                   clicked={teaBagFilter}
-                  onClick={() => goToProductType('티백')}
+                  onClick={() => goToProductType('3')}
                 />
                 <GreenFilterButton
                   text="파우더"
                   clicked={powderFilter}
-                  onClick={() => goToProductType('파우더')}
+                  onClick={() => goToProductType('4')}
                 />
               </div>
             </div>
             <ProductListContainer data={dataList.data} />
+            <Pagination
+              productCount={dataList.productCount}
+              onClick={getList}
+              offset={offset}
+            />
           </div>
         </div>
       </div>
