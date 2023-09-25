@@ -124,13 +124,6 @@ const Login = () => {
             </div>
             <div className="moreLogin">더보기</div>
           </div>
-          {/* <button
-            type="button"
-            className="joinButton"
-            onClick={() => navigate('/signup')}
-          >
-            아직 회원이 아니세요? 회원가입
-          </button> */}
           <div className="joinButton" onClick={() => navigate('/signup')}>
             <span className="a">아직 회원이 아니세요?</span>
             <span className="b">회원가입 &gt; </span>
