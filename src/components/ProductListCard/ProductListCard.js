@@ -68,11 +68,7 @@ const ProductListCard = props => {
         onMouseLeave={showFirstPage}
       >
         <img className="pic" src={productImg} alt="cardImage" />
-        {/* <img
-          className="picSecond"
-          src={data.productImg[0].url}
-          alt="cardImage"
-        /> */}
+
         <div
           className="picCartBox"
           onClick={e => {

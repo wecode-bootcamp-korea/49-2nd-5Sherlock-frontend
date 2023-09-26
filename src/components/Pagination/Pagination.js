@@ -5,7 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 const Pagination = props => {
   const [change, setChange] = useState(true);
   const navigate = useNavigate();
-  const { productCount, getList, offset, test } = props;
+  const { productCount, getList, offset, limit } = props;
   const [searchParams, setSearchParams] = useSearchParams();
   let pageLength = 5;
   let pageProductNumber = 12;
@@ -44,14 +44,11 @@ const Pagination = props => {
     }
 
     searchParams.set('offset', param);
+    searchParams.set('limit', pageProductNumber);
     setSearchParams(searchParams);
-    // getList();
+    getList();
   };
-  console.log(pageList);
-  console.log(offset);
-  console.log(
-    Math.ceil((Number(offset) + 12) / (pageLength * pageProductNumber)),
-  );
+
   return (
     <div className="pagination">
       <div className="paginationBox">

@@ -8,6 +8,8 @@ import { useSearchParams } from 'react-router-dom';
 import Pagination from '../../../components/Pagination/Pagination';
 
 const ProductList = () => {
+  const [change, setChange] = useState(1);
+  const [queryStringBox, setQueryStringBox] = useState();
   const location = useLocation();
   const navigate = useNavigate();
   const [mainTitle, setMainTitle] = useState();
@@ -70,53 +72,53 @@ const ProductList = () => {
   const [dataList, setDataList] = useState(data);
   const offset = searchParams.get('offset');
   const limit = searchParams.get('limit');
-  const category = searchParams.get('c');
+  const category = searchParams.get('category');
   const sort = searchParams.get('sort');
   const product_type = searchParams.get('product_type');
 
   const getList = async () => {
-    // const queryStringKey = {
-    //   category: 'c',
-    //   sort: 'sort',
-    //   product_type: 'product_type',
-    //   limit: 'limit',
-    //   offset: 'offset',
+    // const queryStringBuilder = () => {
+    //   let string = '?';
+    //   if (category) {
+    //     if (string[string.length - 1] !== '?') string += '&';
+    //     string += `category=${category}`;
+    //   }
+    //   if (limit) {
+    //     if (string[string.length - 1] !== '?') string += '&';
+    //     string += `limit=${limit}&offset=${offset}`;
+    //   }
+    //   if (product_type.length === 0) {
+    //     if (string[string.length - 1] !== '?') string += '&';
+    //     let product_type_box;
+    //     if (product_type.length === 0) {
+    //       string += `product_type=${product_type}`;
+    //     }
+    //   }
+    //   if (sort) {
+    //     if (string[string.length - 1] !== '?') string += '&';
+    //     string += `sort=${sort}`;
+    //   }
+    //   return string;
     // };
-
-    const queryStringBuilder = () => {
-      let string = '?';
-      if (category) {
-        if (string[-1] !== '?') string += '&';
-        string += `c=${category}`;
-      }
-      if (limit) {
-        if (string[-1] !== '?') string += '&';
-        string += `limit=${limit}&offset=${offset}`;
-      }
-      if (product_type) {
-        if (string[-1] !== '?') string += '&';
-        string += `product_type=${product_type}`;
-      }
-      if (sort) {
-        if (string[-1] !== '?') string += '&';
-        string += `sort=${sort}`;
-      }
-      return string;
-    };
-    const queryString = queryStringBuilder();
-    // return await fetch(`http://10.58.52.244:8000/product${queryString}`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     // authorization: window.sessionStorage.getItem('token'),
+    // const queryString = queryStringBuilder();
+    console.log(window.location.search);
+    // console.log(searchParams.toString());
+    // return await fetch(
+    //   `http://10.58.52.176:8000/products${window.location.search}`,
+    //   {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       authorization: window.sessionStorage.getItem('token'),
+    //     },
     //   },
-    // })
+    // )
     //   .then(res => res.json())
     //   .then(data => {
-    //     const result = data;
-    //     setDataList(result);
+    //     setDataList(data);
     //   });
   };
+
   useEffect(() => {
     getList();
   }, []);
@@ -225,47 +227,100 @@ const ProductList = () => {
   let teaBagFilter = 'unclicked';
   let powderFilter = 'unclicked';
 
-  if (product_type === '1') {
+  if (product_type && product_type.includes('1')) {
     leafTeaFilter = 'clicked';
-  } else if (product_type === '2') {
+  }
+  if (product_type && product_type.includes('2')) {
     pyramidFilter = 'clicked';
-  } else if (product_type === '3') {
+  }
+  if (product_type && product_type.includes('3')) {
     teaBagFilter = 'clicked';
-  } else if (product_type === '4') {
+  }
+  if (product_type && product_type.includes('4')) {
     powderFilter = 'clicked';
-  } else {
+  }
+  if (!product_type) {
     teaTotalFilter = 'clicked';
   }
 
-  //////////////////////////// 필터
+  //////////////////////////// sort 필터
   const goToSort = param => {
-    searchParams.set('sort', param);
+    if (!param) {
+      searchParams.delete('sort');
+    } else {
+      searchParams.set('sort', param);
+    }
     setSearchParams(searchParams);
-    // getList();
+
+    getList();
   };
 
-  ////////////////////제품필터
+  ////////////////////product_type 필터
   const goToProductType = param => {
-    searchParams.set('product_type', param);
+    let product_type_box = [];
+    let product_type_result = '';
+    // 전체 누르기
+    if (!param) {
+      searchParams.delete('product_type');
+      setSearchParams(searchParams);
+      getList();
+      return;
+    }
+
+    if (!product_type) {
+      searchParams.set('product_type', param);
+      console.log(param);
+      setSearchParams(searchParams);
+      getList();
+      return;
+    }
+
+    for (let i = 0; i < product_type.length; i++) {
+      if (product_type.substring(i, i + 1) === ',') {
+        continue;
+      } else {
+        product_type_box.push(product_type.substring(i, i + 1));
+      }
+    }
+
+    if (product_type_box.includes(param)) {
+      product_type_box = product_type_box.filter(element => element !== param);
+      if (product_type_box.length === 0) {
+        searchParams.delete('product_type');
+        setSearchParams(searchParams);
+        getList();
+        return;
+      }
+    } else {
+      product_type_box.push(param);
+    }
+
+    for (let i = 0; i < product_type_box.length; i++) {
+      if (product_type_result === '') {
+        product_type_result = product_type_result + product_type_box[i];
+      } else {
+        product_type_result = product_type_result + ',' + product_type_box[i];
+      }
+    }
+    searchParams.set('product_type', product_type_result);
+    console.log(product_type_result);
     setSearchParams(searchParams);
-    setSearchParams(searchParams);
-    // getList();
+    getList();
   };
 
   /////////////////////////카테고리
   const goToCategory = param => {
-    searchParams.delete('c');
+    searchParams.delete('category');
     searchParams.delete('sort');
     searchParams.delete('product_type');
     searchParams.delete('limit');
     searchParams.delete('offset');
-    searchParams.set('c', param);
+    searchParams.set('category', param);
     if (!param) {
-      searchParams.delete('c');
+      searchParams.delete('category');
     }
-
     setSearchParams(searchParams);
-    // getList();
+    getList();
   };
 
   return (
@@ -426,39 +481,47 @@ const ProductList = () => {
                 </span>
                 개의 상품이 있습니다.
               </div>
-              <div className="rightMenuTeaFilterBox">
-                <GreenFilterButton
-                  text="전체"
-                  clicked={teaTotalFilter}
-                  onClick={() => goToProductType()}
-                />
-                <GreenFilterButton
-                  text="잎차"
-                  clicked={leafTeaFilter}
-                  onClick={() => goToProductType('1')}
-                />
-                <GreenFilterButton
-                  text="피라미드"
-                  clicked={pyramidFilter}
-                  onClick={() => goToProductType('2')}
-                />
-                <GreenFilterButton
-                  text="티백"
-                  clicked={teaBagFilter}
-                  onClick={() => goToProductType('3')}
-                />
-                <GreenFilterButton
-                  text="파우더"
-                  clicked={powderFilter}
-                  onClick={() => goToProductType('4')}
-                />
-              </div>
+              {category === '1' ||
+              category === '2' ||
+              category === '3' ||
+              category === '4' ||
+              !category ||
+              category === 'tea' ? (
+                <div className="rightMenuTeaFilterBox">
+                  <GreenFilterButton
+                    text="전체"
+                    clicked={teaTotalFilter}
+                    onClick={() => goToProductType()}
+                  />
+                  <GreenFilterButton
+                    text="잎차"
+                    clicked={leafTeaFilter}
+                    onClick={() => goToProductType('1')}
+                  />
+                  <GreenFilterButton
+                    text="피라미드"
+                    clicked={pyramidFilter}
+                    onClick={() => goToProductType('2')}
+                  />
+                  <GreenFilterButton
+                    text="티백"
+                    clicked={teaBagFilter}
+                    onClick={() => goToProductType('3')}
+                  />
+                  <GreenFilterButton
+                    text="파우더"
+                    clicked={powderFilter}
+                    onClick={() => goToProductType('4')}
+                  />
+                </div>
+              ) : null}
             </div>
             <ProductListContainer data={dataList.data} />
             <Pagination
               productCount={dataList.productCount}
-              onClick={getList}
+              getList={getList}
               offset={offset}
+              limit={limit}
             />
           </div>
         </div>
