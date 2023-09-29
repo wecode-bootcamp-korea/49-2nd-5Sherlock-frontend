@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './BestProductList.scss';
 import { useNavigate, Link, useLocation } from 'react-router-dom';
-import ProductListContainer from '../../../components/ProductListContainer/ProductListContainer';
-import WhiteFilterButton from '../../../components/WhiteFilterButton/WhiteFilterButton';
 import GreenFilterButton from '../../../components/GreenFilterButton/GreenFilterButton';
 import { useSearchParams } from 'react-router-dom';
-import Pagination from '../../../components/Pagination/Pagination';
+import BestProductListContainer from '../../../components/BestProductListContainer/BestProductListContainer';
 
 const BestProductList = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [mainTitle, setMainTitle] = useState();
+  const [filter, setFilter] = useState('closed');
+  const [filterResult, setFilterResult] = useState('판매순');
   const [searchParams, setSearchParams] = useSearchParams();
   const data = {
     message: 'querySuccess',
     data: [
       {
-        id: 1,
+        id: 999,
         productImg: [
           {
             id: 2,
@@ -32,8 +31,11 @@ const BestProductList = () => {
         price: 27000,
         originalPrice: 30000,
         discountRate: 10,
+        likeNumber: 77,
+        reviewNumber: 107,
         isNew: true,
         quantity: 0,
+        isLike: true,
         name: '우롱차',
       },
       {
@@ -53,62 +55,203 @@ const BestProductList = () => {
         price: 41000,
         // originalPrice: 10000,
         // discountRate: 70,
+        likeNumber: 123,
+        reviewNumber: 456,
         isNew: false,
         quantity: 10,
+        isLike: false,
         name: '과자 세트',
       },
+      {
+        id: 3,
+        productImg: [
+          {
+            id: 2,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
+          },
+
+          {
+            id: 1,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
+          },
+        ],
+        category: '티 제품',
+        price: 27000,
+        originalPrice: 30000,
+        discountRate: 10,
+        likeNumber: 77,
+        reviewNumber: 107,
+        isNew: true,
+        quantity: 0,
+        isLike: true,
+        name: '우롱차',
+      },
+      {
+        id: 4,
+        productImg: [
+          {
+            id: 2,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
+          },
+
+          {
+            id: 1,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
+          },
+        ],
+        category: '티 제품',
+        price: 27000,
+        originalPrice: 30000,
+        discountRate: 10,
+        likeNumber: 77,
+        reviewNumber: 107,
+        isNew: true,
+        quantity: 0,
+        isLike: true,
+        name: '우롱차',
+      },
+      {
+        id: 5,
+        productImg: [
+          {
+            id: 2,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
+          },
+
+          {
+            id: 1,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
+          },
+        ],
+        category: '티 제품',
+        price: 27000,
+        originalPrice: 30000,
+        discountRate: 10,
+        likeNumber: 77,
+        reviewNumber: 107,
+        isNew: true,
+        quantity: 0,
+        isLike: true,
+        name: '우롱차',
+      },
+      {
+        id: 6,
+        productImg: [
+          {
+            id: 2,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
+          },
+
+          {
+            id: 1,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
+          },
+        ],
+        category: '티 제품',
+        price: 27000,
+        originalPrice: 30000,
+        discountRate: 10,
+        likeNumber: 77,
+        reviewNumber: 107,
+        isNew: true,
+        quantity: 0,
+        isLike: true,
+        name: '우롱차',
+      },
+      {
+        id: 7,
+        productImg: [
+          {
+            id: 2,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
+          },
+
+          {
+            id: 1,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
+          },
+        ],
+        category: '티 제품',
+        price: 27000,
+        originalPrice: 30000,
+        discountRate: 10,
+        likeNumber: 77,
+        reviewNumber: 107,
+        isNew: true,
+        quantity: 0,
+        isLike: true,
+        name: '우롱차',
+      },
+      {
+        id: 8,
+        productImg: [
+          {
+            id: 2,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
+          },
+
+          {
+            id: 1,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
+          },
+        ],
+        category: '티 제품',
+        price: 27000,
+        originalPrice: 30000,
+        discountRate: 10,
+        likeNumber: 77,
+        reviewNumber: 107,
+        isNew: true,
+        quantity: 0,
+        isLike: true,
+        name: '우롱차',
+      },
+      {
+        id: 9,
+        productImg: [
+          {
+            id: 2,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
+          },
+
+          {
+            id: 1,
+            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
+          },
+        ],
+        category: '티 제품',
+        price: 27000,
+        originalPrice: 30000,
+        discountRate: 10,
+        likeNumber: 77,
+        reviewNumber: 107,
+        isNew: true,
+        quantity: 0,
+        isLike: true,
+        name: '우롱차',
+      },
     ],
-    productCount: 100,
+    productCount: 150,
   };
 
   const [dataList, setDataList] = useState(data);
-  const offset = searchParams.get('offset');
-  const limit = searchParams.get('limit');
-  const category = searchParams.get('c');
+  const category = searchParams.get('category');
   const sort = searchParams.get('sort');
-  const product_type = searchParams.get('product_type');
 
   const getList = async () => {
-    // const queryStringKey = {
-    //   category: 'c',
-    //   sort: 'sort',
-    //   product_type: 'product_type',
-    //   limit: 'limit',
-    //   offset: 'offset',
-    // };
-
-    const queryStringBuilder = () => {
-      let string = '?';
-      if (category) {
-        if (string[-1] !== '?') string += '&';
-        string += `c=${category}`;
-      }
-      if (limit) {
-        if (string[-1] !== '?') string += '&';
-        string += `limit=${limit}&offset=${offset}`;
-      }
-      if (product_type) {
-        if (string[-1] !== '?') string += '&';
-        string += `product_type=${product_type}`;
-      }
-      if (sort) {
-        if (string[-1] !== '?') string += '&';
-        string += `sort=${sort}`;
-      }
-      return string;
-    };
-    const queryString = queryStringBuilder();
-    // return await fetch(`http://10.58.52.244:8000/product${queryString}`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     // authorization: window.sessionStorage.getItem('token'),
+    // return await fetch(
+    //   `http://10.58.52.176:8000/bestproducts${window.location.search}`,
+    //   {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       authorization: window.sessionStorage.getItem('token'),
+    //     },
     //   },
-    // })
+    // )
     //   .then(res => res.json())
     //   .then(data => {
-    //     const result = data;
-    //     setDataList(result);
+    //     setDataList(data);
     //   });
   };
   useEffect(() => {
@@ -126,42 +269,78 @@ const BestProductList = () => {
 
   // 타이틀 설명
   let categoryTitle;
-  if (category === '2') {
-    categoryTitle = '베스트';
-  } else {
-    categoryTitle = '위클리 베스트';
-  }
-
-  // sort clicked 설명
   let weeklyBestFilter = 'unclicked';
   let bestFilter = 'unclicked';
-
-  if (sort === 'best') {
+  if (category === '2') {
+    categoryTitle = '베스트';
     bestFilter = 'clicked';
   } else {
+    categoryTitle = '위클리 베스트';
     weeklyBestFilter = 'clicked';
   }
 
-  //////////////////////////// 필터
+  // sort clicked 설명
+
+  // if (sort === 'best') {
+  //   bestFilter = 'clicked';
+  // } else {
+  //   weeklyBestFilter = 'clicked';
+  // }
+
+  // 카테고리 함수
+  const goToBestCategory = param => {
+    if (!param) {
+      searchParams.delete('category');
+      setSearchParams(searchParams);
+      getList();
+      return;
+    }
+    searchParams.set('category', param);
+    setSearchParams(searchParams);
+    getList();
+  };
+
+  // 필터 함수
   const goToSort = param => {
     searchParams.set('sort', param);
     setSearchParams(searchParams);
     // getList();
   };
 
-  ////////////////////제품필터
-  const goToProductType = param => {
-    searchParams.set('product_type', param);
-    setSearchParams(searchParams);
-    setSearchParams(searchParams);
-    // getList();
+  // 주계산법
+  const currentDate = new Date();
+
+  // 현재 날짜의 년도와 달을 가져옵니다.
+  const currentYear = currentDate.getFullYear();
+  const currentMonth = currentDate.getMonth();
+
+  // Date 객체를 이용하여 현재 주를 계산합니다.
+  const firstDayOfMonth = new Date(currentYear, currentMonth, 1);
+  const firstDayOfWeek = firstDayOfMonth.getDay(); // 0 (일요일)부터 6 (토요일)까지의 값
+  const currentDay = currentDate.getDate();
+
+  // 현재 주를 계산합니다.
+  const currentWeek = Math.ceil((currentDay + firstDayOfWeek) / 7);
+
+  const openFunction = () => {
+    if (filter === 'open') {
+      setFilter('closed');
+    } else {
+      setFilter('open');
+    }
   };
 
-  const goToBestCategory = param => {
-    searchParams.set('c', param);
-    setSearchParams(searchParams);
-    setSearchParams(searchParams);
-    // getList();
+  const filterBox = param => {
+    setFilterResult(param);
+    if (param === '리뷰순') {
+      searchParams.set('sort', 'review');
+      setSearchParams(searchParams);
+      getList();
+    } else {
+      searchParams.delete('sort');
+      setSearchParams(searchParams);
+      getList();
+    }
   };
 
   return (
@@ -171,7 +350,7 @@ const BestProductList = () => {
         <img src={process.env.PUBLIC_URL + categoryImg} />
       </div>
       <div className="container">
-        <div className="filterBox">
+        <div className="categoryBox">
           <GreenFilterButton
             text="위클리 베스트"
             clicked={weeklyBestFilter}
@@ -180,9 +359,52 @@ const BestProductList = () => {
           <GreenFilterButton
             text="베스트"
             clicked={bestFilter}
-            onClick={() => goToBestCategory('9')}
+            onClick={() => goToBestCategory('2')}
           />
         </div>
+      </div>
+
+      <div className="silverLine" />
+      <div className="container">
+        <div className="bestProductListTitleBox">
+          {!category ? (
+            <>
+              <div className="weekInf">{`${currentYear}년 ${
+                currentMonth + 1
+              }월 ${currentWeek}째주`}</div>
+              <div onClick={openFunction} className={`selectOption ${filter}`}>
+                <div className="selectTitle">
+                  {filterResult}&nbsp;
+                  <img src={process.env.PUBLIC_URL + '/images/up.png'} />
+                </div>
+                <ul className={`selectOptionList ${filter}`}>
+                  <li
+                    onClick={() => {
+                      filterBox('판매순');
+                    }}
+                  >
+                    판매순
+                  </li>
+                  <li
+                    onClick={() => {
+                      filterBox('리뷰순');
+                    }}
+                  >
+                    리뷰순
+                  </li>
+                </ul>
+              </div>
+            </>
+          ) : (
+            <div className="inf">
+              오설록에서 많이 선물된 선물세트를 모았어요.
+            </div>
+          )}
+        </div>
+      </div>
+      <div className="container listContainer">
+        {' '}
+        <BestProductListContainer data={dataList.data} />
       </div>
     </div>
   );

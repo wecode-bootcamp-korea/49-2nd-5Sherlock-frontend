@@ -101,7 +101,7 @@ const ProductListCard = props => {
       </div>
       <div className="productListCardPriceBox">
         <div className="productListCardPrice">
-          {data.price.toLocaleString('ko-KR')}
+          {data.price.toLocaleString('ko-KR')}&nbsp;원
         </div>
         {data.originalPrice ? (
           <div className="productListCardSaleBox">

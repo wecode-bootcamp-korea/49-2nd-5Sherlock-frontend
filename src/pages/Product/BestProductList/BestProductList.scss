@@ -14,7 +14,6 @@
       height: 100%;
       object-fit: cover;
     }
-
     .bannerName {
       position: absolute;
       top: 50%;
@@ -30,159 +29,84 @@
     padding: 40px 330px 40px 330px;
   }
 
-  .productListBox {
-    margin-top: 10px;
+  .categoryBox {
     display: flex;
-  }
-
-  .leftMenu {
-    width: 220px;
-    font-size: 18px;
-    color: #363535;
-    cursor: pointer;
-    .clicked {
-      color: #6c801a;
-    }
-  }
-
-  .leftMenuTitle {
-    height: 49px;
-    display: flex;
-
+    justify-content: flex-start;
     align-items: center;
   }
 
-  .leftMenuCategory {
-    padding-left: 35px;
-    margin-top: 20px;
-
-    .clicked {
-      color: #6c801a;
-    }
+  .greenFilterButton {
+    padding: 11px 24px 11px 24px;
   }
 
-  .leftMenuTeaBtn {
-    margin-bottom: 35px;
-    position: relative;
-    padding: 10px 0 10px 0;
-    cursor: pointer;
-
-    &:hover {
-      color: #6c801a;
-      .leftMenuTeaSubBox {
-        display: block;
-      }
-    }
-
-    .leftMenuTeaSubBox {
-      position: absolute;
-      right: -65px;
-      top: -15px;
-      border: 1px solid #363535;
-      z-index: 9;
-      background-color: #fff;
-      display: none;
-
-      .leftMenuTeaSubContent {
-        padding: 20px 35px 20px 15px;
-        color: #363535;
-
-        div {
-          display: inline-block;
-          padding-bottom: 5px;
-          cursor: pointer;
-          &:hover {
-            border-bottom: 1px solid #363535;
-            margin-bottom: -1px;
-          }
-        }
-
-        .clicked {
-          border-bottom: 1px solid #363535;
-          margin-bottom: -1px;
-          color: #363535;
-        }
-      }
-    }
+  .greenFilterButton:first-child {
+    margin-left: 0;
   }
 
-  .rightMenu {
-    width: 100%;
+  .silverLine {
+    border-bottom: 2px solid #f6f6f6;
   }
-  .rigthMenuTitleBox {
+
+  .weekInf {
+    font-size: 17px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .inf {
+    font-size: 17px;
+    font-weight: 700;
+    color: #333;
+  }
+
+  .bestProductListTitleBox {
     display: flex;
-    height: 49px;
-    .rightMenuTitle {
-      flex: 1;
-      font-size: 18px;
-      height: 100%;
-    }
-
     justify-content: space-between;
-    width: 100%;
-    border-bottom: 2px solid #ececec;
-  }
-  .rightMenuFilterBox {
-    display: flex;
-  }
-
-  .rightMenuFilter {
-    font-size: 18px;
-    margin-left: 42px;
-    // font-weight: 700;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    cursor: pointer;
+    position: relative;
+  }
 
-    &:hover {
-      border-bottom: 3px solid #6c801a;
-      margin-bottom: -2px;
-      color: #6c801a;
+  .selectOption {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    color: #999999;
+    cursor: pointer;
+    text-align: center;
+    z-index: 1;
+    &.open {
+      border: 1px solid #ddd;
     }
   }
 
-  .rightMenuInfoBox {
-    margin-top: 20px;
-    display: flex;
-    margin-bottom: 30px;
+  .selectOptionList {
+    display: none;
+
+    & li {
+      padding: 15px 20px 15px 20px;
+    }
+  }
+  .open {
+    display: block;
   }
 
-  .rightMenuInfo {
-    flex: 1;
-  }
-
-  .rigthMenuInfoNumber {
-    color: #6c801a;
-  }
-
-  .rightMenuTeaFilterBox {
-    display: flex;
-  }
-
-  .rightMenuTeaFilter {
-    width: 84px;
-    height: 38px;
-    font-size: 18px;
-
-    margin-left: 9px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-radius: 38px;
-    background-color: #f1f1f1;
-    color: #a5a5a5;
+  .selectTitle {
     display: flex;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #6c801a;
-      color: white;
-    }
+    padding: 15px 20px 15px 20px;
   }
 
-  .pagination {
-    margin-top: 30px;
+  .selectTitle img {
+    height: 14px;
+  }
+
+  .closed img {
+    transform: rotate(-180deg);
+  }
+
+  .listContainer {
+    padding-top: 0;
   }
 }

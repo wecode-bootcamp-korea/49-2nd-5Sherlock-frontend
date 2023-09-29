@@ -16,6 +16,10 @@ const Main = () => {
     navigate('/productlist');
   };
 
+  const goToBestProductList = () => {
+    navigate('/bestproductlist');
+  };
+
   return (
     <div className="Main">
       <div className="logInBtn" onClick={goToLogin}>
@@ -26,6 +30,9 @@ const Main = () => {
       </div>
       <div className="productListBtn" onClick={goToProductList}>
         제품리스트
+      </div>
+      <div className="productListBtn" onClick={goToBestProductList}>
+        베스트리스트
       </div>
     </div>
   );
