@@ -9,7 +9,7 @@ const BestProductListCard = props => {
   const [productImg, setProductImg] = useState(data.productImg[1].url);
 
   const goToDetail = id => {
-    navigate(`/productdetail/${id}`);
+    navigate(`/product-detail/${id}`);
   };
 
   const showSecondPage = () => {
@@ -61,19 +61,22 @@ const BestProductListCard = props => {
         </div>
       </div>
       <div className="productListCardPriceBox">
-        <div className="productListCardPrice">
-          {data.price.toLocaleString('ko-KR')}
-        </div>
         {data.originalPrice ? (
-          <div className="productListCardSaleBox">
-            <div className="productListCardOriginalPrice">
-              {data.originalPrice.toLocaleString('ko-KR')}
-            </div>
-            <div className="productListCardDiscountRate">
-              {`(${data.discountRate}%↓)`}
-            </div>
+          <div className="productListCardOriginalPrice">
+            {data.originalPrice.toLocaleString('ko-KR')}
           </div>
         ) : null}
+        <div className="productListCardSaleBox">
+          <div className="productListCardPrice ">
+            {data.price.toLocaleString('ko-KR')}
+            {data.originalPrice ? '원' : null}
+          </div>
+          {data.discountRate ? (
+            <div className="productListCardDiscountRate">
+              {`${data.discountRate}%`}
+            </div>
+          ) : null}
+        </div>
       </div>
     </div>
   );

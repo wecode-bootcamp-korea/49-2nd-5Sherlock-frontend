@@ -13,11 +13,11 @@ const Main = () => {
   };
 
   const goToProductList = () => {
-    navigate('/productlist');
+    navigate('/product-list');
   };
 
   const goToBestProductList = () => {
-    navigate('/bestproductlist');
+    navigate('/best-product-list');
   };
 
   return (

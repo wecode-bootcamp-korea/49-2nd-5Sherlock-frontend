@@ -1,8 +1,8 @@
 .productListCard {
   border-right: 2px #f6f6f6 solid;
   padding: 0 22px 0 22px;
-  height: 460px;
-  .productListCardBox div:nth-child(4n) {
+  height: 470px;
+  &:nth-child(4n) {
     border-right: 0;
   }
 
@@ -26,7 +26,6 @@
       background-color: #bcbcbc;
       position: absolute;
       right: 0;
-      // left: 0;
       bottom: 0;
 
       &:hover {
@@ -87,6 +86,7 @@
     font-size: 20px;
     color: #555555;
     cursor: pointer;
+    word-break: break-all;
   }
 
   .productListCardPriceBox {

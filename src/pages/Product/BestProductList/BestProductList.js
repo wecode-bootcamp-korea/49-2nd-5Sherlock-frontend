@@ -4,6 +4,8 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import GreenFilterButton from '../../../components/GreenFilterButton/GreenFilterButton';
 import { useSearchParams } from 'react-router-dom';
 import BestProductListContainer from '../../../components/BestProductListContainer/BestProductListContainer';
+import Nav from '../../../components/Nav/Nav';
+import Footer from '../../../components/Footer/Footer';
 
 const BestProductList = () => {
   const location = useLocation();
@@ -36,7 +38,7 @@ const BestProductList = () => {
         isNew: true,
         quantity: 0,
         isLike: true,
-        name: '우롱차',
+        name: '[따뜻한 한가위 선물] 달빛걷기 세트',
       },
       {
         id: 2,
@@ -77,8 +79,8 @@ const BestProductList = () => {
         ],
         category: '티 제품',
         price: 27000,
-        originalPrice: 30000,
-        discountRate: 10,
+        // originalPrice: 30000,
+        // discountRate: 10,
         likeNumber: 77,
         reviewNumber: 107,
         isNew: true,
@@ -125,8 +127,8 @@ const BestProductList = () => {
         ],
         category: '티 제품',
         price: 27000,
-        originalPrice: 30000,
-        discountRate: 10,
+        // originalPrice: 30000,
+        // discountRate: 10,
         likeNumber: 77,
         reviewNumber: 107,
         isNew: true,
@@ -271,21 +273,13 @@ const BestProductList = () => {
   let categoryTitle;
   let weeklyBestFilter = 'unclicked';
   let bestFilter = 'unclicked';
-  if (category === '2') {
+  if (category === '1') {
     categoryTitle = '베스트';
     bestFilter = 'clicked';
   } else {
     categoryTitle = '위클리 베스트';
     weeklyBestFilter = 'clicked';
   }
-
-  // sort clicked 설명
-
-  // if (sort === 'best') {
-  //   bestFilter = 'clicked';
-  // } else {
-  //   weeklyBestFilter = 'clicked';
-  // }
 
   // 카테고리 함수
   const goToBestCategory = param => {
@@ -304,7 +298,7 @@ const BestProductList = () => {
   const goToSort = param => {
     searchParams.set('sort', param);
     setSearchParams(searchParams);
-    // getList();
+    getList();
   };
 
   // 주계산법
@@ -343,8 +337,18 @@ const BestProductList = () => {
     }
   };
 
+  useEffect(() => {
+    const sortChange = () => {
+      if (sort) {
+        setFilterResult('리뷰순');
+      }
+    };
+    sortChange();
+  }, []);
+
   return (
     <div className="bestProductList">
+      <Nav></Nav>
       <div className="bannerBox">
         <h2 className="bannerName">{categoryTitle}</h2>
         <img src={process.env.PUBLIC_URL + categoryImg} />
@@ -359,7 +363,7 @@ const BestProductList = () => {
           <GreenFilterButton
             text="베스트"
             clicked={bestFilter}
-            onClick={() => goToBestCategory('2')}
+            onClick={() => goToBestCategory('1')}
           />
         </div>
       </div>
@@ -406,6 +410,7 @@ const BestProductList = () => {
         {' '}
         <BestProductListContainer data={dataList.data} />
       </div>
+      <Footer></Footer>
     </div>
   );
 };

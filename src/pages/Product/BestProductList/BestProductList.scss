@@ -26,7 +26,7 @@
   }
 
   .container {
-    padding: 40px 330px 40px 330px;
+    padding: 40px 300px 40px 300px;
   }
 
   .categoryBox {
@@ -61,14 +61,14 @@
 
   .bestProductListTitleBox {
     display: flex;
-    justify-content: space-between;
+
     align-items: center;
     position: relative;
   }
 
   .selectOption {
     position: absolute;
-    top: 0;
+    top: -14px;
     right: 0;
     background-color: #fff;
     color: #999999;
