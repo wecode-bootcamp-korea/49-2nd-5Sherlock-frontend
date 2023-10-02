@@ -29,7 +29,6 @@ const Login = () => {
 
   const handleLogin = e => {
     e.preventDefault();
-
     fetch('http://10.58.52.229:8000/users/signIn', {
       method: 'POST',
       headers: {

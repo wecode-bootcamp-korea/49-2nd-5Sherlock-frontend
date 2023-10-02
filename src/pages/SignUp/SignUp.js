@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import CheckBox from '../../components/CheckBox/CheckBox';
+import Terms from '../../components/Terms/Terms';
 import './SignUp.scss';
 
 const idReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -121,7 +122,7 @@ const SignUp = () => {
     <div className="signUp">
       <header className="header">
         <div className="headerBox">
-          <div className="headerText">뷰티포인트 X 오설록 쇼핑몰 회원가입</div>
+          <div className="headerText">뷰티포인트 X 오셜록 쇼핑몰 회원가입</div>
           <img
             className="deleteBtn"
             src="/images/login-img1.png"
@@ -138,7 +139,7 @@ const SignUp = () => {
             환영합니다!
           </span>
           <span className="joinGuideTextSmall">
-            아모레퍼시픽 통합멤버십 뷰티포인트에 가입하시면 오설록 쇼핑몰 외
+            마모레퍼시픽 통합멤버십 뷰티포인트에 가입하시면 오설록 쇼핑몰 외
             모든 브랜드 온/오프 매장에서 상품을 구매할 때마다 현금처럼 사용할 수
             있는 포인트 적립과 사용 등 다양한 혜택을 받으실 수 있습니다.
           </span>
@@ -216,6 +217,7 @@ const SignUp = () => {
               onChange={handleCheckboxChange}
               label="개인정보 수집 및 이용 동의(필수)"
             ></CheckBox>
+            <Terms></Terms>
 
             <button
               type="button"
