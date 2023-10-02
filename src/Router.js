@@ -6,18 +6,22 @@ import BestProductList from './pages/Product/BestProductList/BestProductList';
 import Signup from './pages/SignUp/SignUp';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
 import ProductList from './pages/Product/ProductList/ProductList';
+import Nav from './components/Nav/Nav';
+import Footer from './components/Footer/Footer';
 
 const Router = () => {
   return (
     <BrowserRouter>
+      {/* <Nav /> */}
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/bestproductList" element={<BestProductList />} />
-        <Route path="/productdetail/:id" element={<ProductDetail />} />
-        <Route path="/productlist" element={<ProductList />} />
+        <Route path="/best-product-list" element={<BestProductList />} />
+        <Route path="/product-detail/:id" element={<ProductDetail />} />
+        <Route path="/product-list" element={<ProductList />} />
       </Routes>
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 };

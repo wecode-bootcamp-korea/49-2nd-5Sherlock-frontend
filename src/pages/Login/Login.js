@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import './Login.scss';
 
-
 const idReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
 const pwReg = /^[a-zA-Z0-9]{6,16}$/;
@@ -26,9 +25,7 @@ const Login = () => {
   const handleLogin = e => {
     e.preventDefault();
 
-
-    fetch('http://10.58.52.229:8000/users/signIn', {
-
+    fetch('http://10.58.52.176:8000/users/signIn', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -98,7 +95,7 @@ const Login = () => {
           <button
             className="loginButton"
             onClick={handleLogin}
-            disabled={!isUserInputValid}
+            // disabled={!isUserInputValid}
           >
             로그인
           </button>

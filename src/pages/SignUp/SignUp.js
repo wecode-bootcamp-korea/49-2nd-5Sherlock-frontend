@@ -24,7 +24,7 @@ const SignUp = () => {
 
   const handleSignUp = e => {
     console.log('clicked');
-    fetch('http://10.58.52.229:8000/users/signUp', {
+    fetch('http://10.58.52.176:8000/users/signUp', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -41,6 +41,7 @@ const SignUp = () => {
       })
       .then(data => {
         if (data.message === 'userCreated') {
+          console.log(data.message);
           navigate('/login');
         } else {
           alert('회원가입에 실패했습니다.');

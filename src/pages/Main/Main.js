@@ -13,7 +13,11 @@ const Main = () => {
   };
 
   const goToProductList = () => {
-    navigate('/productlist?c=티제품&p=1&sort=추천순&teasort=전체');
+    navigate('/product-list');
+  };
+
+  const goToBestProductList = () => {
+    navigate('/best-product-list');
   };
 
   return (
@@ -26,6 +30,9 @@ const Main = () => {
       </div>
       <div className="productListBtn" onClick={goToProductList}>
         제품리스트
+      </div>
+      <div className="productListBtn" onClick={goToBestProductList}>
+        베스트리스트
       </div>
     </div>
   );
