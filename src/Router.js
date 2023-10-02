@@ -7,10 +7,13 @@ import Signup from './pages/SignUp/SignUp';
 import ProductDetail from './pages/ProductDetail/ProductDetail';
 import ProductList from './pages/Product/ProductList/ProductList';
 import Cart from './pages/Cart/Cart';
+import Nav from './components/Nav/Nav';
+import Footer from './components/Footer/Footer';
 
 const Router = () => {
   return (
     <BrowserRouter>
+      {/* <Nav /> */}
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
@@ -20,6 +23,7 @@ const Router = () => {
         <Route path="/productlist" element={<ProductList />} />
         <Route path="/cart" element={<Cart />} />
       </Routes>
+      {/* <Footer /> */}
     </BrowserRouter>
   );
 };

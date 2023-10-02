@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './GreenFilterButton.scss';
-import { useNavigate, Link } from 'react-router-dom';
 
 const GreenFilterButton = props => {
-  const { text } = props;
+  const { text, clicked, onClick } = props;
 
-  return <div className="greenFilterButton">{text}</div>;
+  return (
+    <div className={`greenFilterButton ${clicked}`} onClick={onClick}>
+      {text}
+    </div>
+  );
 };
 export default GreenFilterButton;

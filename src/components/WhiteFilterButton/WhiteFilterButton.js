@@ -3,8 +3,12 @@ import './WhiteFilterButton.scss';
 import { useNavigate, Link } from 'react-router-dom';
 
 const WhiteFilterButton = props => {
-  const { text } = props;
+  const { text, clicked, onClick } = props;
 
-  return <div className="whiteFilterButton">{text}</div>;
+  return (
+    <div className={`whiteFilterButton ${clicked}`} onClick={onClick}>
+      {text}
+    </div>
+  );
 };
 export default WhiteFilterButton;

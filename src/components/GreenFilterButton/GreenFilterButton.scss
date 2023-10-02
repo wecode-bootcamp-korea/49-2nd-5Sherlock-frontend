@@ -1,5 +1,4 @@
 .greenFilterButton {
-  width: 84px;
   height: 38px;
   font-size: 18px;
 
@@ -18,4 +17,8 @@
     background-color: #6c801a;
     color: white;
   }
+}
+.greenFilterButton.clicked {
+  background-color: #6c801a;
+  color: white;
 }
