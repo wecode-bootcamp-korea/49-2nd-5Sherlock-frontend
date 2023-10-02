@@ -6,7 +6,6 @@ import Modal from '../../components/Modal/Modal';
 
 import Nav from '../../components/Nav/Nav';
 
-
 const ProductDetail = () => {
   //   const { id } = useParams();
   const myData = {
@@ -50,7 +49,6 @@ const ProductDetail = () => {
   //       }
   //     });
   // }, []);
-
 
   const [packaging, setPackaging] = useState(0);
 
@@ -104,7 +102,6 @@ const ProductDetail = () => {
     return pointReward;
   };
 
-
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -112,7 +109,6 @@ const ProductDetail = () => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
 
   return (
     <div className="productDetail">
@@ -337,38 +333,37 @@ const ProductDetail = () => {
               <img src="/images/Detail.png" alt="상품 디테일 이미지" />
             </div>
           </div>
-        </div>
 
-        <div className="contentsWrapper">
-          <div className="contentsNav">
-            <ul>
-              <li>
-                <a href="javascript:;">상품상세</a>
-              </li>
-              <li>
-                <a href="javascript:;">
-                  고객리뷰 <span>492개</span>
-                </a>
-              </li>
-              <li>
-                <a href="javascript:;">상품고시정보</a>
-              </li>
-            </ul>
+          <div className="contentsWrapper">
+            <div className="contentsNav">
+              <ul>
+                <li>
+                  <a href="javascript:;">상품상세</a>
+                </li>
+                <li>
+                  <a href="javascript:;">
+                    고객리뷰 <span>492개</span>
+                  </a>
+                </li>
+                <li>
+                  <a href="javascript:;">상품고시정보</a>
+                </li>
+              </ul>
+            </div>
+            <div className="contentsImg">
+              <img src="/images/Detail.png" alt="상품 디테일 이미지" />
+            </div>
           </div>
-          <div className="contentsImg">
-            <img src="/images/Detail.png" alt="상품 디테일 이미지" />
-          </div>
+          {isModalOpen && (
+            <Modal>
+              <p>선물하기는 로그인 후 이용가능합니다.</p>
+              <button className="btnOk" onClick={closeModal}>
+                확인
+              </button>
+            </Modal>
+          )}
         </div>
-        {isModalOpen && (
-          <Modal>
-            <p>선물하기는 로그인 후 이용가능합니다.</p>
-            <button className="btnOk" onClick={closeModal}>
-              확인
-            </button>
-          </Modal>
-        )}
-      </div>
-
+      )}
     </div>
   );
 };
