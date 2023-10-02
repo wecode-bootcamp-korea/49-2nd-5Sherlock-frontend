@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './ProductDetail.scss';
+import Modal from '../../components/Modal/Modal';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -22,7 +23,7 @@ const ProductDetail = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [originalPrice, setOriginalPrice] = useState(47000);
   const [productCount, setProductCount] = useState(1);
-  console.log(data.description);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // useEffect(() => {
   //   fetch(`http://10.58.52.215:8000/threads${id}`, {
@@ -43,6 +44,7 @@ const ProductDetail = () => {
   //       }
   //     });
   // }, []);
+
   const selectToggle = () => {
     sethandleSelectToggle(!handleSelectToggle);
   };
@@ -85,7 +87,14 @@ const ProductDetail = () => {
     const pointReward = originalPrice / 100;
     return pointReward;
   };
-  console.log(isPointReward());
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="productDetail">
@@ -295,6 +304,14 @@ const ProductDetail = () => {
             <img src="/images/Detail.png" alt="상품 디테일 이미지" />
           </div>
         </div>
+        {isModalOpen && (
+          <Modal>
+            <p>선물하기는 로그인 후 이용가능합니다.</p>
+            <button className="btnOk" onClick={closeModal}>
+              확인
+            </button>
+          </Modal>
+        )}
       </div>
     </div>
   );

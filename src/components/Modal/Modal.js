@@ -1,17 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Modal.scss';
 
 const Modal = props => {
-  const { cont, subCont } = props;
+  const { onClose, children } = props;
+  const handleClose = () => {
+    if (typeof onClose === 'function') {
+      onClose();
+    }
+  };
+
   return (
-    <div className="Modal">
+    <div className="Modal close">
       <div className="modalInner">
         <div className="modalContents">
-          <p>장바구니로 이동하시겠습니까?</p>
-          <div className="btnWrapper">
-            <button className="">취소</button>
-            <button>확인</button>
-          </div>
+          <button className="btnBack" onClick={handleClose}>
+            <img src="/images/login-img1.png" alt="닫기 버튼" />
+          </button>
+          {children}
         </div>
       </div>
     </div>

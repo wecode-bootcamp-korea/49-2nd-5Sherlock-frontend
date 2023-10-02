@@ -1,20 +1,37 @@
 @import '/src/styles/reset.scss';
 
 .productDetail {
+  position: relative;
   width: 100%;
   padding-top: 80px;
   line-height: 1.2;
+
+  .Modal {
+    .btnOk {
+      width: 100%;
+      background-color: #6c801a;
+      color: #fff;
+      font-family: Pretendard;
+      padding: 12px 0;
+      font-size: 16px;
+      border-radius: 6px;
+    }
+  }
   .orderWrapper {
     margin: auto;
     width: 1280px;
+
     .leftWrapper {
       width: 47%;
+
       .productImgWrapper {
         .relationTo {
           width: 100%;
+
           ul {
             display: flex;
             flex-wrap: wrap;
+
             li {
               color: #505051;
               font-size: 14px;
@@ -22,12 +39,14 @@
               margin-top: 22px;
               width: 160px;
             }
+
             .toPackaging {
               display: none;
               &.on {
                 display: block;
               }
             }
+
             .toShoppingBag {
               display: none;
               &.on {
@@ -39,6 +58,7 @@
         width: 100%;
         background-color: #f8f9fb;
         padding: 30px 43px;
+
         .productImg {
           .badge {
             position: absolute;
@@ -65,16 +85,20 @@
         display: flex;
         align-items: center;
         margin-top: 20px;
+
         .reviewGrade {
           display: flex;
           align-items: center;
+
           p {
             font-size: 40px;
             color: #798b66;
+
             .countStar {
               margin-left: 12px;
             }
           }
+
           .reviewText {
             margin-right: 20px;
             font-size: 30px;
