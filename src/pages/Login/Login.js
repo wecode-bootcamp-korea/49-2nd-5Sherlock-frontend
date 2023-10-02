@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import './Login.scss';
 import Nav from '../../components/Nav/Nav';
-import Footer from '../../components/Footer/Footer';
 
 const idReg = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 const pwReg = /^[.@!#$%&'*+-/=?^_`{|}~\w\d]{9,}$/;
@@ -62,7 +61,6 @@ const Login = () => {
 
   return (
     <div className="Login">
-      <Nav></Nav>
       <header className="header">
         <div className="headerBox">
           <div className="headerText">로그인</div>
@@ -76,6 +74,7 @@ const Login = () => {
       </header>
 
       <div className="loginBox">
+        <Nav />
         <div className="container">
           <span className="loginGuideText">
             아모레퍼시픽 뷰티포인트 통합회원
@@ -132,7 +131,6 @@ const Login = () => {
           </div>
         </div>
       </div>
-      <Footer></Footer>
     </div>
   );
 };

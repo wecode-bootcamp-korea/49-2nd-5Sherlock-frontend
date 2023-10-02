@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import './ProductList.scss';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import ProductListContainer from '../../../components/ProductListContainer/ProductListContainer';
 import WhiteFilterButton from '../../../components/WhiteFilterButton/WhiteFilterButton';
 import GreenFilterButton from '../../../components/GreenFilterButton/GreenFilterButton';
 import { useSearchParams } from 'react-router-dom';
 import Pagination from '../../../components/Pagination/Pagination';
+import './ProductList.scss';
 import Nav from '../../../components/Nav/Nav';
-import Footer from '../../../components/Footer/Footer';
 
 const ProductList = () => {
-  const [change, setChange] = useState(1);
-  const [queryStringBox, setQueryStringBox] = useState();
-  const location = useLocation();
-  const navigate = useNavigate();
-  const [mainTitle, setMainTitle] = useState();
   const [searchParams, setSearchParams] = useSearchParams();
   const data = {
     message: 'querySuccess',
@@ -247,34 +241,8 @@ const ProductList = () => {
   const product_type = searchParams.get('product_type');
 
   const getList = async () => {
-    // const queryStringBuilder = () => {
-    //   let string = '?';
-    //   if (category) {
-    //     if (string[string.length - 1] !== '?') string += '&';
-    //     string += `category=${category}`;
-    //   }
-    //   if (limit) {
-    //     if (string[string.length - 1] !== '?') string += '&';
-    //     string += `limit=${limit}&offset=${offset}`;
-    //   }
-    //   if (product_type.length === 0) {
-    //     if (string[string.length - 1] !== '?') string += '&';
-    //     let product_type_box;
-    //     if (product_type.length === 0) {
-    //       string += `product_type=${product_type}`;
-    //     }
-    //   }
-    //   if (sort) {
-    //     if (string[string.length - 1] !== '?') string += '&';
-    //     string += `sort=${sort}`;
-    //   }
-    //   return string;
-    // };
-    // const queryString = queryStringBuilder();
-    console.log(window.location.search);
-    // console.log(searchParams.toString());
     // return await fetch(
-    //   `http://10.58.52.176:8000/products${window.location.search}`,
+    //   `http://10.58.52.176:8000/products?${searchParams.toString()}`,
     //   {
     //     method: 'GET',
     //     headers: {
@@ -291,7 +259,7 @@ const ProductList = () => {
 
   useEffect(() => {
     getList();
-  }, []);
+  }, [searchParams]);
 
   // 배너 Img 설명
   let categoryImg;
@@ -371,25 +339,6 @@ const ProductList = () => {
     total = 'clicked';
   }
 
-  // sort clicked 설명
-  let recommendFilter = 'unclicked';
-  let saleFilter = 'unclicked';
-  let newFilter = 'unclicked';
-  let highPriceFilter = 'unclicked';
-  let lowPriceFilter = 'unclicked';
-
-  if (sort === 'review') {
-    saleFilter = 'clicked';
-  } else if (sort === 'created_at') {
-    newFilter = 'clicked';
-  } else if (sort === 'price') {
-    highPriceFilter = 'clicked';
-  } else if (sort === '-price') {
-    lowPriceFilter = 'clicked';
-  } else {
-    recommendFilter = 'clicked';
-  }
-
   // teaSort clicked 설명
   let teaTotalFilter = 'unclicked';
   let leafTeaFilter = 'unclicked';
@@ -421,8 +370,6 @@ const ProductList = () => {
       searchParams.set('sort', param);
     }
     setSearchParams(searchParams);
-
-    getList();
   };
 
   ////////////////////product_type 필터
@@ -433,7 +380,7 @@ const ProductList = () => {
     if (!param) {
       searchParams.delete('product_type');
       setSearchParams(searchParams);
-      getList();
+
       return;
     }
 
@@ -441,7 +388,7 @@ const ProductList = () => {
       searchParams.set('product_type', param);
       console.log(param);
       setSearchParams(searchParams);
-      getList();
+
       return;
     }
 
@@ -458,7 +405,7 @@ const ProductList = () => {
       if (product_type_box.length === 0) {
         searchParams.delete('product_type');
         setSearchParams(searchParams);
-        getList();
+
         return;
       }
     } else {
@@ -475,7 +422,6 @@ const ProductList = () => {
     searchParams.set('product_type', product_type_result);
     console.log(product_type_result);
     setSearchParams(searchParams);
-    getList();
   };
 
   /////////////////////////카테고리
@@ -490,12 +436,20 @@ const ProductList = () => {
       searchParams.delete('category');
     }
     setSearchParams(searchParams);
-    getList();
   };
 
+  const SORTING_LIST = [
+    { id: 1, text: '추천순', sort: null },
+    { id: 2, text: '판매순', sort: 'review' },
+    { id: 3, text: '신상품순', sort: 'created_at' },
+    { id: 4, text: '높은 가격순', sort: 'price' },
+    { id: 5, text: '낮은 가격순', sort: '-price' },
+  ];
+
+  console.log(sort);
   return (
     <div className="productList">
-      <Nav></Nav>
+      <Nav />
       <div className="bannerBox">
         <h2 className="bannerName">{categoryTitle}</h2>
         <img src={process.env.PUBLIC_URL + categoryImg} />
@@ -618,31 +572,14 @@ const ProductList = () => {
               <div className="rigthMenuTitleBox">
                 <div className="rightMenuTitle">{categoryTitle}</div>
                 <div className="rightMenuFilterBox">
-                  <WhiteFilterButton
-                    text="추천순"
-                    clicked={recommendFilter}
-                    onClick={() => goToSort()}
-                  />
-                  <WhiteFilterButton
-                    text="판매순"
-                    clicked={saleFilter}
-                    onClick={() => goToSort('review')}
-                  />
-                  <WhiteFilterButton
-                    text="신상품순"
-                    clicked={newFilter}
-                    onClick={() => goToSort('created_at')}
-                  />
-                  <WhiteFilterButton
-                    text="높은 가격순"
-                    clicked={highPriceFilter}
-                    onClick={() => goToSort('price')}
-                  />
-                  <WhiteFilterButton
-                    text="낮은 가격순"
-                    clicked={lowPriceFilter}
-                    onClick={() => goToSort('-price')}
-                  />
+                  {SORTING_LIST.map(({ id, text, sort }) => (
+                    <WhiteFilterButton
+                      key={id}
+                      text={text}
+                      isSelected={searchParams.get('sort') === sort}
+                      onClick={() => goToSort(sort)}
+                    />
+                  ))}
                 </div>
               </div>
               <div className="rightMenuInfoBox">
@@ -699,7 +636,6 @@ const ProductList = () => {
           </div>
         </div>
       </div>
-      <Footer></Footer>
     </div>
   );
 };

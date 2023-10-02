@@ -9,7 +9,7 @@ const ProductListCard = props => {
   const { data } = props;
   const [productImg, setProductImg] = useState(data.productImg[1].url);
   const goToDetail = id => {
-    navigate(`/productdetail/${id}`);
+    navigate(`/product-detail/${id}`);
   };
 
   // const likeClick= (param) => {

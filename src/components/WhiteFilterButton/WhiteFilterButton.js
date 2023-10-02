@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './WhiteFilterButton.scss';
-import { useNavigate, Link } from 'react-router-dom';
 
-const WhiteFilterButton = props => {
-  const { text, clicked, onClick } = props;
-
+const WhiteFilterButton = ({ text, isSelected, onClick }) => {
   return (
-    <div className={`whiteFilterButton ${clicked}`} onClick={onClick}>
+    <div
+      className={`whiteFilterButton ${isSelected ? 'clicked' : 'unclicked'}`}
+      onClick={onClick}
+    >
       {text}
     </div>
   );

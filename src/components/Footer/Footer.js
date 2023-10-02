@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './Footer.scss';
-import { useNavigate, Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
