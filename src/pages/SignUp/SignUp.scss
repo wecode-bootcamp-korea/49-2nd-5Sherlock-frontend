@@ -1,68 +1,98 @@
-.SignUp {
+.signUp {
   display: flex;
   flex-direction: column;
-  justify-content: center; /* 컨테이너를 수직 중앙 정렬 */
   align-items: center;
-  // width: 100%;
-  // height: 100vh;
   margin: 0;
   padding: 0;
-  border: solid 1px black;
 
   .header {
     display: flex;
-    justify-content: space-around;
     width: 100%;
-    height: 10%;
-    border: solid 1px black;
+    justify-content: center;
+    border: 1px solid #f0f0f0;
 
     .headerText {
-      margin-left: 350px;
-      font-size: large;
+      font-size: 20px;
+    }
+
+    .headerBox {
+      position: relative;
+      padding: 20px 120px;
     }
 
     .deleteBtn {
-      margin-right: 15px;
-      height: 30px;
-      width: 30px;
+      position: absolute;
+      width: 40px;
+      top: 10px;
+      right: 20px;
     }
+  }
+
+  .joinBox {
+    width: 480px;
+    height: 100%;
   }
 
   .container {
     display: flex;
     flex-direction: column;
     width: 480px;
-    border: solid 1px black;
-    justify-content: flex-start; /* 가로 중앙 정렬 */
-    // align-items: center; /* 세로 중앙 정렬 */
-    height: 100vh; /* 화면 높이에 따라 컨테이너를 중앙에 배치합니다. */
+    justify-content: flex-start;
+    height: 100%;
 
     .joinGuideText {
-      display: flex;
-      flex-direction: column;
-      font-size: 20px;
-      border: solid 1px black;
-      margin-top: 15%;
-      padding: 15%;
+      font-size: 33px;
+      font-weight: bold;
+      margin-top: 50px;
+      margin-left: 10px;
+    }
+    .joinGuideTextSmall {
+      margin-top: 20px;
+      margin-left: 10px;
     }
 
     .joinForm {
       display: flex;
       flex-direction: column;
-      border: solid 1px black;
-      margin-top: 5%;
+      margin-top: 30px;
+      gap: 15px;
+    }
+    .error {
+      color: red; /* 에러 텍스트의 색상을 빨간색으로 지정 */
+      font-size: 13px; /* 에러 텍스트의 글꼴 크기를 조정 */
+      /* 원하는 다른 스타일 추가 */
+      margin-left: 10px;
     }
 
-    .joinButton {
-      border: solid 1px black;
-      margin-top: 5%;
-      padding: 20px;
+    .phoneNumberInput {
+      display: flex;
+      gap: 10px;
+
+      .phoneOption {
+        border-radius: 4px;
+        border: 1px solid #e0e0e0;
+        font-weight: 700;
+        width: 40%;
+        height: 56px;
+        padding: 19px 0px 15px 16px;
+        align-items: center;
+        font-size: 15px;
+        color: black;
+      }
     }
 
-    .joinButton {
-      border: solid 1px black;
-      margin-top: 5%;
+    .signupButton {
+      margin-top: 5px;
       padding: 20px;
+      background-color: #6c801a;
+      color: white;
+      border-radius: 4px;
+      font-size: 15px;
+
+      &:disabled {
+        background-color: #f0f0f0;
+        color: grey;
+      }
     }
   }
 }

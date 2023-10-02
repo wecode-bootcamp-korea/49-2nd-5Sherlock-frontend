@@ -51,7 +51,7 @@ const ProductListContainer = props => {
   if (!data) {
     return;
   }
-
+  console.log(data);
   return (
     <div className="productListContainer">
       {data.map(data => (
