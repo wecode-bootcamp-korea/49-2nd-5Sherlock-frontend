@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './ProductDetail.scss';
+
+import Modal from '../../components/Modal/Modal';
+
 import Nav from '../../components/Nav/Nav';
+
 
 const ProductDetail = () => {
   //   const { id } = useParams();
@@ -24,6 +28,30 @@ const ProductDetail = () => {
   const [selectedOption, setSelectedOption] = useState('');
   const [originalPrice, setOriginalPrice] = useState(47000);
   const [productCount, setProductCount] = useState(1);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  // useEffect(() => {
+  //   fetch(`http://10.58.52.215:8000/threads${id}`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-Type': 'application/json;charset=utf-8',
+  //       authorization: localStorage.getItem('token'),
+  //     },
+  //   })
+  //     .then(res => res.json())
+  //     .then(result => {
+  // setData(result)
+  //       console.log(result);
+  //       if (result.message === 'quarySuccess') {
+  //         console.log(result.data);
+  //       } else {
+  //         alert('실패');
+  //       }
+  //     });
+  // }, []);
+
+
   const [packaging, setPackaging] = useState(0);
 
   useEffect(() => {
@@ -45,6 +73,7 @@ const ProductDetail = () => {
     // //     console.log(result.data[0]);
     // //   });
   }, []);
+
   const selectToggle = () => {
     sethandleSelectToggle(!handleSelectToggle);
   };
@@ -74,6 +103,16 @@ const ProductDetail = () => {
     const pointReward = originalPrice / 100;
     return pointReward;
   };
+
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
 
   return (
     <div className="productDetail">
@@ -299,8 +338,37 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
-      )}
-      ;
+
+        <div className="contentsWrapper">
+          <div className="contentsNav">
+            <ul>
+              <li>
+                <a href="javascript:;">상품상세</a>
+              </li>
+              <li>
+                <a href="javascript:;">
+                  고객리뷰 <span>492개</span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:;">상품고시정보</a>
+              </li>
+            </ul>
+          </div>
+          <div className="contentsImg">
+            <img src="/images/Detail.png" alt="상품 디테일 이미지" />
+          </div>
+        </div>
+        {isModalOpen && (
+          <Modal>
+            <p>선물하기는 로그인 후 이용가능합니다.</p>
+            <button className="btnOk" onClick={closeModal}>
+              확인
+            </button>
+          </Modal>
+        )}
+      </div>
+
     </div>
   );
 };

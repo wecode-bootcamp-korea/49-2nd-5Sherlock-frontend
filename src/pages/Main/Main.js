@@ -8,6 +8,7 @@ import ImgBanner from '../../components/ImgBanner/ImgBanner';
 import Nav from '../../components/Nav/Nav';
 
 const Main = () => {
+
   const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -124,5 +125,6 @@ const Main = () => {
       </div>
     </div>
   );
+
 };
 export default Main;
