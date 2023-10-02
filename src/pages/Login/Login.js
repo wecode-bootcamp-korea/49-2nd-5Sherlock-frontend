@@ -3,8 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import './Login.scss';
 
+
 const idReg = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 const pwReg = /^[.@!#$%&'*+-/=?^_`{|}~\w\d]{9,}$/;
+
 
 const Login = () => {
   const navigate = useNavigate();
