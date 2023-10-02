@@ -5,6 +5,8 @@ import NoticeSlide from '../../components/NoticeSlide/NoticeSlide';
 import BestSlide from '../../components/BestSlide/BestSlide';
 import MainSlide from '../../components/MainSlide/MainSlide';
 import ImgBanner from '../../components/ImgBanner/ImgBanner';
+import Nav from '../../components/Nav/Nav';
+import Footer from '../../components/Footer/Footer';
 
 const Main = () => {
   const navigate = useNavigate();
@@ -43,6 +45,7 @@ const Main = () => {
 
   return (
     <div className="Main">
+      <Nav></Nav>
       <div className="mainBannerSection">
         <MainSlide />
       </div>
@@ -123,6 +126,7 @@ const Main = () => {
       <div className="productListBtn" onClick={goToBestProductList}>
         베스트리스트
       </div>
+      <Footer></Footer>
     </div>
   );
 };

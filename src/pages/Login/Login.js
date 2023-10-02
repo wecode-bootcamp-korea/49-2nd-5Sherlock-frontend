@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import './Login.scss';
-
+import Nav from '../../components/Nav/Nav';
+import Footer from '../../components/Footer/Footer';
 
 const idReg = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 const pwReg = /^[.@!#$%&'*+-/=?^_`{|}~\w\d]{9,}$/;
-
 
 const Login = () => {
   const navigate = useNavigate();
@@ -62,6 +62,7 @@ const Login = () => {
 
   return (
     <div className="Login">
+      <Nav></Nav>
       <header className="header">
         <div className="headerBox">
           <div className="headerText">로그인</div>
@@ -131,6 +132,7 @@ const Login = () => {
           </div>
         </div>
       </div>
+      <Footer></Footer>
     </div>
   );
 };
