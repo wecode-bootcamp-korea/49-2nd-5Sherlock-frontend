@@ -5,7 +5,6 @@ import GreenFilterButton from '../../../components/GreenFilterButton/GreenFilter
 import { useSearchParams } from 'react-router-dom';
 import BestProductListContainer from '../../../components/BestProductListContainer/BestProductListContainer';
 import Nav from '../../../components/Nav/Nav';
-import Footer from '../../../components/Footer/Footer';
 
 const BestProductList = () => {
   const location = useLocation();
@@ -348,7 +347,7 @@ const BestProductList = () => {
 
   return (
     <div className="bestProductList">
-      <Nav></Nav>
+      <Nav />
       <div className="bannerBox">
         <h2 className="bannerName">{categoryTitle}</h2>
         <img src={process.env.PUBLIC_URL + categoryImg} />
@@ -418,7 +417,6 @@ const BestProductList = () => {
           <BestProductListContainer data={dataList.data} />
         </div>
       </div>
-      <Footer></Footer>
     </div>
   );
 };

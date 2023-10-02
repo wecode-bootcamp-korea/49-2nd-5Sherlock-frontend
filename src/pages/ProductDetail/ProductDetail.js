@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import './ProductDetail.scss';
+import Nav from '../../components/Nav/Nav';
 
 const ProductDetail = () => {
   //   const { id } = useParams();
@@ -76,6 +77,7 @@ const ProductDetail = () => {
 
   return (
     <div className="productDetail">
+      <Nav />
       {data && (
         <div className="productDetailInner">
           <div className="orderWrapper">
