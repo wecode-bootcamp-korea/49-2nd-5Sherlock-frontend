@@ -84,7 +84,7 @@ const BestProductList = () => {
         likeNumber: 77,
         reviewNumber: 107,
         isNew: true,
-        quantity: 0,
+        quantity: 1,
         isLike: true,
         name: '우롱차',
       },
@@ -108,7 +108,7 @@ const BestProductList = () => {
         likeNumber: 77,
         reviewNumber: 107,
         isNew: true,
-        quantity: 0,
+        quantity: 3,
         isLike: true,
         name: '우롱차',
       },
@@ -155,7 +155,7 @@ const BestProductList = () => {
         discountRate: 10,
         likeNumber: 77,
         reviewNumber: 107,
-        isNew: true,
+        isNew: false,
         quantity: 0,
         isLike: true,
         name: '우롱차',
@@ -179,7 +179,7 @@ const BestProductList = () => {
         discountRate: 10,
         likeNumber: 77,
         reviewNumber: 107,
-        isNew: true,
+        isNew: false,
         quantity: 0,
         isLike: true,
         name: '우롱차',
@@ -354,61 +354,69 @@ const BestProductList = () => {
         <img src={process.env.PUBLIC_URL + categoryImg} />
       </div>
       <div className="container">
-        <div className="categoryBox">
-          <GreenFilterButton
-            text="위클리 베스트"
-            clicked={weeklyBestFilter}
-            onClick={() => goToBestCategory()}
-          />
-          <GreenFilterButton
-            text="베스트"
-            clicked={bestFilter}
-            onClick={() => goToBestCategory('1')}
-          />
+        <div className="containerInside">
+          <div className="categoryBox">
+            <GreenFilterButton
+              text="위클리 베스트"
+              clicked={weeklyBestFilter}
+              onClick={() => goToBestCategory()}
+            />
+            <GreenFilterButton
+              text="베스트"
+              clicked={bestFilter}
+              onClick={() => goToBestCategory('1')}
+            />
+          </div>
         </div>
       </div>
 
       <div className="silverLine" />
       <div className="container">
-        <div className="bestProductListTitleBox">
-          {!category ? (
-            <>
-              <div className="weekInf">{`${currentYear}년 ${
-                currentMonth + 1
-              }월 ${currentWeek}째주`}</div>
-              <div onClick={openFunction} className={`selectOption ${filter}`}>
-                <div className="selectTitle">
-                  {filterResult}&nbsp;
-                  <img src={process.env.PUBLIC_URL + '/images/up.png'} />
+        <div className="containerInside">
+          <div className="bestProductListTitleBox">
+            {!category ? (
+              <>
+                <div className="weekInf">{`${currentYear}년 ${
+                  currentMonth + 1
+                }월 ${currentWeek}째주`}</div>
+                <div
+                  onClick={openFunction}
+                  className={`selectOption ${filter}`}
+                >
+                  <div className="selectTitle">
+                    {filterResult}&nbsp;
+                    <img src={process.env.PUBLIC_URL + '/images/up.png'} />
+                  </div>
+                  <ul className={`selectOptionList ${filter}`}>
+                    <li
+                      onClick={() => {
+                        filterBox('판매순');
+                      }}
+                    >
+                      판매순
+                    </li>
+                    <li
+                      onClick={() => {
+                        filterBox('리뷰순');
+                      }}
+                    >
+                      리뷰순
+                    </li>
+                  </ul>
                 </div>
-                <ul className={`selectOptionList ${filter}`}>
-                  <li
-                    onClick={() => {
-                      filterBox('판매순');
-                    }}
-                  >
-                    판매순
-                  </li>
-                  <li
-                    onClick={() => {
-                      filterBox('리뷰순');
-                    }}
-                  >
-                    리뷰순
-                  </li>
-                </ul>
+              </>
+            ) : (
+              <div className="inf">
+                오설록에서 많이 선물된 선물세트를 모았어요.
               </div>
-            </>
-          ) : (
-            <div className="inf">
-              오설록에서 많이 선물된 선물세트를 모았어요.
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </div>
       <div className="container listContainer">
-        {' '}
-        <BestProductListContainer data={dataList.data} />
+        <div className="containerInside">
+          <BestProductListContainer data={dataList.data} />
+        </div>
       </div>
       <Footer></Footer>
     </div>

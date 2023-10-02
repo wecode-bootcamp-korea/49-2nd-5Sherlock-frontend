@@ -77,6 +77,12 @@ const BestProductListCard = props => {
             </div>
           ) : null}
         </div>
+        <div className="labelBox">
+          {data.isNew ? <div className="newProduct">신제품</div> : null}
+          {data.quantity === 0 ? (
+            <div className="emptyQuantity">일시품절</div>
+          ) : null}
+        </div>
       </div>
     </div>
   );

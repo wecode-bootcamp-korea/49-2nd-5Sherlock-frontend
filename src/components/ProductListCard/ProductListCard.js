@@ -12,20 +12,35 @@ const ProductListCard = props => {
     navigate(`/productdetail/${id}`);
   };
 
+  // const likeClick= (param) => {
+  //   fetch('http://10.58.52.96:8000/users/signup', {
+  //       method: param,
+  //       headers: {
+  //         'Content-Type': 'application/json;charset=utf-8',
+  //       },
+  //       body: JSON.stringify({
+  //         id: id,
+  //         accessToken: localStorage.getItem('token'),
+  //       }),
+  //     }).then(() => {
+  //       setChange(!change);
+  //     });
+  // }
+
   const clickLike = (id, isLike) => {
     if (!localStorage.getItem('token')) {
       return alert('로그인이 필요합니다.');
     }
 
-    if (props.isLike === false) {
+    if (!isLike) {
       fetch('http://10.58.52.96:8000/users/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
         },
         body: JSON.stringify({
-          id: props.id,
-          accessToken: '123',
+          id: id,
+          accessToken: localStorage.getItem('token'),
         }),
       }).then(() => {
         setChange(!change);
@@ -37,8 +52,8 @@ const ProductListCard = props => {
           'Content-Type': 'application/json;charset=utf-8',
         },
         body: JSON.stringify({
-          id: props.id,
-          accessToken: '123',
+          id: id,
+          accessToken: localStorage.getItem('token'),
         }),
       }).then(() => {
         setChange(!change);

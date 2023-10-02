@@ -501,199 +501,201 @@ const ProductList = () => {
         <img src={process.env.PUBLIC_URL + categoryImg} />
       </div>
       <div className="container">
-        <div className="productListBox">
-          <div className="leftMenu">
-            <div
-              className={`leftMenuTitle ${total}`}
-              onClick={() => {
-                goToCategory();
-              }}
-            >
-              제품
-            </div>
-            <div className="leftMenuCategory">
+        <div className="containerInside">
+          <div className="productListBox">
+            <div className="leftMenu">
               <div
-                className={`leftMenuTeaProduct leftMenuTeaBtn ${bigTeaCategory}`}
+                className={`leftMenuTitle ${total}`}
                 onClick={() => {
-                  goToCategory('tea');
+                  goToCategory();
                 }}
               >
-                티 제품
-                <div className="leftMenuTeaSubBox">
-                  <div
-                    className="leftMenuTeaSubContent"
-                    onClick={e => {
-                      e.stopPropagation();
-                      goToCategory('tea');
-                    }}
-                  >
-                    <div className={teaCategory}>전체상품</div>
-                  </div>
-                  <div
-                    className="leftMenuTeaSubContent"
-                    onClick={e => {
-                      e.stopPropagation();
-                      goToCategory('1');
-                    }}
-                  >
-                    <div className={teaSetCategory}>티세트</div>
-                  </div>
-                  <div
-                    className="leftMenuTeaSubContent"
-                    onClick={e => {
-                      e.stopPropagation();
-                      goToCategory('2');
-                    }}
-                  >
-                    <div className={myungTeaCategory}>명차</div>
-                  </div>
-                  <div
-                    className="leftMenuTeaSubContent"
-                    onClick={e => {
-                      e.stopPropagation();
-                      goToCategory('3');
-                    }}
-                  >
-                    <div className={greenTeaCategory}>녹차/말차</div>
-                  </div>
-                  <div
-                    className="leftMenuTeaSubContent"
-                    onClick={e => {
-                      e.stopPropagation();
-                      goToCategory('4');
-                    }}
-                  >
-                    <div className={redTeaCategory}>발효차/홍차</div>
+                제품
+              </div>
+              <div className="leftMenuCategory">
+                <div
+                  className={`leftMenuTeaProduct leftMenuTeaBtn ${bigTeaCategory}`}
+                  onClick={() => {
+                    goToCategory('tea');
+                  }}
+                >
+                  티 제품
+                  <div className="leftMenuTeaSubBox">
+                    <div
+                      className="leftMenuTeaSubContent"
+                      onClick={e => {
+                        e.stopPropagation();
+                        goToCategory('tea');
+                      }}
+                    >
+                      <div className={teaCategory}>전체상품</div>
+                    </div>
+                    <div
+                      className="leftMenuTeaSubContent"
+                      onClick={e => {
+                        e.stopPropagation();
+                        goToCategory('1');
+                      }}
+                    >
+                      <div className={teaSetCategory}>티세트</div>
+                    </div>
+                    <div
+                      className="leftMenuTeaSubContent"
+                      onClick={e => {
+                        e.stopPropagation();
+                        goToCategory('2');
+                      }}
+                    >
+                      <div className={myungTeaCategory}>명차</div>
+                    </div>
+                    <div
+                      className="leftMenuTeaSubContent"
+                      onClick={e => {
+                        e.stopPropagation();
+                        goToCategory('3');
+                      }}
+                    >
+                      <div className={greenTeaCategory}>녹차/말차</div>
+                    </div>
+                    <div
+                      className="leftMenuTeaSubContent"
+                      onClick={e => {
+                        e.stopPropagation();
+                        goToCategory('4');
+                      }}
+                    >
+                      <div className={redTeaCategory}>발효차/홍차</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                className={`leftMenuTeaFood leftMenuTeaBtn ${bigTeaFoodCategory}`}
-                onClick={() => goToCategory('teafood')}
-              >
-                티푸드
-                <div className="leftMenuTeaSubBox">
-                  <div
-                    className="leftMenuTeaSubContent"
-                    onClick={e => {
-                      e.stopPropagation();
-                      goToCategory('teafood');
-                    }}
-                  >
-                    <div className={teaFoodCategory}>전체상품</div>
-                  </div>
-                  <div
-                    className="leftMenuTeaSubContent"
-                    onClick={e => {
-                      e.stopPropagation();
-                      goToCategory('5');
-                    }}
-                  >
-                    <div className={chocolateCategory}>과자/초콜릿</div>
-                  </div>
-                  <div
-                    className="leftMenuTeaSubContent"
-                    onClick={e => {
-                      e.stopPropagation();
-                      goToCategory('6');
-                    }}
-                  >
-                    <div className={bakeryCategory}>베이커리</div>
-                  </div>
-                  <div
-                    className="leftMenuTeaSubContent"
-                    onClick={e => {
-                      e.stopPropagation();
-                      goToCategory('7');
-                    }}
-                  >
-                    <div className={iceCreamCategory}>아이스크림</div>
+                <div
+                  className={`leftMenuTeaFood leftMenuTeaBtn ${bigTeaFoodCategory}`}
+                  onClick={() => goToCategory('teafood')}
+                >
+                  티푸드
+                  <div className="leftMenuTeaSubBox">
+                    <div
+                      className="leftMenuTeaSubContent"
+                      onClick={e => {
+                        e.stopPropagation();
+                        goToCategory('teafood');
+                      }}
+                    >
+                      <div className={teaFoodCategory}>전체상품</div>
+                    </div>
+                    <div
+                      className="leftMenuTeaSubContent"
+                      onClick={e => {
+                        e.stopPropagation();
+                        goToCategory('5');
+                      }}
+                    >
+                      <div className={chocolateCategory}>과자/초콜릿</div>
+                    </div>
+                    <div
+                      className="leftMenuTeaSubContent"
+                      onClick={e => {
+                        e.stopPropagation();
+                        goToCategory('6');
+                      }}
+                    >
+                      <div className={bakeryCategory}>베이커리</div>
+                    </div>
+                    <div
+                      className="leftMenuTeaSubContent"
+                      onClick={e => {
+                        e.stopPropagation();
+                        goToCategory('7');
+                      }}
+                    >
+                      <div className={iceCreamCategory}>아이스크림</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="rightMenu">
-            <div className="rigthMenuTitleBox">
-              <div className="rightMenuTitle">{categoryTitle}</div>
-              <div className="rightMenuFilterBox">
-                <WhiteFilterButton
-                  text="추천순"
-                  clicked={recommendFilter}
-                  onClick={() => goToSort()}
-                />
-                <WhiteFilterButton
-                  text="판매순"
-                  clicked={saleFilter}
-                  onClick={() => goToSort('review')}
-                />
-                <WhiteFilterButton
-                  text="신상품순"
-                  clicked={newFilter}
-                  onClick={() => goToSort('created_at')}
-                />
-                <WhiteFilterButton
-                  text="높은 가격순"
-                  clicked={highPriceFilter}
-                  onClick={() => goToSort('price')}
-                />
-                <WhiteFilterButton
-                  text="낮은 가격순"
-                  clicked={lowPriceFilter}
-                  onClick={() => goToSort('-price')}
-                />
-              </div>
-            </div>
-            <div className="rightMenuInfoBox">
-              <div className="rightMenuInfo">
-                총&nbsp;
-                <span className="rigthMenuInfoNumber">
-                  {dataList.productCount}
-                </span>
-                개의 상품이 있습니다.
-              </div>
-              {category === '1' ||
-              category === '2' ||
-              category === '3' ||
-              category === '4' ||
-              !category ||
-              category === 'tea' ? (
-                <div className="rightMenuTeaFilterBox">
-                  <GreenFilterButton
-                    text="전체"
-                    clicked={teaTotalFilter}
-                    onClick={() => goToProductType()}
+            <div className="rightMenu">
+              <div className="rigthMenuTitleBox">
+                <div className="rightMenuTitle">{categoryTitle}</div>
+                <div className="rightMenuFilterBox">
+                  <WhiteFilterButton
+                    text="추천순"
+                    clicked={recommendFilter}
+                    onClick={() => goToSort()}
                   />
-                  <GreenFilterButton
-                    text="잎차"
-                    clicked={leafTeaFilter}
-                    onClick={() => goToProductType('1')}
+                  <WhiteFilterButton
+                    text="판매순"
+                    clicked={saleFilter}
+                    onClick={() => goToSort('review')}
                   />
-                  <GreenFilterButton
-                    text="피라미드"
-                    clicked={pyramidFilter}
-                    onClick={() => goToProductType('2')}
+                  <WhiteFilterButton
+                    text="신상품순"
+                    clicked={newFilter}
+                    onClick={() => goToSort('created_at')}
                   />
-                  <GreenFilterButton
-                    text="티백"
-                    clicked={teaBagFilter}
-                    onClick={() => goToProductType('3')}
+                  <WhiteFilterButton
+                    text="높은 가격순"
+                    clicked={highPriceFilter}
+                    onClick={() => goToSort('price')}
                   />
-                  <GreenFilterButton
-                    text="파우더"
-                    clicked={powderFilter}
-                    onClick={() => goToProductType('4')}
+                  <WhiteFilterButton
+                    text="낮은 가격순"
+                    clicked={lowPriceFilter}
+                    onClick={() => goToSort('-price')}
                   />
                 </div>
-              ) : null}
+              </div>
+              <div className="rightMenuInfoBox">
+                <div className="rightMenuInfo">
+                  총&nbsp;
+                  <span className="rigthMenuInfoNumber">
+                    {dataList.productCount}
+                  </span>
+                  개의 상품이 있습니다.
+                </div>
+                {category === '1' ||
+                category === '2' ||
+                category === '3' ||
+                category === '4' ||
+                !category ||
+                category === 'tea' ? (
+                  <div className="rightMenuTeaFilterBox">
+                    <GreenFilterButton
+                      text="전체"
+                      clicked={teaTotalFilter}
+                      onClick={() => goToProductType()}
+                    />
+                    <GreenFilterButton
+                      text="잎차"
+                      clicked={leafTeaFilter}
+                      onClick={() => goToProductType('1')}
+                    />
+                    <GreenFilterButton
+                      text="피라미드"
+                      clicked={pyramidFilter}
+                      onClick={() => goToProductType('2')}
+                    />
+                    <GreenFilterButton
+                      text="티백"
+                      clicked={teaBagFilter}
+                      onClick={() => goToProductType('3')}
+                    />
+                    <GreenFilterButton
+                      text="파우더"
+                      clicked={powderFilter}
+                      onClick={() => goToProductType('4')}
+                    />
+                  </div>
+                ) : null}
+              </div>
+              <ProductListContainer data={dataList.data} />
+              <Pagination
+                productCount={dataList.productCount}
+                getList={getList}
+                offset={offset}
+                limit={limit}
+              />
             </div>
-            <ProductListContainer data={dataList.data} />
-            <Pagination
-              productCount={dataList.productCount}
-              getList={getList}
-              offset={offset}
-              limit={limit}
-            />
           </div>
         </div>
       </div>
