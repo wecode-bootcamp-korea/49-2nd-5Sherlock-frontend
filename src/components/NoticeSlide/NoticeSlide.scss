@@ -1,0 +1,30 @@
+.NoticeSlide {
+  width: 100%;
+  background-color: #f6f6f6;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  padding: 14px 16px;
+  span {
+    color: #999;
+    margin-right: 16px;
+  }
+  .slideWrapper {
+    overflow: hidden;
+    height: 16px;
+    .slide {
+      transition: transform 0.5s ease;
+      li {
+        color: #666;
+        padding: 0 0 4px 0;
+        transition: transform 0.5s ease;
+      }
+      li.active {
+        //transform: translateY(calc(-14px * var(--currentIndex)));
+      }
+    }
+  }
+}
+
+.NoticeSlide2 {
+}

@@ -1,0 +1,18 @@
+.ImgBanner {
+  width: 100%;
+  h2 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  p {
+    font-size: 16px;
+    color: #999;
+    margin-bottom: 28px;
+  }
+  .img {
+    img {
+      width: 100%;
+      display: block;
+    }
+  }
+}

@@ -254,7 +254,12 @@ const ProductDetail = () => {
               <div className="priceSum">
                 <p className="sumText">상품금액 합계</p>
                 <p className="sum">
-                  <span>{data.price * productCount + packaging}원</span>
+                  <span>
+                    {(data.price * productCount + packaging).toLocaleString(
+                      'ko-KR',
+                    )}
+                    원
+                  </span>
                 </p>
                 <span
                   className={`freeDelivery ${
