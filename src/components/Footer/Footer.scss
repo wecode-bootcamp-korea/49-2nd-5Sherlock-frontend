@@ -1,0 +1,31 @@
+.footer {
+  .onlineBar {
+    height: 57px;
+    background-color: #727272;
+    width: 100%;
+
+    .onlineBarInside {
+      padding: 0 60px 0 60px;
+    }
+  }
+
+  .infBar {
+    height: 164px;
+    background-color: #fafafa;
+    width: 100%;
+
+    .infBarInside {
+      padding: 0 60px 0 60px;
+    }
+  }
+
+  .mainFooterBar {
+    height: 186px;
+    background-color: #fff;
+    width: 100%;
+
+    .mainFooterBarInside {
+      padding: 0 60px 0 60px;
+    }
+  }
+}

@@ -1,121 +1,135 @@
 import React, { useState } from 'react';
-import './Login.scss';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
+import './Login.scss';
+import Nav from '../../components/Nav/Nav';
+
+const idReg = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+const pwReg = /^[.@!#$%&'*+-/=?^_`{|}~\w\d]{9,}$/;
 
 const Login = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
-
-  const navdeleteBtn = () => {
-    navigate('/');
-  };
-
-  const navgoToJoinBtn = () => {
-    navigate('/signup');
-  };
-
   const [userInfo, setUserInfo] = useState({
-    id: '',
+    email: '',
     password: '',
   });
-  const { id, password } = userInfo;
 
   const saveUserInfo = event => {
     const { name, value } = event.target;
-
     setUserInfo({ ...userInfo, [name]: value });
+
+    if (name === 'email' && !idReg.test(value)) {
+      setErrorMessage('이메일 형식이 올바르지 않습니다');
+    } else if (name === 'password' && !pwReg.test(value)) {
+      setErrorMessage('패스워드는 9자 이상이어야 합니다');
+    } else {
+      clearErrorMessage();
+    }
   };
 
-  let idReg = /^[a-zA-Z0-9]{1,10}$/;
-  let pwReg = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,15}$/;
-
-  const activeBtn = idReg.test(id) && pwReg.test(password);
-
-  const loginBtn = e => {
+  const handleLogin = e => {
     e.preventDefault();
-    fetch('http://localhost:8000/login', {
+    fetch('http://10.58.52.229:8000/users/signIn', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        // authorization: 'token',
       },
       body: JSON.stringify({
-        id: id,
-        password: password,
+        email,
+        password,
       }),
     })
       .then(res => {
-        if (res.ok) {
-          return res.json();
+        return res.json();
+      })
+      .then(result => {
+        if (result.message === 'signInSuccess' && result.token) {
+          localStorage.setItem('token', result.token);
+          navigate('/');
         } else {
-          throw new Error('로그인 실패');
+          setErrorMessage('아이디 또는 비밀번호가 맞지 않습니다.');
         }
-      })
-      .then(data => {
-        console.log(data);
-        // navigate('/');
-      })
-      .catch(error => {
-        setErrorMessage('아이디 또는 비밀번호가 맞지 않습니다.');
       });
   };
-
   const clearErrorMessage = () => {
     setErrorMessage('');
   };
-  console.log(userInfo);
+
+  const { email, password } = userInfo;
+  const isUserInputValid = idReg.test(email) && pwReg.test(password);
 
   return (
     <div className="Login">
       <header className="header">
-        <span className="headerText">로그인</span>
-        <img
-          className="deleteBtn"
-          src="/images/login-img1.png"
-          alt="취소버튼"
-          onClick={navdeleteBtn}
-        ></img>
+        <div className="headerBox">
+          <div className="headerText">로그인</div>
+          <img
+            className="deleteBtn"
+            src="/images/login-img1.png"
+            alt="취소버튼"
+            onClick={() => navigate('/')}
+          />
+        </div>
       </header>
-      <div className="container">
-        <span className="loginGuideText">
-          아모레퍼시픽 뷰티포인트 통합회원
-          <br />
-          아이디로 로그인해주세요.
-        </span>
-        <form className="loginForm">
-          <Input
-            scale="first"
-            placeholder="아이디 입력"
-            type="id"
-            name="id"
-            onChange={saveUserInfo}
-            onFocus={clearErrorMessage}
-          />
-          <Input
-            scale="first"
-            placeholder="패스워드 입력(영문, 숫자, 특수문자 조합)"
-            type="password"
-            name="password"
-            onFocus={clearErrorMessage}
-            onChange={saveUserInfo}
-          />
-          {/* {errorMessage &&   */}
-          <div className="error">{errorMessage}</div>
 
-          {/* <input type="checkbox">아이디저장</input> */}
+      <div className="loginBox">
+        <Nav />
+        <div className="container">
+          <span className="loginGuideText">
+            아모레퍼시픽 뷰티포인트 통합회원
+            <br />
+            아이디로 로그인해주세요.
+          </span>
+          <form className="loginForm">
+            <Input
+              scale="first"
+              placeholder="이메일 입력"
+              name="email"
+              onChange={saveUserInfo}
+              onFocus={clearErrorMessage}
+            />
+            <Input
+              scale="first"
+              placeholder="패스워드 입력"
+              type="password"
+              name="password"
+              onChange={saveUserInfo}
+              onFocus={clearErrorMessage}
+            />
+            <div className="error">{errorMessage}</div>
+          </form>
 
           <button
             className="loginButton"
-            onClick={loginBtn}
-            disabled={activeBtn ? false : true}
+            onClick={handleLogin}
+            // disabled={!isUserInputValid}
           >
             로그인
           </button>
-          <button type="button" className="joinButton" onClick={navgoToJoinBtn}>
-            아직 회원이 아니세요? 회원가입
-          </button>
-        </form>
+          <div className="snsLogin">
+            <div className="phoneLogin">
+              휴대폰
+              <br />
+              로그인
+            </div>
+            <div className="kakaoLogin">
+              카카오
+              <br />
+              로그인
+            </div>
+            <div className="naverLogin">
+              네이버
+              <br />
+              로그인
+            </div>
+            <div className="moreLogin">더보기</div>
+          </div>
+          <div className="joinButton" onClick={() => navigate('/signup')}>
+            <span className="a">아직 회원이 아니세요?</span>
+            <span className="b">회원가입 &gt; </span>
+          </div>
+        </div>
       </div>
     </div>
   );

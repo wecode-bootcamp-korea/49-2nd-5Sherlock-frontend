@@ -1,0 +1,24 @@
+.greenFilterButton {
+  height: 38px;
+  font-size: 18px;
+
+  margin-left: 9px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 38px;
+  background-color: #f1f1f1;
+  color: #a5a5a5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #6c801a;
+    color: white;
+  }
+}
+.greenFilterButton.clicked {
+  background-color: #6c801a;
+  color: white;
+}
