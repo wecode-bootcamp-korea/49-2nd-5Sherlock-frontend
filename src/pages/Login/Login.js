@@ -3,9 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import './Login.scss';
 
-const idReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-const pwReg = /^[a-zA-Z0-9]{6,16}$/;
+const idReg = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+const pwReg = /^[.@!#$%&'*+-/=?^_`{|}~\w\d]{9,}$/;
 
 const Login = () => {
   const navigate = useNavigate();
@@ -17,15 +16,20 @@ const Login = () => {
 
   const saveUserInfo = event => {
     const { name, value } = event.target;
-
-    clearErrorMessage();
     setUserInfo({ ...userInfo, [name]: value });
+
+    if (name === 'email' && !idReg.test(value)) {
+      setErrorMessage('이메일 형식이 올바르지 않습니다');
+    } else if (name === 'password' && !pwReg.test(value)) {
+      setErrorMessage('패스워드는 9자 이상이어야 합니다');
+    } else {
+      clearErrorMessage();
+    }
   };
 
   const handleLogin = e => {
     e.preventDefault();
-
-    fetch('http://10.58.52.176:8000/users/signIn', {
+    fetch('http://10.58.52.229:8000/users/signIn', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -57,40 +61,42 @@ const Login = () => {
   return (
     <div className="Login">
       <header className="header">
-        <div className="headerText">로그인</div>
-        <img
-          className="deleteBtn"
-          src="/images/login-img1.png"
-          alt="취소버튼"
-          onClick={() => navigate('/')}
-        />
+        <div className="headerBox">
+          <div className="headerText">로그인</div>
+          <img
+            className="deleteBtn"
+            src="/images/login-img1.png"
+            alt="취소버튼"
+            onClick={() => navigate('/')}
+          />
+        </div>
       </header>
-      <div className="container">
-        <span className="loginGuideText">
-          아모레퍼시픽 뷰티포인트 통합회원
-          <br />
-          아이디로 로그인해주세요.
-        </span>
-        <form className="loginForm">
-          <Input
-            scale="first"
-            placeholder="이메일 입력"
-            name="email"
-            onChange={saveUserInfo}
-            onFocus={clearErrorMessage}
-          />
-          <Input
-            scale="first"
-            placeholder="패스워드 입력"
-            type="password"
-            name="password"
-            onChange={saveUserInfo}
-            onFocus={clearErrorMessage}
-          />
-          {/* {errorMessage &&   */}
-          <div className="error">{errorMessage}</div>
 
-          {/* <input type="checkbox">아이디저장</input> */}
+      <div className="loginBox">
+        <div className="container">
+          <span className="loginGuideText">
+            아모레퍼시픽 뷰티포인트 통합회원
+            <br />
+            아이디로 로그인해주세요.
+          </span>
+          <form className="loginForm">
+            <Input
+              scale="first"
+              placeholder="이메일 입력"
+              name="email"
+              onChange={saveUserInfo}
+              onFocus={clearErrorMessage}
+            />
+            <Input
+              scale="first"
+              placeholder="패스워드 입력"
+              type="password"
+              name="password"
+              onChange={saveUserInfo}
+              onFocus={clearErrorMessage}
+            />
+            <div className="error">{errorMessage}</div>
+          </form>
 
           <button
             className="loginButton"
@@ -99,14 +105,29 @@ const Login = () => {
           >
             로그인
           </button>
-          <button
-            type="button"
-            className="joinButton"
-            onClick={() => navigate('/signup')}
-          >
-            아직 회원이 아니세요? 회원가입
-          </button>
-        </form>
+          <div className="snsLogin">
+            <div className="phoneLogin">
+              휴대폰
+              <br />
+              로그인
+            </div>
+            <div className="kakaoLogin">
+              카카오
+              <br />
+              로그인
+            </div>
+            <div className="naverLogin">
+              네이버
+              <br />
+              로그인
+            </div>
+            <div className="moreLogin">더보기</div>
+          </div>
+          <div className="joinButton" onClick={() => navigate('/signup')}>
+            <span className="a">아직 회원이 아니세요?</span>
+            <span className="b">회원가입 &gt; </span>
+          </div>
+        </div>
       </div>
     </div>
   );
