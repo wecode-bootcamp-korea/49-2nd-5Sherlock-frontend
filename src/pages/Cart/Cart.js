@@ -4,17 +4,18 @@ import Timer from '../../components/Timer/Timer';
 import './Cart.scss';
 
 const Cart = () => {
-  const [productList, setProductList] = useState([]);
+  // const [productList, setProductList] = useState({});
 
-  useEffect(() => {
-    fetch('/data/cartData.json', {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(data => {
-        setProductList(data);
-      });
-  }, []);
+  // useEffect(() => {
+  //   fetch('/data/cartData.json', {
+  //     method: 'GET',
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       console.log(data);
+  //       setProductList(data);
+  //     });
+  // }, []);
 
   return (
     <div className="cart">
@@ -29,17 +30,25 @@ const Cart = () => {
       </div>
       <div className="listBox">
         <div className="itemInfoBox">
-          <CheckBox></CheckBox>
-          <div className="image">이미지</div>
-          <div className="itemInfo">
-            <div className="itemName">상품이름</div>
-            <div className="packingItem">포장여부</div>
-            <div className="presentItem">선물여부</div>
-          </div>
-        </div>
-        <div className="countPrice">
-          <div className="count">수량</div>
-          <div className="price">금액</div>
+          {/* <CheckBox></CheckBox>
+          {productList.list?.map(item => {
+            return (
+              <div key={item.id} className="cartList">
+                <img className="image" src={item.imageUrl} alt={item.name} />
+                <div className="itemInfo">
+                  <div className="itemName">{item.name}</div>
+                  <div className="packingItem">{item.package}</div>
+                  <div className="presentItem">{item.present}</div>
+                </div>
+                <div className="countPrice">
+                  <div className="count">수량</div>
+                  <div className="price">
+                    {item.price * (1 - item.discountRate)}
+                  </div>
+                </div>
+              </div>
+            );
+          })} */}
         </div>
         <div className="getBtnBox">
           <button className="getBtn" type="button">
@@ -47,7 +56,6 @@ const Cart = () => {
           </button>
         </div>
       </div>
-
       <div className="cartBtnBox">
         <button className="getOptionItem">선택상품 주문하기</button>
         <button className="getAllItems">전체상품 주문하기</button>
@@ -58,7 +66,6 @@ const Cart = () => {
       <div className="cartMsg">
         장바구니에 보관된 상품은 3개월 후에 삭제 됩니다.
       </div>
-
       <div className="onlyTodayBox">
         <div className="onlyToday">
           <div className="onlyTodayTitle">오늘만 이 가격</div>
@@ -68,6 +75,7 @@ const Cart = () => {
           <div className="countingTime">
             {' '}
             <Timer hh="10" mm="0" ss="0" />{' '}
+            {/* 렌더링 시 초기화 됨, 수정 필요 */}
           </div>
         </div>
         <div className="onlyTodayBottomBox">
