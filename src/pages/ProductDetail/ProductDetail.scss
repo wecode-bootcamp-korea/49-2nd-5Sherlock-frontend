@@ -16,6 +16,26 @@
       font-size: 16px;
       border-radius: 6px;
     }
+    .modalBtnWrapper {
+      display: flex;
+      justify-content: space-between;
+      button {
+        width: 140px;
+        font-size: 16px;
+      }
+      .btnClose {
+        border: 1px solid #ddd;
+        border-radius: 6px;
+      }
+    }
+    .btnNonMembers {
+      display: block;
+      margin: auto;
+      font-size: 14px;
+      color: #ccc;
+      text-decoration: underline;
+      margin-top: 24px;
+    }
   }
   .orderWrapper {
     margin: auto;
@@ -33,24 +53,31 @@
             flex-wrap: wrap;
 
             li {
+              display: flex;
+              align-items: center;
               color: #505051;
               font-size: 14px;
               text-align: left;
-              margin-top: 22px;
+              margin: 22px 6px 0 0;
               width: 160px;
+
+              i {
+                padding-right: 5px;
+              }
             }
 
             .toPackaging {
-              display: none;
+              opacity: 0;
+
               &.on {
-                display: block;
+                opacity: 1;
               }
             }
 
             .toShoppingBag {
-              display: none;
+              opacity: 0;
               &.on {
-                display: block;
+                opacity: 1;
               }
             }
           }
@@ -73,7 +100,6 @@
 
           position: relative;
           overflow: hidden;
-          max-width: 480px;
           height: 480px;
           img {
             height: 100%;
@@ -151,10 +177,40 @@
         border-bottom: 1px solid #ccc;
         .btnBox {
           display: flex;
-          button {
+          a {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 10px;
+
             img {
+              display: block;
+              width: 100%;
+              position: absolute;
+              left: 0;
+              top: 0;
+            }
+            img.hoverNone {
+              display: block;
+              height: 100%;
               width: 100%;
             }
+          }
+          a:hover .hoverNone {
+            display: none;
+          }
+
+          button {
+            img {
+              position: absolute;
+              left: 0;
+              top: 0;
+              display: block;
+              width: 100%;
+            }
+            position: relative;
             background-color: #f8f9fb;
             margin-right: 10px;
             display: block;
@@ -164,6 +220,9 @@
             border-radius: 50%;
             color: #ccc;
           }
+        }
+        button:hover .hoverNone {
+          display: none;
         }
         .productPriceInfo {
           position: relative;
@@ -357,10 +416,32 @@
         }
       }
       .btnDecision {
+        display: flex;
         margin-top: 24px;
+        width: 100%;
+
+        button {
+          display: block;
+          height: 60px;
+          font-size: 20px;
+          color: #fff;
+        }
+
         .btnGift {
-          width: 60px;
-          border: 1px solid #000;
+          width: 32%;
+          margin-right: 5px;
+          border: 1px solid #333;
+          color: #333;
+        }
+
+        .btnBasket {
+          width: 32%;
+          background-color: #000;
+        }
+
+        .btnBuy {
+          width: 65%;
+          background-color: #6c801a;
         }
       }
       width: 47%;
