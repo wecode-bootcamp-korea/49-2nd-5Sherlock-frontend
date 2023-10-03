@@ -285,19 +285,12 @@ const BestProductList = () => {
     if (!param) {
       searchParams.delete('category');
       setSearchParams(searchParams);
-      getList();
       return;
     }
+    searchParams.delete('sort');
+    setFilterResult('판매순');
     searchParams.set('category', param);
     setSearchParams(searchParams);
-    getList();
-  };
-
-  // 필터 함수
-  const goToSort = param => {
-    searchParams.set('sort', param);
-    setSearchParams(searchParams);
-    getList();
   };
 
   // 주계산법
@@ -328,11 +321,9 @@ const BestProductList = () => {
     if (param === '리뷰순') {
       searchParams.set('sort', 'review');
       setSearchParams(searchParams);
-      getList();
     } else {
       searchParams.delete('sort');
       setSearchParams(searchParams);
-      getList();
     }
   };
 
@@ -345,6 +336,11 @@ const BestProductList = () => {
     sortChange();
   }, []);
 
+  const CATEGORY_LIST = [
+    { id: 1, text: '위클리 베스트', category: null },
+    { id: 2, text: '베스트', category: '1' },
+  ];
+
   return (
     <div className="bestProductList">
       <Nav />
@@ -355,16 +351,14 @@ const BestProductList = () => {
       <div className="container">
         <div className="containerInside">
           <div className="categoryBox">
-            <GreenFilterButton
-              text="위클리 베스트"
-              clicked={weeklyBestFilter}
-              onClick={() => goToBestCategory()}
-            />
-            <GreenFilterButton
-              text="베스트"
-              clicked={bestFilter}
-              onClick={() => goToBestCategory('1')}
-            />
+            {CATEGORY_LIST.map(({ id, text, category }) => (
+              <GreenFilterButton
+                key={id}
+                text={text}
+                isSelected={searchParams.get('category') === category}
+                onClick={() => goToBestCategory(category)}
+              />
+            ))}
           </div>
         </div>
       </div>

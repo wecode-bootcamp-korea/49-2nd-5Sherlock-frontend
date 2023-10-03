@@ -1,11 +1,16 @@
 import React from 'react';
 import './GreenFilterButton.scss';
 
-const GreenFilterButton = props => {
-  const { text, clicked, onClick } = props;
-
+const GreenFilterButton = ({ text, isSelected, onClick }) => {
   return (
-    <div className={`greenFilterButton ${clicked}`} onClick={onClick}>
+    <div
+      className={`greenFilterButton ${
+        isSelected || (text === '전체' && isSelected === undefined)
+          ? 'clicked'
+          : 'unclicked'
+      }`}
+      onClick={onClick}
+    >
       {text}
     </div>
   );

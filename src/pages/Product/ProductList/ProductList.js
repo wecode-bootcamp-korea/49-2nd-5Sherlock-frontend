@@ -294,74 +294,6 @@ const ProductList = () => {
     categoryTitle = '전체 상품';
   }
 
-  // category clicked 설명
-  let teaCategory = 'unclicked';
-  let teaSetCategory = 'unclicked';
-  let myungTeaCategory = 'unclicked';
-  let greenTeaCategory = 'unclicked';
-  let redTeaCategory = 'unclicked';
-  let teaFoodCategory = 'unclicked';
-  let chocolateCategory = 'unclicked';
-  let bakeryCategory = 'unclicked';
-  let iceCreamCategory = 'unclicked';
-  let bigTeaCategory = 'unclicked';
-  let bigTeaFoodCategory = 'unclicked';
-  let total = 'unclicked';
-
-  if (category === 'tea') {
-    teaCategory = 'clicked';
-    bigTeaCategory = 'clicked';
-  } else if (category === '1') {
-    teaSetCategory = 'clicked';
-    bigTeaCategory = 'clicked';
-  } else if (category === '2') {
-    myungTeaCategory = 'clicked';
-    bigTeaCategory = 'clicked';
-  } else if (category === '3') {
-    greenTeaCategory = 'clicked';
-    bigTeaCategory = 'clicked';
-  } else if (category === '4') {
-    redTeaCategory = 'clicked';
-    bigTeaCategory = 'clicked';
-  } else if (category === 'teafood') {
-    teaFoodCategory = 'clicked';
-    bigTeaFoodCategory = 'clicked';
-  } else if (category === '5') {
-    chocolateCategory = 'clicked';
-    bigTeaFoodCategory = 'clicked';
-  } else if (category === '6') {
-    bakeryCategory = 'clicked';
-    bigTeaFoodCategory = 'clicked';
-  } else if (category === '7') {
-    iceCreamCategory = 'clicked';
-    bigTeaFoodCategory = 'clicked';
-  } else {
-    total = 'clicked';
-  }
-
-  // teaSort clicked 설명
-  let teaTotalFilter = 'unclicked';
-  let leafTeaFilter = 'unclicked';
-  let pyramidFilter = 'unclicked';
-  let teaBagFilter = 'unclicked';
-  let powderFilter = 'unclicked';
-
-  if (product_type && product_type.includes('1')) {
-    leafTeaFilter = 'clicked';
-  }
-  if (product_type && product_type.includes('2')) {
-    pyramidFilter = 'clicked';
-  }
-  if (product_type && product_type.includes('3')) {
-    teaBagFilter = 'clicked';
-  }
-  if (product_type && product_type.includes('4')) {
-    powderFilter = 'clicked';
-  }
-  if (!product_type) {
-    teaTotalFilter = 'clicked';
-  }
-
   //////////////////////////// sort 필터
   const goToSort = param => {
     if (!param) {
@@ -380,7 +312,6 @@ const ProductList = () => {
     if (!param) {
       searchParams.delete('product_type');
       setSearchParams(searchParams);
-
       return;
     }
 
@@ -388,10 +319,10 @@ const ProductList = () => {
       searchParams.set('product_type', param);
       console.log(param);
       setSearchParams(searchParams);
-
       return;
     }
 
+    // product_type_box안에 기존 요소 넣기
     for (let i = 0; i < product_type.length; i++) {
       if (product_type.substring(i, i + 1) === ',') {
         continue;
@@ -400,12 +331,12 @@ const ProductList = () => {
       }
     }
 
+    // box에서 param과 같으면 삭제, 아니면 추가
     if (product_type_box.includes(param)) {
       product_type_box = product_type_box.filter(element => element !== param);
       if (product_type_box.length === 0) {
         searchParams.delete('product_type');
         setSearchParams(searchParams);
-
         return;
       }
     } else {
@@ -420,7 +351,6 @@ const ProductList = () => {
       }
     }
     searchParams.set('product_type', product_type_result);
-    console.log(product_type_result);
     setSearchParams(searchParams);
   };
 
@@ -438,6 +368,21 @@ const ProductList = () => {
     setSearchParams(searchParams);
   };
 
+  const TEA_PRODUCT_LIST = [
+    { id: 1, text: '전체상품', category: 'tea' },
+    { id: 2, text: '티세트', category: '1' },
+    { id: 3, text: '명차', category: '2' },
+    { id: 4, text: '녹차/말차', category: '3' },
+    { id: 5, text: '발효차/홍차', category: '4' },
+  ];
+
+  const TEA_FOOD_LIST = [
+    { id: 1, text: '전체상품', category: 'teafood' },
+    { id: 2, text: '과자/초콜릿', category: '5' },
+    { id: 3, text: '베이커리', category: '6' },
+    { id: 4, text: '아이스크림', category: '7' },
+  ];
+
   const SORTING_LIST = [
     { id: 1, text: '추천순', sort: null },
     { id: 2, text: '판매순', sort: 'review' },
@@ -446,7 +391,14 @@ const ProductList = () => {
     { id: 5, text: '낮은 가격순', sort: '-price' },
   ];
 
-  console.log(sort);
+  const PRODUCT_TYPE_LIST = [
+    { id: 1, text: '전체', productType: undefined },
+    { id: 2, text: '잎차', productType: '1' },
+    { id: 3, text: '피라미드', productType: '2' },
+    { id: 4, text: '티백', productType: '3' },
+    { id: 5, text: '파우더', productType: '4' },
+  ];
+
   return (
     <div className="productList">
       <Nav />
@@ -459,7 +411,11 @@ const ProductList = () => {
           <div className="productListBox">
             <div className="leftMenu">
               <div
-                className={`leftMenuTitle ${total}`}
+                className={
+                  !category
+                    ? 'leftMenuTitle clicked'
+                    : 'leftMenuTitle unclicked'
+                }
                 onClick={() => {
                   goToCategory();
                 }}
@@ -468,102 +424,69 @@ const ProductList = () => {
               </div>
               <div className="leftMenuCategory">
                 <div
-                  className={`leftMenuTeaProduct leftMenuTeaBtn ${bigTeaCategory}`}
+                  className={
+                    ['tea', '1', '2', '3', '4'].includes(category)
+                      ? 'leftMenuTeaProduct leftMenuTeaBtn clicked'
+                      : 'leftMenuTeaProduct leftMenuTeaBtn unclicked'
+                  }
                   onClick={() => {
                     goToCategory('tea');
                   }}
                 >
                   티 제품
                   <div className="leftMenuTeaSubBox">
-                    <div
-                      className="leftMenuTeaSubContent"
-                      onClick={e => {
-                        e.stopPropagation();
-                        goToCategory('tea');
-                      }}
-                    >
-                      <div className={teaCategory}>전체상품</div>
-                    </div>
-                    <div
-                      className="leftMenuTeaSubContent"
-                      onClick={e => {
-                        e.stopPropagation();
-                        goToCategory('1');
-                      }}
-                    >
-                      <div className={teaSetCategory}>티세트</div>
-                    </div>
-                    <div
-                      className="leftMenuTeaSubContent"
-                      onClick={e => {
-                        e.stopPropagation();
-                        goToCategory('2');
-                      }}
-                    >
-                      <div className={myungTeaCategory}>명차</div>
-                    </div>
-                    <div
-                      className="leftMenuTeaSubContent"
-                      onClick={e => {
-                        e.stopPropagation();
-                        goToCategory('3');
-                      }}
-                    >
-                      <div className={greenTeaCategory}>녹차/말차</div>
-                    </div>
-                    <div
-                      className="leftMenuTeaSubContent"
-                      onClick={e => {
-                        e.stopPropagation();
-                        goToCategory('4');
-                      }}
-                    >
-                      <div className={redTeaCategory}>발효차/홍차</div>
-                    </div>
+                    {TEA_PRODUCT_LIST.map(({ id, text, category }) => (
+                      <div
+                        className="leftMenuTeaSubContent"
+                        onClick={e => {
+                          e.stopPropagation();
+                          goToCategory(category);
+                        }}
+                        key={id}
+                      >
+                        <div
+                          className={
+                            searchParams.get('category') === category
+                              ? 'clicked'
+                              : 'unclicked'
+                          }
+                        >
+                          {text}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
                 <div
-                  className={`leftMenuTeaFood leftMenuTeaBtn ${bigTeaFoodCategory}`}
+                  className={
+                    ['teafood', '5', '6', '7'].includes(category)
+                      ? 'leftMenuTeaFood leftMenuTeaBtn clicked'
+                      : 'leftMenuTeaFood leftMenuTeaBtn unclicked'
+                  }
                   onClick={() => goToCategory('teafood')}
                 >
                   티푸드
                   <div className="leftMenuTeaSubBox">
-                    <div
-                      className="leftMenuTeaSubContent"
-                      onClick={e => {
-                        e.stopPropagation();
-                        goToCategory('teafood');
-                      }}
-                    >
-                      <div className={teaFoodCategory}>전체상품</div>
-                    </div>
-                    <div
-                      className="leftMenuTeaSubContent"
-                      onClick={e => {
-                        e.stopPropagation();
-                        goToCategory('5');
-                      }}
-                    >
-                      <div className={chocolateCategory}>과자/초콜릿</div>
-                    </div>
-                    <div
-                      className="leftMenuTeaSubContent"
-                      onClick={e => {
-                        e.stopPropagation();
-                        goToCategory('6');
-                      }}
-                    >
-                      <div className={bakeryCategory}>베이커리</div>
-                    </div>
-                    <div
-                      className="leftMenuTeaSubContent"
-                      onClick={e => {
-                        e.stopPropagation();
-                        goToCategory('7');
-                      }}
-                    >
-                      <div className={iceCreamCategory}>아이스크림</div>
-                    </div>
+                    {TEA_FOOD_LIST.map(({ id, text, category }) => (
+                      <div
+                        className="leftMenuTeaSubContent"
+                        onClick={e => {
+                          e.stopPropagation();
+                          goToCategory(category);
+                        }}
+                        key={id}
+                      >
+                        <div
+                          className={
+                            searchParams.get('category') === category
+                              ? 'clicked'
+                              : 'unclicked'
+                          }
+                        >
+                          {text}
+                        </div>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>
@@ -590,38 +513,18 @@ const ProductList = () => {
                   </span>
                   개의 상품이 있습니다.
                 </div>
-                {category === '1' ||
-                category === '2' ||
-                category === '3' ||
-                category === '4' ||
-                !category ||
-                category === 'tea' ? (
+                {!category || ['1', '2', '3', '4', 'tea'].includes(category) ? (
                   <div className="rightMenuTeaFilterBox">
-                    <GreenFilterButton
-                      text="전체"
-                      clicked={teaTotalFilter}
-                      onClick={() => goToProductType()}
-                    />
-                    <GreenFilterButton
-                      text="잎차"
-                      clicked={leafTeaFilter}
-                      onClick={() => goToProductType('1')}
-                    />
-                    <GreenFilterButton
-                      text="피라미드"
-                      clicked={pyramidFilter}
-                      onClick={() => goToProductType('2')}
-                    />
-                    <GreenFilterButton
-                      text="티백"
-                      clicked={teaBagFilter}
-                      onClick={() => goToProductType('3')}
-                    />
-                    <GreenFilterButton
-                      text="파우더"
-                      clicked={powderFilter}
-                      onClick={() => goToProductType('4')}
-                    />
+                    {PRODUCT_TYPE_LIST.map(({ id, text, productType }) => (
+                      <GreenFilterButton
+                        key={id}
+                        text={text}
+                        isSelected={searchParams
+                          .get('product_type')
+                          ?.includes(productType)}
+                        onClick={() => goToProductType(productType)}
+                      />
+                    ))}
                   </div>
                 ) : null}
               </div>
