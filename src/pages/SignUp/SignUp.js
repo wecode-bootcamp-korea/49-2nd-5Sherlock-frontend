@@ -4,6 +4,7 @@ import Input from '../../components/Input/Input';
 import CheckBox from '../../components/CheckBox/CheckBox';
 import Terms from '../../components/Terms/Terms';
 import './SignUp.scss';
+import Nav from '../../components/Nav/Nav';
 
 const idReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const pwReg = /^[a-zA-Z0-9]{6,16}$/;
@@ -120,6 +121,7 @@ const SignUp = () => {
 
   return (
     <div className="signUp">
+      <Nav />
       <header className="header">
         <div className="headerBox">
           <div className="headerText">뷰티포인트 X 오셜록 쇼핑몰 회원가입</div>

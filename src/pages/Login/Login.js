@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import './Login.scss';
+import Nav from '../../components/Nav/Nav';
 
 const idReg = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 const pwReg = /^[.@!#$%&'*+-/=?^_`{|}~\w\d]{9,}$/;
@@ -73,6 +74,7 @@ const Login = () => {
       </header>
 
       <div className="loginBox">
+        <Nav />
         <div className="container">
           <span className="loginGuideText">
             아모레퍼시픽 뷰티포인트 통합회원
@@ -101,7 +103,7 @@ const Login = () => {
           <button
             className="loginButton"
             onClick={handleLogin}
-            disabled={!isUserInputValid}
+            // disabled={!isUserInputValid}
           >
             로그인
           </button>
