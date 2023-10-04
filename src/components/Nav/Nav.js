@@ -5,7 +5,7 @@ import { useNavigate, Link } from 'react-router-dom';
 const Nav = props => {
   const navigate = useNavigate();
   // const { cartNumber } = props;
-  let cartNumber = 0;
+  const [cartNumber, setCartNumber] = useState(0);
 
   const [openCheck, setOpenCheck] = useState('unclicked');
   const clickCheck = () => {
@@ -28,6 +28,46 @@ const Nav = props => {
 
   const goToFunction = param => {
     navigate(param);
+  };
+
+  const logOut = () => {
+    localStorage.removeItem('token');
+    logOutFunction();
+    window.location.reload();
+  };
+
+  const showCart = async () => {
+    // return await fetch(
+    //   `http://10.58.52.176:8000/cart?${searchParams.toString()}`,
+    //   {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       authorization: window.sessionStorage.getItem('token'),
+    //     },
+    //   },
+    // )
+    //   .then(res => res.json())
+    //   .then(data => {
+    //      setCartNumber(data);
+    //   });
+  };
+
+  const logOutFunction = async () => {
+    // return await fetch(
+    //   `http://10.58.52.176:8000/cart?${searchParams.toString()}`,
+    //   {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       authorization: window.sessionStorage.getItem('token'),
+    //     },
+    //   },
+    // )
+    //   .then(res => res.json())
+    //   .then(data=> {
+    //      setCartNumber(data.cartItemCount);
+    //   });
   };
 
   return (
@@ -281,7 +321,12 @@ const Nav = props => {
                 </div>
               )}
 
-              <div className="navIconCart">
+              <div
+                className="navIconCart"
+                onClick={() => {
+                  goToFunction('/cart');
+                }}
+              >
                 <img src={process.env.PUBLIC_URL + '/images/cart.svg'} />
                 <div className="navIconCartNumber">{cartNumber}</div>
               </div>
@@ -299,34 +344,44 @@ const Nav = props => {
                   <div className="moreBoxContent">뷰티포인트 추후적립</div>
                 </div>
               </div>
-              <div
-                className="navIconLogIn"
-                onClick={() => {
-                  goToFunction('/login');
-                }}
-              >
-                로그인
-                <div className="logInBox">
-                  <div
-                    className="logInBoxContent"
-                    onClick={e => {
-                      e.stopPropagation();
-                      goToFunction('/login');
-                    }}
-                  >
-                    로그인
-                  </div>
-                  <div
-                    className="logInBoxContent"
-                    onClick={e => {
-                      e.stopPropagation();
-                      goToFunction('/signup');
-                    }}
-                  >
-                    회원가입
+
+              {!localStorage.getItem('token') ? (
+                <div
+                  className="navIconLogIn"
+                  onClick={() => {
+                    goToFunction('/login');
+                  }}
+                >
+                  로그인
+                  <div className="logInBox">
+                    <div
+                      className="logInBoxContent"
+                      onClick={e => {
+                        e.stopPropagation();
+                        goToFunction('/login');
+                      }}
+                    >
+                      로그인
+                    </div>
+                    <div
+                      className="logInBoxContent"
+                      onClick={e => {
+                        e.stopPropagation();
+                        goToFunction('/signup');
+                      }}
+                    >
+                      회원가입
+                    </div>
                   </div>
                 </div>
-              </div>
+              ) : (
+                /////////////////////
+                /////////////////////
+                <div className="navIconLogIn" onClick={logOut}>
+                  로그아웃
+                </div>
+              )}
+
               <div className="navIconLanguage">
                 KOREAN ▼
                 <div className="languageBox">

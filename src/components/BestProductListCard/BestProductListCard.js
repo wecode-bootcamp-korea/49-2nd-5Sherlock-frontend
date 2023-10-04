@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './BestProductListCard.scss';
 import { useNavigate, Link } from 'react-router-dom';
+import ProductImgBox from '../ProductImgBox/ProductImgBox';
 
 const BestProductListCard = props => {
   const { data, index } = props;
@@ -25,31 +26,9 @@ const BestProductListCard = props => {
 
   return (
     <div className="bestProductListCard">
-      <div
-        className="productListCardImgBox"
-        onClick={() => {
-          goToDetail(data.id);
-        }}
-        onMouseEnter={showSecondPage}
-        onMouseLeave={showFirstPage}
-      >
-        <img className="pic" src={productImg} alt="cardImage" />
-
-        <div
-          className="picCartBox"
-          onClick={e => {
-            e.stopPropagation();
-            goToOrderBox();
-          }}
-        >
-          <img
-            className="picCart"
-            src={process.env.PUBLIC_URL + '/images/shopping-cart.png'}
-            alt="cardImage"
-          />
-        </div>
+      <ProductImgBox data={data}>
         <div className="numberBox">{index + 1}</div>
-      </div>
+      </ProductImgBox>
       <div className="titleBox">
         <div
           onClick={() => {

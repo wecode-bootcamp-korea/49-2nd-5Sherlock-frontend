@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import './ProductListCard.scss';
 import { useNavigate, Link } from 'react-router-dom';
+import ProductImgBox from '../ProductImgBox/ProductImgBox';
 
 const ProductListCard = props => {
   const [change, setChange] = useState(true);
 
   const navigate = useNavigate();
   const { data } = props;
-  const [productImg, setProductImg] = useState(data.productImg[1].url);
+  // const [productImg, setProductImg] = useState(data.productImg[1].url);
   const goToDetail = id => {
     navigate(`/product-detail/${id}`);
   };
@@ -61,43 +62,20 @@ const ProductListCard = props => {
     }
   };
 
-  const showSecondPage = () => {
-    setProductImg(data.productImg[1].url);
-  };
-  const showFirstPage = () => {
-    setProductImg(data.productImg[0].url);
-  };
+  // const showSecondPage = () => {
+  //   setProductImg(data.productImg[1].url);
+  // };
+  // const showFirstPage = () => {
+  //   setProductImg(data.productImg[0].url);
+  // };
 
-  const goToOrderBox = () => {
-    navigate('/orderbox');
-  };
+  // const goToOrderBox = () => {
+  //   navigate('/orderbox');
+  // };
 
   return (
     <div className="productListCard">
-      <div
-        className="productListCardImgBox"
-        onClick={() => {
-          goToDetail(data.id);
-        }}
-        onMouseEnter={showSecondPage}
-        onMouseLeave={showFirstPage}
-      >
-        <img className="pic" src={productImg} alt="cardImage" />
-
-        <div
-          className="picCartBox"
-          onClick={e => {
-            e.stopPropagation();
-            goToOrderBox();
-          }}
-        >
-          <img
-            className="picCart"
-            src={process.env.PUBLIC_URL + '/images/shopping-cart.png'}
-            alt="cardImage"
-          />
-        </div>
-      </div>
+      <ProductImgBox data={data} />
       <div className="titleBox">
         <div className="labelBox">
           {data.isNew ? <div className="newProduct">신제품</div> : null}
