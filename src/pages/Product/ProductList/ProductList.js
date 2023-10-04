@@ -234,7 +234,7 @@ const ProductList = () => {
     productCount: 150,
   };
 
-  const [dataList, setDataList] = useState(data);
+  const [dataList, setDataList] = useState({});
   const offset = searchParams.get('offset');
   const limit = searchParams.get('limit');
   const category = searchParams.get('category');
@@ -244,6 +244,23 @@ const ProductList = () => {
   const getList = async () => {
     return await fetch(
       `http://${Address.address}/products?${searchParams.toString()}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: window.sessionStorage.getItem('token'),
+        },
+      },
+    )
+      .then(res => res.json())
+      .then(data => {
+        setDataList(data);
+      });
+  };
+
+  const getCart = async () => {
+    return await fetch(
+      `http://${Address.address}/carts/count${searchParams.toString()}`,
       {
         method: 'GET',
         headers: {

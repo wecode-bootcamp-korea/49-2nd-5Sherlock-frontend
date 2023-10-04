@@ -52,9 +52,8 @@ const ProductDetail = () => {
       .then(res => res.json())
       .then(result => {
         setData(result.data);
-        console.log(result);
+
         if (result.message === 'querySuccess') {
-          console.log(result.data);
         } else {
           alert('실패');
         }
@@ -146,12 +145,6 @@ const ProductDetail = () => {
   const goCart = () => {
     navigate('/Cart');
   };
-
-  console.log(data.price * productCount + packaging);
-  console.log(data);
-  console.log(data.price);
-  console.log(productCount);
-  console.log(packaging);
 
   return (
     <div className="productDetail">
