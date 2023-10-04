@@ -1,13 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useState, useEffect, Link } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import './ProductDetail.scss';
+import clipboardCopy from 'clipboard-copy';
 
 import Modal from '../../components/Modal/Modal';
 
 import Nav from '../../components/Nav/Nav';
 
+import ReviewGrade from '../../components/ReviewGrade/ReviewGrade';
+
 const ProductDetail = () => {
   //   const { id } = useParams();
+  const navigate = useNavigate();
   const myData = {
     name: '시크릿 티',
     price: 77000,
@@ -20,15 +24,20 @@ const ProductDetail = () => {
     category_name: '티 세트',
     category_id: 1,
     descriptionImage: '/images/product-img1.png',
+    token: 'dd',
+    rating: '4.8',
   };
+
   const [data, setData] = useState(myData);
   const [handleSelectToggle, sethandleSelectToggle] = useState(false);
   const [handleSelectToggle2, sethandleSelectToggle2] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
   const [originalPrice, setOriginalPrice] = useState(47000);
   const [productCount, setProductCount] = useState(1);
-
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [packaging, setPackaging] = useState(0);
+  const [isGiftModalOpen, setIsGiftModalOpen] = useState(false);
+  const [isCartModalOpen, setIsCartModalOpen] = useState(false);
+  const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
 
   // useEffect(() => {
   //   fetch(`http://10.58.52.215:8000/threads${id}`, {
@@ -50,8 +59,6 @@ const ProductDetail = () => {
   //     });
   // }, []);
 
-  const [packaging, setPackaging] = useState(0);
-
   useEffect(() => {
     // fetch(`http://10.58.52.200:8000/products/1`, {
     //   method: 'GET',
@@ -71,6 +78,14 @@ const ProductDetail = () => {
     // //     console.log(result.data[0]);
     // //   });
   }, []);
+  localStorage.getItem('token');
+
+  const copyToClipboard = () => {
+    const currentURL = 'window.location.href';
+    clipboardCopy(currentURL)
+      .then(() => alert('링크가 복사되었습니다.'))
+      .catch(err => console.error('복사 실패: ', err));
+  };
 
   const selectToggle = () => {
     sethandleSelectToggle(!handleSelectToggle);
@@ -103,11 +118,31 @@ const ProductDetail = () => {
   };
 
   const openModal = () => {
-    setIsModalOpen(true);
+    setIsGiftModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);
+    setIsGiftModalOpen(false);
+  };
+
+  const openGiftModal = () => {
+    setIsCartModalOpen(true);
+  };
+
+  const closeGiftModal = () => {
+    setIsCartModalOpen(false);
+  };
+
+  const closeBuyModal = () => {
+    setIsBuyModalOpen(false);
+  };
+
+  const openBuyModal = () => {
+    setIsBuyModalOpen(true);
+  };
+
+  const goCart = () => {
+    navigate('/Cart');
   };
 
   return (
@@ -128,19 +163,38 @@ const ProductDetail = () => {
                 <div className="relationTo">
                   <ul>
                     <li className="toPoint">
+                      <i>
+                        <img src="/images/icon-coin.png" alt="적립 아이콘" />
+                      </i>
                       {`뷰티포인트 ${isPointReward()}P 적립`}
                     </li>
-                    <li className="toTeaPoint">{`찻잎 ${isPointReward()}P 적립`}</li>
+                    <li className="toTeaPoint">
+                      <i>
+                        <img
+                          src="/images/icon-delivery.png"
+                          alt="무료배송 아이콘"
+                        />
+                      </i>
+                      {`찻잎 ${isPointReward()}P 적립`}
+                    </li>
                     <li className="toDeliveryFree">
-                      {' '}
-                      <span>
-                        <i className="fa-light fa-truck"></i>
-                      </span>
+                      <i>
+                        <img
+                          src="/images/icon-delivery.png"
+                          alt="무료배송 아이콘"
+                        />
+                      </i>
                       3만원 이상 무료배송
                     </li>
                     <li
                       className={`toPackaging ${data.provideBag ? 'on' : ''}`}
                     >
+                      <i>
+                        <img
+                          src="/images/icon-gift.png"
+                          alt="포장가능 아이콘"
+                        />
+                      </i>
                       (유료)포장가능
                     </li>
                     <li
@@ -148,21 +202,19 @@ const ProductDetail = () => {
                         data.packageService ? 'on' : ''
                       }`}
                     >
+                      <i>
+                        <img
+                          src="/images/icon-bag.png"
+                          alt="쇼핑백 동봉 아이콘"
+                        />
+                      </i>
                       쇼핑백 동봉
                     </li>
                   </ul>
                 </div>
               </div>
               <div className="reviewWrapper">
-                <div className="reviewGrade">
-                  <span className="reviewText">리뷰 평점</span>
-                  <p>
-                    4.8
-                    <span className="countStar">
-                      <img src="/images/start-5.png" alt="별점 5점" />
-                    </span>
-                  </p>
-                </div>
+                <ReviewGrade data={data} />
                 <div className="goReview">
                   <button>
                     REVIEW <span className="reviewNum">12 &gt;</span>
@@ -182,15 +234,34 @@ const ProductDetail = () => {
               </div>
               <div className="iconAndPriceBox">
                 <div className="btnBox">
-                  <button className="btnUrl">URL</button>
-                  <button className="btnFacebook">
+                  <button className="btnUrl" onClick={copyToClipboard}>
+                    <img src="/images/main/icon-url-on.png" alt="" />
                     <img
-                      src="/images/icon-facebook.png"
-                      alt="페이스북 아이콘"
+                      className="hoverNone"
+                      src="/images/main/icon-url-off.png"
+                      alt=""
                     />
                   </button>
+
+                  <a
+                    className="btnFacebook"
+                    href="https://www.facebook.com/?locale=ko_KR"
+                  >
+                    <img src="/images/main/icon-facebook-on.png" alt="" />
+                    <img
+                      className="hoverNone"
+                      src="/images/main/icon-facebook-off.png"
+                      alt=""
+                    />
+                  </a>
+
                   <button className="btnLike">
-                    <img src="/images/btn-like.png" alt="좋아요 버튼 아이콘" />
+                    <img src="/images/main/icon-like-on.png" alt="" />
+                    <img
+                      className="hoverNone"
+                      src="/images/main/icon-like-off.png"
+                      alt=""
+                    />
                   </button>
                 </div>
                 <p className="productPriceInfo">
@@ -307,9 +378,21 @@ const ProductDetail = () => {
                 </span>
               </div>
               <div className="btnDecision">
-                <button className="btnGift">선물하기</button>
-                <button className="btnBasket">장바구니</button>
-                <button className="btnBuy">바로구매</button>
+                <button
+                  className="btnGift"
+                  onClick={data.token ? { goCart } : { openModal }}
+                >
+                  선물하기
+                </button>
+                <button className="btnBasket" onClick={openGiftModal}>
+                  장바구니
+                </button>
+                <button
+                  className="btnBuy"
+                  onClick={data.token ? { goCart } : { openBuyModal }}
+                >
+                  바로구매
+                </button>
               </div>
             </div>
           </div>
@@ -333,33 +416,57 @@ const ProductDetail = () => {
               <img src="/images/Detail.png" alt="상품 디테일 이미지" />
             </div>
           </div>
-
-          <div className="contentsWrapper">
-            <div className="contentsNav">
-              <ul>
-                <li>
-                  <a href="javascript:;">상품상세</a>
-                </li>
-                <li>
-                  <a href="javascript:;">
-                    고객리뷰 <span>492개</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="javascript:;">상품고시정보</a>
-                </li>
-              </ul>
-            </div>
-            <div className="contentsImg">
-              <img src="/images/Detail.png" alt="상품 디테일 이미지" />
-            </div>
-          </div>
-          {isModalOpen && (
+          {isGiftModalOpen && (
             <Modal>
+              <button className="btnBack" onClick={closeModal}>
+                <img src="/images/login-img1.png" alt="닫기 버튼" />
+              </button>
               <p>선물하기는 로그인 후 이용가능합니다.</p>
-              <button className="btnOk" onClick={closeModal}>
+              <button className="btnOk" onClick={() => navigate('/Login')}>
                 확인
               </button>
+            </Modal>
+          )}
+          {isCartModalOpen && (
+            <Modal>
+              <button className="btnBack" onClick={closeGiftModal}>
+                <img src="/images/login-img1.png" alt="닫기 버튼" />
+              </button>
+              <p>장바구니로 이동하시겠습니까?</p>
+              <div className="modalBtnWrapper">
+                <button className="btnOk" onClick={closeGiftModal}>
+                  취소
+                </button>
+                <button className="btnClose" onClick={goCart}>
+                  확인
+                </button>
+              </div>
+            </Modal>
+          )}
+          {isBuyModalOpen && (
+            <Modal>
+              <button className="btnBack" onClick={closeBuyModal}>
+                <img src="/images/login-img1.png" alt="닫기 버튼" />
+              </button>
+              <p>
+                회원으로 구매하시면
+                <br />
+                할인 및 포인트 적립, 구매 금액별 사은품 등의
+                <br />
+                혜택을 받으실 수 있습니다.
+              </p>
+              <div className="modalBtnWrapper">
+                <button className="btnOk" onClick={() => navigate('/Login')}>
+                  로그인
+                </button>
+                <button
+                  className="btnClose"
+                  onClick={() => navigate('/SignUp')}
+                >
+                  회원가입
+                </button>
+              </div>
+              <button className="btnNonMembers">비회원으로 구매하기</button>
             </Modal>
           )}
         </div>

@@ -1,0 +1,19 @@
+.reviewGrade {
+  display: flex;
+  align-items: center;
+
+  p {
+    font-size: 40px;
+    color: #798b66;
+
+    .countStar {
+      margin-left: 12px;
+    }
+  }
+
+  .reviewText {
+    margin-right: 20px;
+    font-size: 30px;
+    color: #555;
+  }
+}

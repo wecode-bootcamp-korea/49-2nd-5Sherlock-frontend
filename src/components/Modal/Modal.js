@@ -12,12 +12,7 @@ const Modal = props => {
   return (
     <div className="Modal close">
       <div className="modalInner">
-        <div className="modalContents">
-          <button className="btnBack" onClick={handleClose}>
-            <img src="/images/login-img1.png" alt="닫기 버튼" />
-          </button>
-          {children}
-        </div>
+        <div className="modalContents">{children}</div>
       </div>
     </div>
   );
