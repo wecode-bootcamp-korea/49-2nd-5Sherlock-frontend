@@ -27,6 +27,9 @@ const NoticeSlide = props => {
     '[공지] 오설록 차 제품 고시 정보 변경 안내',
     '[공지] 오설록 짱짱',
   ];
+
+  console.log('Notice에서 돈다');
+
   return (
     <div className="NoticeSlide NoticeSlide2">
       <span>공지사항</span>

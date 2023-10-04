@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './Nav.scss';
 import { useNavigate, Link } from 'react-router-dom';
+import Address from '../Address/Address';
 
 const Nav = props => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const Nav = props => {
 
   const showCart = async () => {
     // return await fetch(
-    //   `http://10.58.52.176:8000/cart?${searchParams.toString()}`,
+    //   `http://${Address.address}/cart?${searchParams.toString()}`,
     //   {
     //     method: 'GET',
     //     headers: {
@@ -55,7 +56,7 @@ const Nav = props => {
 
   const logOutFunction = async () => {
     // return await fetch(
-    //   `http://10.58.52.176:8000/cart?${searchParams.toString()}`,
+    //   `http://${Address.address}/cart?${searchParams.toString()}`,
     //   {
     //     method: 'POST',
     //     headers: {

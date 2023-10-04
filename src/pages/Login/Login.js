@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import './Login.scss';
 import Nav from '../../components/Nav/Nav';
+import Address from '../../components/Address/Address';
 
 const idReg = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 const pwReg = /^[.@!#$%&'*+-/=?^_`{|}~\w\d]{9,}$/;
@@ -30,7 +31,7 @@ const Login = () => {
 
   const handleLogin = e => {
     e.preventDefault();
-    fetch('http://10.58.52.229:8000/users/signIn', {
+    fetch(`http://${Address.address}/users/signIn`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',

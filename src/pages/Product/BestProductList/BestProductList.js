@@ -5,6 +5,7 @@ import GreenFilterButton from '../../../components/GreenFilterButton/GreenFilter
 import { useSearchParams } from 'react-router-dom';
 import BestProductListContainer from '../../../components/BestProductListContainer/BestProductListContainer';
 import Nav from '../../../components/Nav/Nav';
+import Address from '../../../components/Address/Address';
 
 const BestProductList = () => {
   const location = useLocation();
@@ -235,13 +236,13 @@ const BestProductList = () => {
     productCount: 150,
   };
 
-  const [dataList, setDataList] = useState(data);
+  const [dataList, setDataList] = useState({});
   const category = searchParams.get('category');
   const sort = searchParams.get('sort');
 
   const getList = async () => {
     // return await fetch(
-    //   `http://10.58.52.176:8000/bestproducts${window.location.search}`,
+    //   `http://${Address.address}/products/bestproducts${window.location.search}`,
     //   {
     //     method: 'GET',
     //     headers: {
