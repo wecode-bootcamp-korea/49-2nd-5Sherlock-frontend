@@ -13,6 +13,19 @@
       width: calc(224px + 20px);
       transition: transform 0.8s;
       height: 375px;
+      cursor: pointer;
+
+      .productImgBox {
+        position: relative;
+        width: 224px;
+        height: 250px;
+
+        .picCartBox {
+          width: 40px;
+          height: 40px;
+          padding: 8px;
+        }
+      }
       .slideImg {
         width: 224px;
         background-color: #ccc;
