@@ -8,7 +8,7 @@ function Cart() {
   const [selectedItems, setSelectedItems] = useState({});
   const [cartList, setCartList] = useState([]);
   const selectedObjectLength = Object.keys(selectedItems).length;
-  console.log(selectedItems);
+
   const handleSelectAllChange = () => {
     setSelectAll(!selectAll);
     const newSelectedItems = {};
@@ -18,6 +18,42 @@ function Cart() {
       });
     }
     setSelectedItems(newSelectedItems);
+  };
+
+  const sendDataToBackend = () => {
+    // selectedDataToSend 배열 생성
+    const selectedData = [];
+    for (const itemId in selectedItems) {
+      if (selectedItems[itemId]) {
+        const selectedItem = cartList.find(
+          item => item.id === parseInt(itemId),
+        );
+        if (selectedItem) {
+          selectedData.push({
+            id: selectedItem.id,
+            quantity: selectedItem.quantity,
+          });
+        }
+      }
+    }
+
+    // 데이터를 백엔드로 보내는 fetch 요청
+    fetch('/api/sendSelectedData', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(selectedData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        // 백엔드에서의 응답을 처리합니다.
+        console.log(data);
+      })
+      .catch(error => {
+        // 에러 처리
+        console.error('Error:', error);
+      });
   };
 
   useEffect(() => {
@@ -75,7 +111,9 @@ function Cart() {
       </div>
 
       <div className="cartBtnBox">
-        <button className="getOptionItem">선택상품 주문하기</button>
+        <button className="getOptionItem" onClick={sendDataToBackend}>
+          선택상품 주문하기
+        </button>
 
         <button className="getAllItems">전체상품 주문하기</button>
       </div>

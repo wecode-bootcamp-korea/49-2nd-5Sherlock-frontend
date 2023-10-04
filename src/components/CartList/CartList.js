@@ -27,6 +27,7 @@ const CartList = ({ setSelectedItems, selectedItems }) => {
       }
       return item;
     });
+    console.log(updatedCartList);
 
     setCartList(updatedCartList);
   };
@@ -39,6 +40,26 @@ const CartList = ({ setSelectedItems, selectedItems }) => {
       };
     });
   };
+
+  const selectedData = [];
+  for (const itemId in selectedItems) {
+    if (selectedItems[itemId]) {
+      // itemId를 가진 데이터가 선택되었으면 해당 데이터를 selectedData에 추가
+      const selectedItem = cartList.find(item => item.id === parseInt(itemId));
+      if (selectedItem) {
+        selectedData.push(selectedItem);
+      }
+    }
+  }
+
+  console.log(selectedData);
+
+  const selectedDataToSend = selectedData.map(item => ({
+    id: item.id,
+    quantity: item.quantity,
+  }));
+
+  console.log(selectedDataToSend);
 
   return (
     <>
