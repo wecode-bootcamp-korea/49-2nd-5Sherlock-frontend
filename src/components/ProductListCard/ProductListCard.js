@@ -111,9 +111,9 @@ const ProductListCard = props => {
         <div className="likeBox">
           <div
             className="likeBtn"
-            onClick={() => {
-              clickLike(data.id, data.isLike);
-            }}
+            // onClick={() => {
+            //   clickLike(data.id, data.isLike);
+            // }}
           >
             {data.isLike ? (
               <img

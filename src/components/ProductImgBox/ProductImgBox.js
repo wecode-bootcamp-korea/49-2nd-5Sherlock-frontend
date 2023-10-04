@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './ProductImgBox.scss';
 import { useNavigate } from 'react-router-dom';
+import Address from '../Address/Address';
 
 const ProductImgBox = ({ data, children }) => {
   const navigate = useNavigate();
@@ -33,7 +34,9 @@ const ProductImgBox = ({ data, children }) => {
     // )
     //   .then(res => res.json())
     //   .then(data => {
-    //
+    // if(data.message==='querySuccess'){
+    //   alert('장바구니 추가되었습니다!')
+    // }
     //   });
   };
 

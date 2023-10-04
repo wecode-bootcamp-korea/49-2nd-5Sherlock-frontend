@@ -7,6 +7,7 @@ import { useSearchParams } from 'react-router-dom';
 import Pagination from '../../../components/Pagination/Pagination';
 import './ProductList.scss';
 import Nav from '../../../components/Nav/Nav';
+import Address from '../../../components/Address/Address';
 
 const ProductList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -233,7 +234,7 @@ const ProductList = () => {
     productCount: 150,
   };
 
-  const [dataList, setDataList] = useState(data);
+  const [dataList, setDataList] = useState({});
   const offset = searchParams.get('offset');
   const limit = searchParams.get('limit');
   const category = searchParams.get('category');
@@ -241,20 +242,37 @@ const ProductList = () => {
   const product_type = searchParams.get('product_type');
 
   const getList = async () => {
-    // return await fetch(
-    //   `http://10.58.52.176:8000/products?${searchParams.toString()}`,
-    //   {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       authorization: window.sessionStorage.getItem('token'),
-    //     },
-    //   },
-    // )
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     setDataList(data);
-    //   });
+    return await fetch(
+      `http://${Address.address}/products?${searchParams.toString()}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: window.sessionStorage.getItem('token'),
+        },
+      },
+    )
+      .then(res => res.json())
+      .then(data => {
+        setDataList(data);
+      });
+  };
+
+  const getCart = async () => {
+    return await fetch(
+      `http://${Address.address}/carts/count${searchParams.toString()}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: window.sessionStorage.getItem('token'),
+        },
+      },
+    )
+      .then(res => res.json())
+      .then(data => {
+        setDataList(data);
+      });
   };
 
   useEffect(() => {

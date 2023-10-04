@@ -3,12 +3,14 @@ import './MainSlide.scss';
 
 const MainSlide = props => {
   const [currentIndex, setCurrentIndex] = useState(0);
+
   useEffect(() => {
     const intervalId2 = setInterval(() => {
       setCurrentIndex(prevIndex => (prevIndex === 4 ? 0 : prevIndex + 1));
     }, 1000);
     return () => clearInterval(intervalId2);
-  });
+  }, []);
+
   return (
     <div className="MainSlide">
       <ul>

@@ -9,26 +9,28 @@ import Nav from '../../components/Nav/Nav';
 
 import ReviewGrade from '../../components/ReviewGrade/ReviewGrade';
 
+import Address from '../../components/Address/Address';
+
 const ProductDetail = () => {
-  //   const { id } = useParams();
+  const { id } = useParams();
   const navigate = useNavigate();
   const myData = {
     name: '시크릿 티',
     price: 77000,
     originalPrice: 80000,
-    discount_rate: 20,
+    discountRate: 20,
     description:
       '즐겁고 행복한 티타임을 선사하는 달콤하고 향긋한 오설록만의 특별한 블렌디드 티 선물 세트',
     provideBag: true,
     packageService: true,
-    category_name: '티 세트',
-    category_id: 1,
+    categoryName: '티 세트',
+    categoryId: 1,
     descriptionImage: '/images/product-img1.png',
     token: 'dd',
     rating: '4.8',
   };
 
-  const [data, setData] = useState(myData);
+  const [data, setData] = useState({});
   const [handleSelectToggle, sethandleSelectToggle] = useState(false);
   const [handleSelectToggle2, sethandleSelectToggle2] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -39,25 +41,24 @@ const ProductDetail = () => {
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
 
-  // useEffect(() => {
-  //   fetch(`http://10.58.52.215:8000/threads${id}`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json;charset=utf-8',
-  //       authorization: localStorage.getItem('token'),
-  //     },
-  //   })
-  //     .then(res => res.json())
-  //     .then(result => {
-  // setData(result)
-  //       console.log(result);
-  //       if (result.message === 'quarySuccess') {
-  //         console.log(result.data);
-  //       } else {
-  //         alert('실패');
-  //       }
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch(`http://${Address.address}/products/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        authorization: localStorage.getItem('token'),
+      },
+    })
+      .then(res => res.json())
+      .then(result => {
+        setData(result.data);
+
+        if (result.message === 'querySuccess') {
+        } else {
+          alert('실패');
+        }
+      });
+  }, []);
 
   useEffect(() => {
     // fetch(`http://10.58.52.200:8000/products/1`, {
@@ -148,7 +149,7 @@ const ProductDetail = () => {
   return (
     <div className="productDetail">
       <Nav />
-      {data && (
+      {
         <div className="productDetailInner">
           <div className="orderWrapper">
             <div className="leftWrapper">
@@ -225,7 +226,7 @@ const ProductDetail = () => {
             <div className="rightWrapper">
               <p className="category">
                 <a className="mainCategory">티제품 &gt;</a>
-                <a className="subCategory"> {data.category_name}</a>
+                <a className="subCategory"> {data.categoryName}</a>
               </p>
               <div className="productInfo">
                 <h1 className="productName">{data?.name}</h1>
@@ -267,48 +268,17 @@ const ProductDetail = () => {
                 <p className="productPriceInfo">
                   <span className="price">
                     <span>
-                      {data ? data.price.toLocaleString('ko-KR') : null}
+                      {Object.keys(data).length !== 0
+                        ? data.price.toLocaleString('ko-KR')
+                        : null}
+                      원
                     </span>
-                    원
                   </span>
-                  <span className="discount"> {data.discount_rate}%</span>
+                  <span className="discount"> {data.discountRate}%</span>
                   <span className="lineText">{data.originalPrice}</span>
                 </p>
               </div>
               <div className="productSeletWrapper">
-                {/* <div className="additionalSelect">
-                <div class="selected" onClick={selectToggle}>
-                  <div className="selectedValue">추가상품 선택</div>
-                  <div className="selectArrow">
-                    <img
-                      src="/images/select-arrow.png"
-                      alt="셀렉트 박스 화살표 아이콘"
-                    ></img>
-                  </div>
-                </div>
-                <ul className={handleSelectToggle ? 'on' : ''}>
-                  <li className="option">
-                    <p className="optionText">녹차 밀크 스프레드 세트</p>
-                    <p className="optionPrice">
-                      <span className="lineText">20,000원</span>
-                      <strong>
-                        <span>&nbsp;&nbsp;17,000</span>원
-                      </strong>
-                      <span className="discount"> 15%</span>
-                    </p>
-                  </li>
-                  <li className="option">
-                    <p className="optionText">신 오브 제주</p>
-                    <p className="optionPrice">
-                      <span className="lineText">27,000원</span>
-                      <strong>
-                        <span>&nbsp;20,250</span>원
-                      </strong>
-                      <span className="discount"> 25%</span>
-                    </p>
-                  </li>
-                </ul>
-              </div> */}
                 <div className="buyNumWrapper">
                   <div className="buyNumCount">
                     <span>구매수량</span>
@@ -363,9 +333,11 @@ const ProductDetail = () => {
                 <p className="sumText">상품금액 합계</p>
                 <p className="sum">
                   <span>
-                    {(data.price * productCount + packaging).toLocaleString(
-                      'ko-KR',
-                    )}
+                    {Object.keys(data).length !== 0
+                      ? (data.price * productCount + packaging).toLocaleString(
+                          'ko-KR',
+                        )
+                      : null}
                     원
                   </span>
                 </p>
@@ -470,7 +442,7 @@ const ProductDetail = () => {
             </Modal>
           )}
         </div>
-      )}
+      }
     </div>
   );
 };

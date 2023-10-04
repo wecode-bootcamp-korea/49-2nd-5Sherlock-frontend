@@ -5,6 +5,7 @@ import CheckBox from '../../components/CheckBox/CheckBox';
 import Terms from '../../components/Terms/Terms';
 import './SignUp.scss';
 import Nav from '../../components/Nav/Nav';
+import Address from '../../components/Address/Address';
 
 const idReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const pwReg = /^[a-zA-Z0-9]{6,16}$/;
@@ -82,7 +83,7 @@ const SignUp = () => {
 
   const handleSignUp = e => {
     if (Object.keys(errors).length === 0) {
-      fetch('http://10.58.52.229:8000/users/signUp', {
+      fetch(`http://${Address.address}/users/signUp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',

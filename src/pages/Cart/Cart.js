@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import CheckBox from '../../components/CheckBox/CheckBox';
 import Timer from '../../components/Timer/Timer';
 import './Cart.scss';
+import Address from '../../components/Address/Address';
 
 const Cart = () => {
   const [productList, setProductList] = useState([]);

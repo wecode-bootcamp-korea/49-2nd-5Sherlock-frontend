@@ -6,6 +6,7 @@ import BestSlide from '../../components/BestSlide/BestSlide';
 import MainSlide from '../../components/MainSlide/MainSlide';
 import ImgBanner from '../../components/ImgBanner/ImgBanner';
 import Nav from '../../components/Nav/Nav';
+import Address from '../../components/Address/Address';
 
 const Main = () => {
   const data = {
@@ -230,23 +231,27 @@ const Main = () => {
     ],
     productCount: 150,
   };
-  const [bestData, setBestData] = useState(data.data);
+  const [bestData, setBestData] = useState({});
   const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  // useEffect(() => {
-  //   fetch(`http://10.58.52.215:8000/threads${id}`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json;charset=utf-8',
-  //       authorization: localStorage.getItem('token'),
-  //     },
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //     setDataList(data);
-  //     });
-  // }, []);
+  useEffect(() => {
+    fetch(
+      `http://${Address.address}/products/bestProducts${window.location.search}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          authorization: localStorage.getItem('token'),
+        },
+      },
+    )
+      .then(res => res.json())
+      .then(data => {
+        setBestData(data);
+      });
+  }, []);
+
   const goToLogin = () => {
     navigate('/login');
   };
@@ -268,12 +273,14 @@ const Main = () => {
 
     return () => clearInterval(intervalId);
   }, []);
+
   const today = new Date();
   const hours = today.getHours();
   const minutes = today.getMinutes();
   const seconds = today.getSeconds();
   const formattedTime = `${hours}:${minutes}:${seconds}`;
-
+  console.log('메인에서 도네요');
+  console.log(bestData);
   return (
     <div className="Main">
       <Nav />
@@ -290,7 +297,7 @@ const Main = () => {
                 <button className="btnCateBest">베스트</button>
               </p>
             </div>
-            <BestSlide data={data.data} />
+            {/* <BestSlide data={bestData.data} /> */}
             <button className="addView" onClick={goToProductList}>
               더 보기 &gt;
             </button>
