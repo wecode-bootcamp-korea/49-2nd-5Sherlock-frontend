@@ -3,11 +3,10 @@ import './ProductListCard.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import ProductImgBox from '../ProductImgBox/ProductImgBox';
 
-const ProductListCard = props => {
+const ProductListCard = ({ data, onClick }) => {
   const [change, setChange] = useState(true);
 
   const navigate = useNavigate();
-  const { data } = props;
   // const [productImg, setProductImg] = useState(data.productImg[1].url);
   const goToDetail = id => {
     navigate(`/product-detail/${id}`);
@@ -75,7 +74,7 @@ const ProductListCard = props => {
 
   return (
     <div className="productListCard">
-      <ProductImgBox data={data} />
+      <ProductImgBox data={data} onClick={onClick} />
       <div className="titleBox">
         <div className="labelBox">
           {data.isNew ? <div className="newProduct">신제품</div> : null}

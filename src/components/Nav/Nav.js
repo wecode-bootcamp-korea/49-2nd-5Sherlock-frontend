@@ -5,8 +5,8 @@ import Address from '../Address/Address';
 
 const Nav = props => {
   const navigate = useNavigate();
-  // const { cartNumber } = props;
-  const [cartNumber, setCartNumber] = useState(0);
+  const { cartNumber } = props;
+  // const [cartNumber, setCartNumber] = useState(0);
 
   const [openCheck, setOpenCheck] = useState('unclicked');
   const clickCheck = () => {
@@ -28,47 +28,16 @@ const Nav = props => {
   const currentDay = currentDate.getDate();
 
   const goToFunction = param => {
+    if (param === '/cart' && !window.localStorage.getItem('token')) {
+      alert('로그인을 해주세요');
+      return;
+    }
     navigate(param);
   };
 
   const logOut = () => {
     localStorage.removeItem('token');
-    logOutFunction();
     window.location.reload();
-  };
-
-  const showCart = async () => {
-    // return await fetch(
-    //   `http://${Address.address}/cart?${searchParams.toString()}`,
-    //   {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       authorization: window.sessionStorage.getItem('token'),
-    //     },
-    //   },
-    // )
-    //   .then(res => res.json())
-    //   .then(data => {
-    //      setCartNumber(data);
-    //   });
-  };
-
-  const logOutFunction = async () => {
-    // return await fetch(
-    //   `http://${Address.address}/cart?${searchParams.toString()}`,
-    //   {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       authorization: window.sessionStorage.getItem('token'),
-    //     },
-    //   },
-    // )
-    //   .then(res => res.json())
-    //   .then(data=> {
-    //      setCartNumber(data.cartItemCount);
-    //   });
   };
 
   return (
@@ -329,7 +298,9 @@ const Nav = props => {
                 }}
               >
                 <img src={process.env.PUBLIC_URL + '/images/cart.svg'} />
-                <div className="navIconCartNumber">{cartNumber}</div>
+                <div className="navIconCartNumber">
+                  {cartNumber ? cartNumber : 0}
+                </div>
               </div>
 
               <div className="navIconMore">

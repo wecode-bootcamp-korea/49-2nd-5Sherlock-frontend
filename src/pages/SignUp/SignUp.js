@@ -82,30 +82,31 @@ const SignUp = () => {
   };
 
   const handleSignUp = e => {
-    if (Object.keys(errors).length === 0) {
-      fetch(`http://${Address.address}/users/signUp`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-        },
-        body: JSON.stringify({
-          name,
-          phoneNumber,
-          email,
-          password,
-        }),
+    console.log('사인업');
+
+    fetch(`http://${Address.address}/users/signUp`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+      },
+      body: JSON.stringify({
+        name,
+        phoneNumber,
+        email,
+        password,
+      }),
+    })
+      .then(res => {
+        return res.json();
       })
-        .then(res => {
-          return res.json();
-        })
-        .then(data => {
-          if (data.message === 'userCreated') {
-            navigate('/login');
-          } else {
-            alert('회원가입에 실패했습니다.');
-          }
-        });
-    }
+      .then(data => {
+        console.log(123);
+        if (data.message === 'userCreated') {
+          navigate('/login');
+        } else {
+          alert('회원가입에 실패했습니다.');
+        }
+      });
   };
 
   const { name, phoneNumber, birthday, email, password, confirmPassword } =
