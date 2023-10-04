@@ -1,0 +1,25 @@
+.counter {
+  display: flex;
+  justify-content: space-between;
+  width: 80px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+
+  .decreaseBtn {
+    font-size: 17px;
+    color: #666666;
+  }
+
+  .increaseBtn {
+    font-size: 15px;
+    color: #666666;
+    margin-bottom: 3px;
+  }
+
+  .number {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 14px;
+    color: #666666;
+  }
+}

@@ -1,16 +1,16 @@
 {
   "category": "티 세트",
-  "total": 2,
+  "total": 3,
   "list": [
     {
       "id": 1,
       "name": "프리미엄 티 컬렉션",
       "imageUrl": "https://img.freepik.com/free-vector/watercolor-international-tea-day-instagram-stories-collection_52683-83718.jpg?w=1800&t=st=1696223926~exp=1696224526~hmac=da5f96225c2c9ed340c3a5a2059ad8cd2a6b47eba8d396a62a7ec116d704370b",
       "package": "포장가능",
-      "present": "선물가능",
+      "present": "선물 가능한 상품입니다",
       "originalPrice": 30000,
       "discountRate": 0.1,
-      "price": 28000,
+      "price": 27000,
       "quantity": 3
     },
     {
@@ -18,11 +18,22 @@
       "name": "러블리 티 박스",
       "imageUrl": "https://img.freepik.com/premium-photo/stack-boxes-with-word-parsley-them_655090-59384.jpg?w=1380",
       "package": "포장불가능",
-      "present": "선물불가능",
+      "present": "선물 불가능한 상품입니다.",
       "originalPrice": 30000,
       "discountRate": 0.1,
-      "price": 28000,
+      "price": 27000,
       "quantity": 3
+    },
+    {
+      "id": 3,
+      "name": "오설록 프리미엄 티",
+      "imageUrl": "https://img.freepik.com/premium-photo/stack-boxes-with-word-parsley-them_655090-59384.jpg?w=1380",
+      "package": "포장가능",
+      "present": "선물 가능한 상품입니다.",
+      "originalPrice": 20000,
+      "discountRate": 0.1,
+      "price": 18000,
+      "quantity": 1
     }
   ]
 }
