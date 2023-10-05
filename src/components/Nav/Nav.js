@@ -18,7 +18,7 @@ const Nav = () => {
     });
 
     const result = await response.json();
-
+    console.log(result.cartItemCount);
     setCartNumber(result.cartItemCount);
   };
 

@@ -1,12 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './BestProductListContainer.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import BestProductListCard from '../BestProductListCard/BestProductListCard';
 
-const BestProductListContainer = props => {
-  const navigate = useNavigate();
-  const { data } = props;
-
+const BestProductListContainer = ({ data, onClick }) => {
   if (!data) {
     return;
   }
@@ -14,7 +11,12 @@ const BestProductListContainer = props => {
   return (
     <div className="bestProductListContainer">
       {data.map((data, index) => (
-        <BestProductListCard index={index} key={data.id} data={data} />
+        <BestProductListCard
+          index={index}
+          key={data.id}
+          data={data}
+          onClick={onClick}
+        />
       ))}
     </div>
   );

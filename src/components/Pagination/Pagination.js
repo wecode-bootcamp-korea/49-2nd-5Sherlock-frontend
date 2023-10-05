@@ -48,10 +48,7 @@ const Pagination = ({
     setSearchParams(searchParams);
     onClick();
   };
-  console.log(
-    pageProductNumber * Math.floor(productCount / pageProductNumber) -
-      pageProductNumber,
-  );
+
   return (
     <div className="pagination">
       <div className="paginationBox">

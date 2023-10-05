@@ -256,6 +256,28 @@ const BestProductList = () => {
       });
   };
 
+  const postCart = async id => {
+    if (!window.localStorage.getItem('token')) {
+      alert('로그인을 해주세요.');
+      return;
+    }
+
+    if (window.confirm('장바구니에 담으시겠습니까?')) {
+      const response = await fetch(`${BASE_API}/carts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: window.localStorage.getItem('token'),
+        },
+        body: JSON.stringify({ productId: id, quantity: 1 }),
+      });
+
+      if (response.ok) {
+        window.location.reload();
+      }
+    }
+  };
+
   useEffect(() => {
     getList();
   }, [searchParams]);
@@ -408,7 +430,7 @@ const BestProductList = () => {
       </div>
       <div className="container listContainer">
         <div className="containerInside">
-          <BestProductListContainer data={dataList.data} />
+          <BestProductListContainer data={dataList.data} onClick={postCart} />
         </div>
       </div>
     </div>

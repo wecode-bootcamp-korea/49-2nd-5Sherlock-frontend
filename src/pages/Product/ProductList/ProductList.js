@@ -18,8 +18,8 @@ const ProductList = () => {
 
   const getList = async () => {
     const response = await fetch(
-      // `/data/listData.json`,
-      `${BASE_API}/products?${searchParams.toString()}`,
+      `/data/listData.json`,
+      // `${BASE_API}/products?${searchParams.toString()}`,
       {
         method: 'GET',
         headers: {
@@ -30,8 +30,8 @@ const ProductList = () => {
     );
 
     const result = await response.json();
-
-    setDataList(result);
+    setDataList(result.data);
+    // setDataList(result);
   };
 
   const postCart = async id => {
@@ -40,17 +40,19 @@ const ProductList = () => {
       return;
     }
 
-    const response = await fetch(`${BASE_API}/carts`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: window.localStorage.getItem('token'),
-      },
-      body: JSON.stringify({ productId: id, quantity: 1 }),
-    });
+    if (window.confirm('장바구니에 담으시겠습니까?')) {
+      const response = await fetch(`${BASE_API}/carts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: window.localStorage.getItem('token'),
+        },
+        body: JSON.stringify({ productId: id, quantity: 1 }),
+      });
 
-    if (response.ok) {
-      window.location.reload();
+      if (response.ok) {
+        window.location.reload();
+      }
     }
   };
 

@@ -3,8 +3,7 @@ import './BestProductListCard.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import ProductImgBox from '../ProductImgBox/ProductImgBox';
 
-const BestProductListCard = props => {
-  const { data, index } = props;
+const BestProductListCard = ({ data, index, onClick }) => {
   const navigate = useNavigate();
 
   const [productImg, setProductImg] = useState(data.productImg[1].url);
@@ -26,7 +25,7 @@ const BestProductListCard = props => {
 
   return (
     <div className="bestProductListCard">
-      <ProductImgBox data={data}>
+      <ProductImgBox data={data} onClick={onClick}>
         <div className="numberBox">{index + 1}</div>
       </ProductImgBox>
       <div className="titleBox">

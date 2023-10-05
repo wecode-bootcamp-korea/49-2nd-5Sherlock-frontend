@@ -16,27 +16,6 @@ const ProductImgBox = ({ data, children, onClick }) => {
     setProductImg(data.productImg[0].url);
   };
 
-  // const goToOrderBox = () => {
-  //   goCart();
-  //   console.log('장바구니 담김');
-  // };
-
-  // const goCart = async () => {
-  //   return await fetch(`${BASE_API}/cart`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       authorization: window.localStorage.getItem('token'),
-  //     },
-  //   })
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       if (data.message === 'querySuccess') {
-  //         alert('장바구니 추가되었습니다!');
-  //       }
-  //     });
-  // };
-
   return (
     <div
       className="productImgBox"
@@ -52,7 +31,7 @@ const ProductImgBox = ({ data, children, onClick }) => {
         className="picCartBox"
         onClick={e => {
           e.stopPropagation();
-          // goToOrderBox();
+
           onClick(data.id);
         }}
       >
