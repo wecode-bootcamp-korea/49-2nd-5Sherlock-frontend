@@ -77,9 +77,7 @@ const Login = () => {
         <Nav />
         <div className="container">
           <span className="loginGuideText">
-            아모레퍼시픽 뷰티포인트 통합회원
-            <br />
-            아이디로 로그인해주세요.
+            오셜록 계정으로 로그인해주세요.
           </span>
           <form className="loginForm">
             <Input

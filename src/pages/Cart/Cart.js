@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import CartList from '../../components/CartList/CartList';
 import Timer from '../../components/Timer/Timer';
 import './Cart.scss';
@@ -7,29 +8,45 @@ function Cart() {
   const [selectAll, setSelectAll] = useState(false);
   const [selectedItems, setSelectedItems] = useState({});
   const [cartList, setCartList] = useState([]);
-  const selectedObjectLength = Object.keys(selectedItems).length;
+  const navigate = useNavigate();
 
+  // 선택된 아이템 수
+  const selectedCount = Object.values(selectedItems).reduce(
+    (acc, cur) => (cur ? acc + 1 : acc),
+    0,
+  );
+  const isSelected = Object.values(selectedItems).some(item => item);
+
+  // 전체 선택/해제를 처리하는 함수
   const handleSelectAllChange = () => {
-    setSelectAll(!selectAll);
     const newSelectedItems = {};
+
     if (!selectAll) {
       cartList.forEach(item => {
-        newSelectedItems[item.id] = true;
+        newSelectedItems[item.productId] = true;
       });
     }
+
     setSelectedItems(newSelectedItems);
   };
 
-  const sendDataToBackend = () => {
-    // selectedDataToSend 배열 생성
-    const selectedData = [];
+  // 선택된 데이터를 order 페이지로 전송하는 함수
+  const sendData = () => {
+    if (!isSelected) {
+      alert('하나 이상의 상품을 선택해 주세요!');
+      return;
+    }
+
+    const items = [];
+
     for (const itemId in selectedItems) {
       if (selectedItems[itemId]) {
         const selectedItem = cartList.find(
           item => item.id === parseInt(itemId),
         );
+
         if (selectedItem) {
-          selectedData.push({
+          items.push({
             id: selectedItem.id,
             quantity: selectedItem.quantity,
           });
@@ -37,46 +54,39 @@ function Cart() {
       }
     }
 
-    // 데이터를 백엔드로 보내는 fetch 요청
-    fetch('/api/sendSelectedData', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(selectedData),
-    })
-      .then(response => response.json())
-      .then(data => {
-        // 백엔드에서의 응답을 처리합니다.
-        console.log(data);
-      })
-      .catch(error => {
-        // 에러 처리
-        console.error('Error:', error);
-      });
+    navigate('/order', { state: { items, cart: true } });
   };
 
+  // 컴포넌트가 처음 렌더링될 때 장바구니 데이터를 가져오는 useEffect
   useEffect(() => {
-    fetch('/data/cartData.json', {
+    fetch('http://10.58.52.212:8000/carts', {
       method: 'GET',
+      headers: {
+        Authorization: `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjk2NDkwOTk2fQ.cbj3xra35EJ3u_eumbfzfLSTksTN-UIl0UsyePsWDdc`,
+      },
     })
       .then(res => res.json())
       .then(data => {
-        const updatedCartList = data.list.map(item => ({
+        console.log(data);
+        const updatedCartList = data.data.map(item => ({
           ...item,
           quantity: 1,
         }));
         setCartList(updatedCartList);
+      })
+      .catch(error => {
+        console.error('Error fetching cart data:', error);
       });
-  }, []);
+  }, []); // 빈 배열을 넘겨 컴포넌트가 마운트될 때 한 번만 실행됩
 
+  // 선택된 아이템 수와 장바구니 목록 수를 비교하여 전체 선택 상태를 설정하는 useEffect
   useEffect(() => {
-    if (selectedObjectLength > 0 && selectedObjectLength === cartList.length) {
+    if (isSelected && selectedCount === cartList.length) {
       setSelectAll(true);
     } else {
-      return;
+      setSelectAll(false);
     }
-  }, [selectedObjectLength]);
+  }, [selectedItems, cartList]);
 
   return (
     <div className="cart">
@@ -90,19 +100,19 @@ function Cart() {
             id="checkAll"
             className="checkAll"
             type="checkbox"
-            checked={selectAll || selectedObjectLength === cartList.length}
+            checked={selectAll || selectedCount === cartList.length}
             onChange={handleSelectAllChange}
           />
+
           <label htmlFor="checkAll">전체선택</label>
         </div>
-        <button className="deleteBtn" type="button">
-          ㅣ 선택삭제
-        </button>
       </div>
+
       <div className="listBox">
         <div className="itemInfoBox">
           <CartList
             cartList={cartList}
+            setCartList={setCartList}
             selectAll={selectAll}
             setSelectedItems={setSelectedItems}
             selectedItems={selectedItems}
@@ -111,11 +121,9 @@ function Cart() {
       </div>
 
       <div className="cartBtnBox">
-        <button className="getOptionItem" onClick={sendDataToBackend}>
-          선택상품 주문하기
+        <button className="getOptionItem" onClick={sendData}>
+          주문하기
         </button>
-
-        <button className="getAllItems">전체상품 주문하기</button>
       </div>
 
       <div className="cartinfo">
@@ -135,8 +143,7 @@ function Cart() {
           </div>
 
           <div className="countingTime">
-            {' '}
-            <Timer hh="10" mm="0" ss="0" />{' '}
+            <Timer hh="10" mm="0" ss="0" />
           </div>
         </div>
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import './Main.scss';
 import NoticeSlide from '../../components/NoticeSlide/NoticeSlide';
 import BestSlide from '../../components/BestSlide/BestSlide';
@@ -9,8 +9,9 @@ import Nav from '../../components/Nav/Nav';
 
 const Main = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [currentTime, setCurrentTime] = useState(new Date());
-
+  console.log(location);
   const goToLogin = () => {
     navigate('/login');
   };

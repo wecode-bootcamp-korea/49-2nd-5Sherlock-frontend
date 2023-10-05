@@ -1,43 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Counter from '../../components/Counter/Counter';
 import './CartList.scss';
 
-const CartList = ({ setSelectedItems, selectedItems }) => {
-  const [cartList, setCartList] = useState([]);
-
-  useEffect(() => {
-    fetch('/data/cartData.json', {
-      method: 'GET',
-    })
-      .then(res => res.json())
-      .then(data => {
-        const updatedCartList = data.list.map(item => ({
-          ...item,
-          quantity: 1,
-        }));
-        setCartList(updatedCartList);
-      });
-  }, []);
-
+const CartList = ({
+  cartList,
+  setCartList,
+  setSelectedItems,
+  selectedItems,
+}) => {
   const handleCounterChange = (itemId, newQuantity) => {
+    // 상품 수량 변경 시 호출되는 함수
     const updatedCartList = cartList.map(item => {
-      if (item.id === itemId) {
-        item.quantity = newQuantity;
-        item.price = item.originalPrice * (1 - item.discountRate) * newQuantity;
+      if (item.productId === itemId) {
+        // 해당 상품의 수량을 업데이트
+        const updatedItem = {
+          ...item,
+          quantity: newQuantity,
+        };
+        return updatedItem;
+      } else {
+        return item;
       }
-      return item;
     });
-    console.log(updatedCartList);
 
     setCartList(updatedCartList);
   };
 
   const handleCheckboxChange = itemId => {
     setSelectedItems(prevSelectedItems => {
-      return {
+      const updatedSelectedItems = {
         ...prevSelectedItems,
         [itemId]: !prevSelectedItems[itemId],
       };
+
+      return updatedSelectedItems;
     });
   };
 
@@ -47,31 +43,34 @@ const CartList = ({ setSelectedItems, selectedItems }) => {
       // itemId를 가진 데이터가 선택되었으면 해당 데이터를 selectedData에 추가
       const selectedItem = cartList.find(item => item.id === parseInt(itemId));
       if (selectedItem) {
-        selectedData.push(selectedItem);
+        const dataToSend = {
+          id: selectedItem.id,
+          quantity: selectedItem.quantity,
+        };
+        selectedData.push(dataToSend);
       }
     }
   }
 
-  console.log(selectedData);
+  // console.log(selectedData);
 
-  const selectedDataToSend = selectedData.map(item => ({
-    id: item.id,
-    quantity: item.quantity,
-  }));
+  // const selectedDataToSend = selectedData.map(item => ({
+  //   id: item.id,
+  //   quantity: item.quantity,
+  // }));
 
-  console.log(selectedDataToSend);
-
+  // console.log(selectedDataToSend);
   return (
     <>
       {cartList.map(item => (
-        <div className="cartList" key={item.id}>
+        <div className="cartList" key={item.productId}>
           <input
             className="checkBox"
             type="checkbox"
-            checked={selectedItems[item.id]}
-            onChange={() => handleCheckboxChange(item.id)}
+            checked={selectedItems[item.productId] || false}
+            onChange={() => handleCheckboxChange(item.productId)}
           />
-          <img className="image" src={item.imageUrl} alt={item.name} />
+          <img className="image" src={item.url} alt={item.name} />
           <div className="itemInfo">
             <div className="itemName">{item.name}</div>
             <div className="packingItem">{item.package}</div>
@@ -79,17 +78,14 @@ const CartList = ({ setSelectedItems, selectedItems }) => {
           </div>
           <div className="countPrice">
             <Counter
-              itemId={item.id}
+              itemId={item.productId}
               quantity={item.quantity}
               onQuantityChange={handleCounterChange}
             />
-
-            <div className="price">{item.price.toLocaleString()}원</div>
+            <div className="price">
+              {(item.price * item.quantity).toLocaleString()}원
+            </div>
           </div>
-
-          <button className="getBtn" type="button">
-            바로구매
-          </button>
         </div>
       ))}
     </>
