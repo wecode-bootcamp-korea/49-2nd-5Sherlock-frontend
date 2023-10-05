@@ -3,8 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './BestSlide.scss';
 import ProductImgBox from '../../components/ProductImgBox/ProductImgBox';
 
-const BestSlide = props => {
-  const { data } = props;
+const BestSlide = ({ data, onClick }) => {
   const slideWidth = 244;
 
   const navigate = useNavigate();
@@ -53,7 +52,7 @@ const BestSlide = props => {
         >
           {duplicatedSlides.map((slide, index) => (
             <li>
-              <ProductImgBox data={data[0]} />
+              <ProductImgBox data={data[0]} onClick={onClick} />
               <div
                 className="productInfo"
                 onClick={() => {

@@ -13,7 +13,7 @@ const Main = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   // const getList = async () => {
-  //   const response = await fetch(
+  //   return await fetch(
   //     `${BASE_API}/products/bestProducts${window.location.search}`,
   //     {
   //       method: 'GET',
@@ -22,16 +22,38 @@ const Main = () => {
   //         authorization: window.localStorage.getItem('token'),
   //       },
   //     },
-  //   );
-
-  //   const result = await response.json();
-
-  //   setBestData(result);
+  //   )
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       setDataList(data);
+  //     });
   // };
 
   // useEffect(() => {
   //   getList();
   // }, []);
+
+  const postCart = async id => {
+    if (!window.localStorage.getItem('token')) {
+      alert('로그인을 해주세요.');
+      return;
+    }
+
+    if (window.confirm('장바구니에 담으시겠습니까?')) {
+      const response = await fetch(`${BASE_API}/carts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: window.localStorage.getItem('token'),
+        },
+        body: JSON.stringify({ productId: id, quantity: 1 }),
+      });
+
+      if (response.ok) {
+        window.location.reload();
+      }
+    }
+  };
 
   const goToProductList = () => {
     navigate('/BestProductList');
@@ -68,7 +90,7 @@ const Main = () => {
                 <button className="btnCateBest">베스트</button>
               </p>
             </div>
-            <BestSlide data={bestData.data} />
+            <BestSlide data={bestData.data} onClick={postCart} />
             <button className="addView" onClick={goToProductList}>
               더 보기 &gt;
             </button>

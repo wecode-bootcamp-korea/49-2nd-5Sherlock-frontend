@@ -46,7 +46,9 @@ const Login = () => {
       .then(result => {
         if (result.message === 'signInSuccess' && result.token) {
           localStorage.setItem('token', result.token);
+
           navigate('/');
+          window.location.reload();
         } else {
           setErrorMessage('아이디 또는 비밀번호가 맞지 않습니다.');
         }
@@ -68,7 +70,7 @@ const Login = () => {
             className="deleteBtn"
             src="/images/login-img1.png"
             alt="취소버튼"
-            onClick={() => navigate('/')}
+            // onClick={navigate('/')}
           />
         </div>
       </header>

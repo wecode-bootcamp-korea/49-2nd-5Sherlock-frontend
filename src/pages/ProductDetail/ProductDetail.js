@@ -4,6 +4,7 @@ import clipboardCopy from 'clipboard-copy';
 import Modal from '../../components/Modal/Modal';
 import ReviewGrade from '../../components/ReviewGrade/ReviewGrade';
 import ProductReview from '../../components/ProductReview/ProductReview';
+import BASE_API from '../../config';
 import './ProductDetail.scss';
 
 const DUMMY_PRODUCT_DATA = {
@@ -69,21 +70,21 @@ const ProductDetail = () => {
   const offset = searchParams.get('offset');
 
   const getDetailList = () => {
-    // fetch(`${BASE_API}/products/${id}`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json;charset=utf-8',
-    //     authorization: localStorage.getItem('token'),
-    //   },
-    // })
-    //   .then(res => res.json())
-    //   .then(result => {
-    //     setData(result.data);
-    //     if (result.message === 'querySuccess') {
-    //     } else {
-    //       alert('실패');
-    //     }
-    //   });
+    fetch(`${BASE_API}/products/${id}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        authorization: localStorage.getItem('token'),
+      },
+    })
+      .then(res => res.json())
+      .then(result => {
+        setData(result.data);
+        if (result.message === 'querySuccess') {
+        } else {
+          alert('실패');
+        }
+      });
   };
 
   useEffect(() => {
@@ -129,6 +130,26 @@ const ProductDetail = () => {
     setIsCartModalOpen(false);
   };
 
+  const postCart = async id => {
+    if (!window.localStorage.getItem('token')) {
+      alert('로그인을 해주세요.');
+      return;
+    }
+
+    const response = await fetch(`${BASE_API}/carts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: window.localStorage.getItem('token'),
+      },
+      body: JSON.stringify({ productId: id, quantity: 1 }),
+    });
+
+    if (response.ok) {
+      window.location.reload();
+    }
+  };
+
   const goCart = () => {
     navigate('/cart');
   };
@@ -139,6 +160,12 @@ const ProductDetail = () => {
   };
 
   const pointReward = data.originalPrice / 100;
+
+  // const cartInFunction=() => {
+  //   postCart()
+  // }
+
+  console.log(data.id);
 
   return (
     <div className="productDetail">
@@ -343,15 +370,12 @@ const ProductDetail = () => {
               </span>
             </div>
             <div className="btnDecision">
-              <button
-                className="btnGift"
-                onClick={data.token ? goCart : () => setIsGiftModalOpen(true)}
-              >
-                선물하기
-              </button>
+              <button className="btnGift">선물하기</button>
               <button
                 className="btnBasket"
-                onClick={() => setIsCartModalOpen(true)}
+                // onClick={() => {
+                //   setIsCartModalOpen(true);
+                // }}
               >
                 장바구니
               </button>
@@ -403,12 +427,28 @@ const ProductDetail = () => {
             <button className="btnBack" onClick={closeGiftModal}>
               <img src="/images/login-img1.png" alt="닫기 버튼" />
             </button>
-            <p>장바구니로 이동하시겠습니까?</p>
+            <p>
+              장바구니에 담겼습니다! <br />
+              장바구니로 이동하시겠습니까?
+            </p>
             <div className="modalBtnWrapper">
-              <button className="btnOk" onClick={closeGiftModal}>
+              <button
+                className="btnOk"
+                onClick={() => {
+                  closeGiftModal();
+                  postCart(data.id);
+                }}
+              >
                 취소
               </button>
-              <button className="btnClose" onClick={goCart}>
+              <button
+                className="btnClose"
+                onClick={() => {
+                  postCart(data.id);
+                  console.log(`데이터아이디: ${data.id}`);
+                  goCart();
+                }}
+              >
                 확인
               </button>
             </div>
