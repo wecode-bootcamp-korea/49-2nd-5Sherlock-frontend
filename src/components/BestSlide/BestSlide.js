@@ -36,7 +36,7 @@ const BestSlide = ({ data, onClick }) => {
   }, [currentIndex]);
 
   const duplicatedSlides = [...data, ...data];
-  console.log(data);
+
   return (
     <div className="BestSlide">
       <button className="slideButton prevButton" onClick={goToPreviousSlide}>

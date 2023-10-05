@@ -58,8 +58,8 @@ const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [data, setData] = useState(DUMMY_PRODUCT_DATA);
-
+  const [data, setData] = useState({});
+  const [review, setReview] = useState({});
   const [handleSelectToggle, sethandleSelectToggle] = useState(false);
   const [handleSelectToggle2, sethandleSelectToggle2] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -82,6 +82,26 @@ const ProductDetail = () => {
       .then(res => res.json())
       .then(result => {
         setData(result.data);
+
+        if (result.message === 'querySuccess') {
+        } else {
+          alert('실패');
+        }
+      });
+  };
+
+  const getReview = () => {
+    fetch(`${BASE_API}/products/${id}/reviews`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        authorization: localStorage.getItem('token'),
+      },
+    })
+      .then(res => res.json())
+      .then(result => {
+        console.log('오냐?');
+        setReview(result.data);
         if (result.message === 'querySuccess') {
         } else {
           alert('실패');
@@ -91,6 +111,7 @@ const ProductDetail = () => {
 
   useEffect(() => {
     getDetailList();
+    getReview();
   }, []);
 
   const copyToClipboard = () => {
@@ -174,6 +195,10 @@ const ProductDetail = () => {
   //     search: `?${setSearchParams(quary)}&cart=false`,
   //   });
 
+  console.log(review);
+  // console.log(review.reviewsCount);
+  // console.log(review.reviewsList);
+
   return (
     <div className="productDetail">
       <div className="productDetailInner">
@@ -189,7 +214,7 @@ const ProductDetail = () => {
                     : ''
                 }`}</p>
                 <img
-                  src={`${data.productImage}`}
+                  src={`${data.productImages}`}
                   alt="제품상세 시크릿 티세트 이미지"
                 />
               </div>
@@ -242,10 +267,11 @@ const ProductDetail = () => {
               </div>
             </div>
             <div className="reviewWrapper">
-              <ReviewGrade data={data.rating} />
+              <ReviewGrade data={review.averageRating} />
               <div className="goReview">
                 <button>
-                  REVIEW <span className="reviewNum">12 &gt;</span>
+                  REVIEW{' '}
+                  <span className="reviewNum">{review.reviewsCount} &gt;</span>
                 </button>
               </div>
             </div>
@@ -388,7 +414,11 @@ const ProductDetail = () => {
               </button>
               <button
                 className="btnBuy"
-                onClick={data.token ? order : () => setIsBuyModalOpen(true)}
+                onClick={
+                  localStorage.getItem('token')
+                    ? order
+                    : () => setIsBuyModalOpen(true)
+                }
               >
                 바로구매
               </button>
@@ -452,7 +482,7 @@ const ProductDetail = () => {
                 className="btnClose"
                 onClick={() => {
                   postCart(data.id);
-                  console.log(`데이터아이디: ${data.id}`);
+                  // console.log(`데이터아이디: ${data.id}`);
                   goCart();
                 }}
               >
@@ -489,10 +519,10 @@ const ProductDetail = () => {
         )}
       </div>
       <ProductReview
-        reviewsList={DUMMY_REVIEW_DATA.data.reviewsList}
-        reviewsCount={DUMMY_REVIEW_DATA.data.reviewsCount}
-        averageRating={DUMMY_REVIEW_DATA.data.averageRating}
-        // onClick={getReview}
+        reviewsList={review.reviewsList}
+        reviewsCount={review.reviewsCount}
+        averageRating={review.averageRating}
+        onClick={getReview}
         offset={offset}
       />
     </div>
