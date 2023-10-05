@@ -6,40 +6,38 @@ import MainSlide from '../../components/MainSlide/MainSlide';
 import ImgBanner from '../../components/ImgBanner/ImgBanner';
 import BASE_API from '../../config';
 import './Main.scss';
-
 const Main = () => {
-  const [bestData, setBestData] = useState(DUMMY_DATA);
+  const [bestData, setDataList] = useState();
   const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(new Date());
-
-  // const getList = async () => {
-  //   return await fetch(
-  //     `${BASE_API}/products/bestProducts${window.location.search}`,
-  //     {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         authorization: window.localStorage.getItem('token'),
-  //       },
-  //     },
-  //   )
-  //     .then(res => res.json())
-  //     .then(data => {
-  //       setDataList(data);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   getList();
-  // }, []);
-
+  const getList = async () => {
+    console.log('1');
+    fetch(`${BASE_API}/products/bestProducts${window.location.search}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: window.localStorage.getItem('token'),
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log('2');
+        setDataList(data);
+        console.log(data);
+      });
+  };
+  useEffect(() => {
+    console.log('3');
+    getList();
+  }, []);
   const postCart = async id => {
+    console.log('4');
     if (!window.localStorage.getItem('token')) {
       alert('로그인을 해주세요.');
       return;
     }
-
     if (window.confirm('장바구니에 담으시겠습니까?')) {
+      console.log('5');
       const response = await fetch(`${BASE_API}/carts`, {
         method: 'POST',
         headers: {
@@ -48,33 +46,29 @@ const Main = () => {
         },
         body: JSON.stringify({ productId: id, quantity: 1 }),
       });
-
       if (response.ok) {
+        console.log('6');
         window.location.reload();
       }
     }
   };
-
   const goToProductList = () => {
+    console.log('6');
     navigate('/BestProductList');
   };
-
   useEffect(() => {
+    console.log('7');
     const updateCurrentTime = () => {
       setCurrentTime(new Date());
     };
-
     const intervalId = setInterval(updateCurrentTime, 1000);
-
     return () => clearInterval(intervalId);
   }, []);
-
   const today = new Date();
   const hours = today.getHours();
   const minutes = today.getMinutes();
   const seconds = today.getSeconds();
   const formattedTime = `${hours}:${minutes}:${seconds}`;
-
   return (
     <div className="Main">
       <div className="mainBannerSection">
@@ -90,7 +84,11 @@ const Main = () => {
                 <button className="btnCateBest">베스트</button>
               </p>
             </div>
-            <BestSlide data={bestData.data} onClick={postCart} />
+            {bestData?.data ? (
+              <BestSlide data={bestData.data} onClick={postCart} />
+            ) : (
+              ''
+            )}
             <button className="addView" onClick={goToProductList}>
               더 보기 &gt;
             </button>
@@ -164,7 +162,6 @@ const Main = () => {
   );
 };
 export default Main;
-
 const DUMMY_DATA = {
   message: 'querySuccess',
   data: [
@@ -175,7 +172,6 @@ const DUMMY_DATA = {
           id: 2,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
         },
-
         {
           id: 1,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
@@ -199,7 +195,6 @@ const DUMMY_DATA = {
           id: 2,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
         },
-
         {
           id: 1,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
@@ -223,7 +218,6 @@ const DUMMY_DATA = {
           id: 2,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
         },
-
         {
           id: 1,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
@@ -247,7 +241,6 @@ const DUMMY_DATA = {
           id: 2,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
         },
-
         {
           id: 1,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
@@ -271,7 +264,6 @@ const DUMMY_DATA = {
           id: 2,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
         },
-
         {
           id: 1,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
@@ -295,7 +287,6 @@ const DUMMY_DATA = {
           id: 2,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
         },
-
         {
           id: 1,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
@@ -319,7 +310,6 @@ const DUMMY_DATA = {
           id: 2,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
         },
-
         {
           id: 1,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
@@ -343,7 +333,6 @@ const DUMMY_DATA = {
           id: 2,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
         },
-
         {
           id: 1,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
@@ -367,7 +356,6 @@ const DUMMY_DATA = {
           id: 2,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
         },
-
         {
           id: 1,
           url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',

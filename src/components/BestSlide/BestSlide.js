@@ -2,41 +2,41 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './BestSlide.scss';
 import ProductImgBox from '../../components/ProductImgBox/ProductImgBox';
-
 const BestSlide = ({ data, onClick }) => {
+  console.log(data);
   const slideWidth = 244;
-
+  console.log('9');
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [translateX, setTranslateX] = useState(0);
-
   const goToDetail = id => {
+    console.log('10');
     navigate(`/product-detail/${id}`);
   };
-
   useEffect(() => {
+    console.log('11');
     const intervalId = setInterval(goToNextSlide, 3000);
     return () => clearInterval(intervalId);
   }, []);
-
   const goToPreviousSlide = () => {
+    console.log('12');
     setCurrentIndex(prevIndex =>
       prevIndex === 0 ? data.length - 1 : prevIndex - 1,
     );
   };
-
+  console.log('15');
   const goToNextSlide = () => {
+    console.log('14');
     setCurrentIndex(prevIndex =>
       prevIndex === data.length - 1 ? 0 : prevIndex + 1,
     );
   };
-
   useEffect(() => {
+    console.log('18');
     setTranslateX(-currentIndex * slideWidth);
   }, [currentIndex]);
-
-  const duplicatedSlides = [...data, ...data];
-
+  //const duplicatedSlides = [...data, ...data];
+  console.log('20');
   return (
     <div className="BestSlide">
       <button className="slideButton prevButton" onClick={goToPreviousSlide}>
@@ -46,13 +46,13 @@ const BestSlide = ({ data, onClick }) => {
         <ul
           className="slideList"
           style={{
-            width: `${duplicatedSlides.length * slideWidth}px`,
+            width: `${data?.length * slideWidth}px`,
             transform: `translateX(${translateX}px)`,
           }}
         >
-          {duplicatedSlides.map((slide, index) => (
+          {data?.map((slide, index) => (
             <li>
-              <ProductImgBox data={data[0]} onClick={onClick} />
+              <ProductImgBox data={slide} onClick={onClick} />
               <div
                 className="productInfo"
                 onClick={() => {
@@ -81,5 +81,4 @@ const BestSlide = ({ data, onClick }) => {
     </div>
   );
 };
-
 export default BestSlide;
