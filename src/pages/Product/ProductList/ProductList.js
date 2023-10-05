@@ -234,7 +234,7 @@ const ProductList = () => {
     productCount: 150,
   };
 
-  const [dataList, setDataList] = useState({});
+  const [dataList, setDataList] = useState(data);
   const [cartNumber, setCartNumber] = useState();
   const offset = searchParams.get('offset');
   const limit = searchParams.get('limit');
@@ -243,56 +243,56 @@ const ProductList = () => {
   const product_type = searchParams.get('product_type');
 
   const getList = async () => {
-    return await fetch(
-      `http://${Address.address}/products?${searchParams.toString()}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: window.sessionStorage.getItem('token'),
-        },
-      },
-    )
-      .then(res => res.json())
-      .then(data => {
-        setDataList(data);
-      });
+    // return await fetch(
+    //   `http://${Address.address}/products?${searchParams.toString()}`,
+    //   {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       authorization: window.sessionStorage.getItem('token'),
+    //     },
+    //   },
+    // )
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     setDataList(data);
+    //   });
   };
 
   const getCart = async () => {
-    return await fetch(`http://${Address.address}/carts/count`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: window.localStorage.getItem('token'),
-      },
-    })
-      .then(res => res.json())
-      .then(result => {
-        setCartNumber(result.cartItemCount);
-      });
+    // return await fetch(`http://${Address.address}/carts/count`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     authorization: window.localStorage.getItem('token'),
+    //   },
+    // })
+    //   .then(res => res.json())
+    //   .then(result => {
+    //     setCartNumber(result.cartItemCount);
+    //   });
   };
 
   const postCart = async id => {
-    return await fetch(`http://${Address.address}/carts`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: window.localStorage.getItem('token'),
-      },
-      body: JSON.stringify({ productId: id, quantity: 1 }),
-    });
+    // return await fetch(`http://${Address.address}/carts`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     authorization: window.localStorage.getItem('token'),
+    //   },
+    //   body: JSON.stringify({ productId: id, quantity: 1 }),
+    // });
   };
 
   const postCartFunction = id => {
-    if (!window.localStorage.getItem('token')) {
-      alert('로그인을 해주세요.');
-      return;
-    }
-    console.log(id);
-    postCart(id).then(() => {
-      getCart();
-    });
+    // if (!window.localStorage.getItem('token')) {
+    //   alert('로그인을 해주세요.');
+    //   return;
+    // }
+    // console.log(id);
+    // postCart(id).then(() => {
+    //   getCart();
+    // });
   };
 
   useEffect(() => {
@@ -446,8 +446,6 @@ const ProductList = () => {
     { id: 5, text: '파우더', productType: '4' },
   ];
 
-  console.log(`카트개수: ${cartNumber}`);
-
   return (
     <div className="productList">
       <Nav cartNumber={cartNumber} />
@@ -583,9 +581,10 @@ const ProductList = () => {
               />
               <Pagination
                 productCount={dataList.productCount}
-                getList={getList}
+                onClick={getList}
                 offset={offset}
-                limit={limit}
+                pageLength="5"
+                pageProductNumber="3"
               />
             </div>
           </div>
