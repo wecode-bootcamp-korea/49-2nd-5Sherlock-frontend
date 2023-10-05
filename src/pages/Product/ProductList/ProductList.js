@@ -1,241 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import ProductListContainer from '../../../components/ProductListContainer/ProductListContainer';
 import WhiteFilterButton from '../../../components/WhiteFilterButton/WhiteFilterButton';
 import GreenFilterButton from '../../../components/GreenFilterButton/GreenFilterButton';
-import { useSearchParams } from 'react-router-dom';
 import Pagination from '../../../components/Pagination/Pagination';
+import BASE_API from '../../../config';
 import './ProductList.scss';
-import Nav from '../../../components/Nav/Nav';
-import Address from '../../../components/Address/Address';
 
 const ProductList = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const data = {
-    message: 'querySuccess',
-    data: [
-      {
-        id: 999,
-        productImg: [
-          {
-            id: 2,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
-          },
-
-          {
-            id: 1,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
-          },
-        ],
-        category: '티 제품',
-        price: 27000,
-        originalPrice: 30000,
-        discountRate: 10,
-        likeNumber: 77,
-        reviewNumber: 107,
-        isNew: true,
-        quantity: 0,
-        isLike: true,
-        name: '우롱차',
-      },
-      {
-        id: 2,
-        productImg: [
-          {
-            id: 2,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
-          },
-
-          {
-            id: 1,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
-          },
-        ],
-        category: '과자 세트',
-        price: 41000,
-        // originalPrice: 10000,
-        // discountRate: 70,
-        likeNumber: 123,
-        reviewNumber: 456,
-        isNew: false,
-        quantity: 10,
-        isLike: false,
-        name: '과자 세트',
-      },
-      {
-        id: 3,
-        productImg: [
-          {
-            id: 2,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
-          },
-
-          {
-            id: 1,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
-          },
-        ],
-        category: '티 제품',
-        price: 27000,
-        originalPrice: 30000,
-        discountRate: 10,
-        likeNumber: 77,
-        reviewNumber: 107,
-        isNew: true,
-        quantity: 0,
-        isLike: true,
-        name: '우롱차',
-      },
-      {
-        id: 4,
-        productImg: [
-          {
-            id: 2,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
-          },
-
-          {
-            id: 1,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
-          },
-        ],
-        category: '티 제품',
-        price: 27000,
-        originalPrice: 30000,
-        discountRate: 10,
-        likeNumber: 77,
-        reviewNumber: 107,
-        isNew: true,
-        quantity: 0,
-        isLike: true,
-        name: '우롱차',
-      },
-      {
-        id: 5,
-        productImg: [
-          {
-            id: 2,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
-          },
-
-          {
-            id: 1,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
-          },
-        ],
-        category: '티 제품',
-        price: 27000,
-        originalPrice: 30000,
-        discountRate: 10,
-        likeNumber: 77,
-        reviewNumber: 107,
-        isNew: true,
-        quantity: 0,
-        isLike: true,
-        name: '우롱차',
-      },
-      {
-        id: 6,
-        productImg: [
-          {
-            id: 2,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
-          },
-
-          {
-            id: 1,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
-          },
-        ],
-        category: '티 제품',
-        price: 27000,
-        originalPrice: 30000,
-        discountRate: 10,
-        likeNumber: 77,
-        reviewNumber: 107,
-        isNew: true,
-        quantity: 0,
-        isLike: true,
-        name: '우롱차',
-      },
-      {
-        id: 7,
-        productImg: [
-          {
-            id: 2,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
-          },
-
-          {
-            id: 1,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
-          },
-        ],
-        category: '티 제품',
-        price: 27000,
-        originalPrice: 30000,
-        discountRate: 10,
-        likeNumber: 77,
-        reviewNumber: 107,
-        isNew: true,
-        quantity: 0,
-        isLike: true,
-        name: '우롱차',
-      },
-      {
-        id: 8,
-        productImg: [
-          {
-            id: 2,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
-          },
-
-          {
-            id: 1,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
-          },
-        ],
-        category: '티 제품',
-        price: 27000,
-        originalPrice: 30000,
-        discountRate: 10,
-        likeNumber: 77,
-        reviewNumber: 107,
-        isNew: true,
-        quantity: 0,
-        isLike: true,
-        name: '우롱차',
-      },
-      {
-        id: 9,
-        productImg: [
-          {
-            id: 2,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/NK/UF/304_20221114150238508QK.png',
-          },
-
-          {
-            id: 1,
-            url: 'https://image.osulloc.com/upload/kr/ko/adminImage/HW/AQ/304_20220921131344082JD.png',
-          },
-        ],
-        category: '티 제품',
-        price: 27000,
-        originalPrice: 30000,
-        discountRate: 10,
-        likeNumber: 77,
-        reviewNumber: 107,
-        isNew: true,
-        quantity: 0,
-        isLike: true,
-        name: '우롱차',
-      },
-    ],
-    productCount: 150,
-  };
-
-  const [dataList, setDataList] = useState(data);
-  const [cartNumber, setCartNumber] = useState();
+  const [dataList, setDataList] = useState({});
   const offset = searchParams.get('offset');
   const limit = searchParams.get('limit');
   const category = searchParams.get('category');
@@ -243,70 +17,46 @@ const ProductList = () => {
   const product_type = searchParams.get('product_type');
 
   const getList = async () => {
-    // return await fetch(
-    //   `http://${Address.address}/products?${searchParams.toString()}`,
-    //   {
-    //     method: 'GET',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       authorization: window.sessionStorage.getItem('token'),
-    //     },
-    //   },
-    // )
-    //   .then(res => res.json())
-    //   .then(data => {
-    //     setDataList(data);
-    //   });
-  };
+    const response = await fetch(
+      // `/data/listData.json`,
+      `${BASE_API}/products?${searchParams.toString()}`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: window.sessionStorage.getItem('token'),
+        },
+      },
+    );
 
-  const getCart = async () => {
-    // return await fetch(`http://${Address.address}/carts/count`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     authorization: window.localStorage.getItem('token'),
-    //   },
-    // })
-    //   .then(res => res.json())
-    //   .then(result => {
-    //     setCartNumber(result.cartItemCount);
-    //   });
+    const result = await response.json();
+
+    setDataList(result);
   };
 
   const postCart = async id => {
-    // return await fetch(`http://${Address.address}/carts`, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     authorization: window.localStorage.getItem('token'),
-    //   },
-    //   body: JSON.stringify({ productId: id, quantity: 1 }),
-    // });
-  };
+    if (!window.localStorage.getItem('token')) {
+      alert('로그인을 해주세요.');
+      return;
+    }
 
-  const postCartFunction = id => {
-    // if (!window.localStorage.getItem('token')) {
-    //   alert('로그인을 해주세요.');
-    //   return;
-    // }
-    // console.log(id);
-    // postCart(id).then(() => {
-    //   getCart();
-    // });
+    const response = await fetch(`${BASE_API}/carts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: window.localStorage.getItem('token'),
+      },
+      body: JSON.stringify({ productId: id, quantity: 1 }),
+    });
+
+    if (response.ok) {
+      window.location.reload();
+    }
   };
 
   useEffect(() => {
     getList();
   }, [searchParams]);
-
-  useEffect(() => {
-    if (!window.localStorage.getItem('token')) {
-      getList();
-      return;
-    }
-    getCart();
-    getList();
-  }, []);
 
   // 배너 Img 설명
   let categoryImg;
@@ -415,40 +165,8 @@ const ProductList = () => {
     setSearchParams(searchParams);
   };
 
-  const TEA_PRODUCT_LIST = [
-    { id: 1, text: '전체상품', category: 'tea' },
-    { id: 2, text: '티세트', category: '1' },
-    { id: 3, text: '명차', category: '2' },
-    { id: 4, text: '녹차/말차', category: '3' },
-    { id: 5, text: '발효차/홍차', category: '4' },
-  ];
-
-  const TEA_FOOD_LIST = [
-    { id: 1, text: '전체상품', category: 'teafood' },
-    { id: 2, text: '과자/초콜릿', category: '5' },
-    { id: 3, text: '베이커리', category: '6' },
-    { id: 4, text: '아이스크림', category: '7' },
-  ];
-
-  const SORTING_LIST = [
-    { id: 1, text: '추천순', sort: null },
-    { id: 2, text: '판매순', sort: 'review' },
-    { id: 3, text: '신상품순', sort: 'created_at' },
-    { id: 4, text: '높은 가격순', sort: 'price' },
-    { id: 5, text: '낮은 가격순', sort: '-price' },
-  ];
-
-  const PRODUCT_TYPE_LIST = [
-    { id: 1, text: '전체', productType: undefined },
-    { id: 2, text: '잎차', productType: '1' },
-    { id: 3, text: '피라미드', productType: '2' },
-    { id: 4, text: '티백', productType: '3' },
-    { id: 5, text: '파우더', productType: '4' },
-  ];
-
   return (
     <div className="productList">
-      <Nav cartNumber={cartNumber} />
       <div className="bannerBox">
         <h2 className="bannerName">{categoryTitle}</h2>
         <img src={process.env.PUBLIC_URL + categoryImg} />
@@ -575,16 +293,13 @@ const ProductList = () => {
                   </div>
                 ) : null}
               </div>
-              <ProductListContainer
-                data={dataList.data}
-                onClick={postCartFunction}
-              />
+              <ProductListContainer data={dataList.data} onClick={postCart} />
               <Pagination
                 productCount={dataList.productCount}
                 onClick={getList}
                 offset={offset}
                 pageLength="5"
-                pageProductNumber="3"
+                pageProductNumber="12"
               />
             </div>
           </div>
@@ -594,3 +309,34 @@ const ProductList = () => {
   );
 };
 export default ProductList;
+
+const TEA_PRODUCT_LIST = [
+  { id: 1, text: '전체상품', category: 'tea' },
+  { id: 2, text: '티세트', category: '1' },
+  { id: 3, text: '명차', category: '2' },
+  { id: 4, text: '녹차/말차', category: '3' },
+  { id: 5, text: '발효차/홍차', category: '4' },
+];
+
+const TEA_FOOD_LIST = [
+  { id: 1, text: '전체상품', category: 'teafood' },
+  { id: 2, text: '과자/초콜릿', category: '5' },
+  { id: 3, text: '베이커리', category: '6' },
+  { id: 4, text: '아이스크림', category: '7' },
+];
+
+const SORTING_LIST = [
+  { id: 1, text: '추천순', sort: null },
+  { id: 2, text: '판매순', sort: 'review' },
+  { id: 3, text: '신상품순', sort: 'created_at' },
+  { id: 4, text: '높은 가격순', sort: 'price' },
+  { id: 5, text: '낮은 가격순', sort: '-price' },
+];
+
+const PRODUCT_TYPE_LIST = [
+  { id: 1, text: '전체', productType: undefined },
+  { id: 2, text: '잎차', productType: '1' },
+  { id: 3, text: '피라미드', productType: '2' },
+  { id: 4, text: '티백', productType: '3' },
+  { id: 5, text: '파우더', productType: '4' },
+];

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-
-import './ProductReview.scss';
 import ReviewGrade from '../ReviewGrade/ReviewGrade';
 import Pagination from '../Pagination/Pagination';
 import StarRating from '../StarRating/StarRating';
+// import BASE_API from '../../config';
+import './ProductReview.scss';
 
 const ProductReview = props => {
   const { reviewsList, reviewsCount, averageRating, onClick, offset } = props;
@@ -15,7 +15,7 @@ const ProductReview = props => {
   console.log(offset);
   // const getList = async () => {
   //   return await fetch(
-  //     `http://${Address.address}/products?${searchParams.toString()}`,
+  //     `${BASE_API}/products?${searchParams.toString()}`,
   //     {
   //       method: 'GET',
   //       headers: {

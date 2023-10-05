@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
+import BASE_API from '../../config';
 import './Login.scss';
-import Nav from '../../components/Nav/Nav';
-import Address from '../../components/Address/Address';
 
 const idReg = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 const pwReg = /^[.@!#$%&'*+-/=?^_`{|}~\w\d]{9,}$/;
@@ -31,7 +30,7 @@ const Login = () => {
 
   const handleLogin = e => {
     e.preventDefault();
-    fetch(`http://${Address.address}/users/signIn`, {
+    fetch(`${BASE_API}/users/signIn`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -75,7 +74,6 @@ const Login = () => {
       </header>
 
       <div className="loginBox">
-        <Nav />
         <div className="container">
           <span className="loginGuideText">
             아모레퍼시픽 뷰티포인트 통합회원
