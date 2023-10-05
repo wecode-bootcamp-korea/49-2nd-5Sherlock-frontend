@@ -57,7 +57,9 @@ const DUMMY_REVIEW_DATA = {
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+
   const [data, setData] = useState(DUMMY_PRODUCT_DATA);
+
   const [handleSelectToggle, sethandleSelectToggle] = useState(false);
   const [handleSelectToggle2, sethandleSelectToggle2] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -87,9 +89,11 @@ const ProductDetail = () => {
       });
   };
 
+
   useEffect(() => {
     getDetailList();
   }, []);
+
 
   const copyToClipboard = () => {
     const currentURL = 'window.location.href';
@@ -161,14 +165,27 @@ const ProductDetail = () => {
 
   const pointReward = data.originalPrice / 100;
 
-  // const cartInFunction=() => {
-  //   postCart()
-  // }
 
-  console.log(data.id);
+
+  const goLogin = () => {
+    navigate('/login');
+  };
+
+  const order = () => {
+    const items = [{ id: data.id, quantity: productCount }];
+    navigate('/order', { state: { items, cart: false } });
+  };
+
+  // const quary = [{ id: data.id, quantity: productCount }];
+  // const goToPosts = () =>
+  //   navigate({
+  //     pathname: '/order',
+  //     search: `?${setSearchParams(quary)}&cart=false`,
+  //   });
 
   return (
     <div className="productDetail">
+
       <div className="productDetailInner">
         <div className="orderWrapper">
           <div className="leftWrapper">
@@ -185,6 +202,7 @@ const ProductDetail = () => {
                   src={`${data.productImage}`}
                   alt="제품상세 시크릿 티세트 이미지"
                 />
+
               </div>
               <div className="relationTo">
                 <ul>
@@ -293,6 +311,7 @@ const ProductDetail = () => {
                       : null}
                     원
                   </span>
+
                 </span>
                 <span className="discount"> {data.discountRate}%</span>
                 <span className="lineText">{data.originalPrice}</span>
@@ -316,6 +335,7 @@ const ProductDetail = () => {
                   className={`packagingSelect ${
                     data.packageService ? 'on' : ''
                   }`}
+
                 >
                   <div className="selected" onClick={selectToggle2}>
                     <div className="selectedValue">
@@ -482,10 +502,17 @@ const ProductDetail = () => {
         )}
       </div>
       <ProductReview
+
         reviewsList={DUMMY_REVIEW_DATA.data.reviewsList}
         reviewsCount={DUMMY_REVIEW_DATA.data.reviewsCount}
         averageRating={DUMMY_REVIEW_DATA.data.averageRating}
-        onClick={getDetailList}
+        onClick={getReview}
+        
+        
+        
+        
+        
+
         offset={offset}
       />
     </div>
