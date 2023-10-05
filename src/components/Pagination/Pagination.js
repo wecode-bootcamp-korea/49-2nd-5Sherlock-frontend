@@ -2,24 +2,23 @@ import React, { useState, useEffect } from 'react';
 import './Pagination.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import { useSearchParams } from 'react-router-dom';
-const Pagination = props => {
-  const [change, setChange] = useState(true);
-  const navigate = useNavigate();
-  const { productCount, getList, offset, limit } = props;
+const Pagination = ({
+  productCount,
+  onClick,
+  offset,
+  pageLength,
+  pageProductNumber,
+}) => {
   const [searchParams, setSearchParams] = useSearchParams();
-  let pageLength = 5;
-  let pageProductNumber = 12;
   let page = 1;
   if (productCount >= pageProductNumber) {
     page = Math.ceil(productCount / pageProductNumber);
   }
-
   //   for(let i=1;i<=Math.ceil(productCount/(pageLength*pageProductNumber))){
   //     if(offset<=(i*(pageLength*pageProductNumber)-pageProductNumber)){
   //         offsetBox=i;
   //       }
   //   }
-
   let pageList = [];
   for (let i = 1; i < page + 1; i++) {
     if (i === 1) {
@@ -27,12 +26,11 @@ const Pagination = props => {
     } else {
       pageList.push({
         id: i,
-        offset: (i - 1) * 12,
+        offset: (i - 1) * pageProductNumber,
         offsetBox: Math.ceil(i / pageLength),
       });
     }
   }
-
   const goToPage = param => {
     if (param < 0) {
       return;
@@ -41,14 +39,18 @@ const Pagination = props => {
       pageProductNumber * Math.floor(productCount / pageProductNumber)
     ) {
       return;
+    } else if (param === productCount) {
+      return;
     }
-
     searchParams.set('offset', param);
     searchParams.set('limit', pageProductNumber);
     setSearchParams(searchParams);
-    getList();
+    onClick();
   };
-
+  console.log(
+    pageProductNumber * Math.floor(productCount / pageProductNumber) -
+      pageProductNumber,
+  );
   return (
     <div className="pagination">
       <div className="paginationBox">
@@ -66,7 +68,7 @@ const Pagination = props => {
         <div
           className="btnPrev btnArrow"
           onClick={() => {
-            goToPage(Number(offset) - pageProductNumber);
+            goToPage(Number(offset) - Number(pageProductNumber));
           }}
         >
           <img
@@ -74,13 +76,13 @@ const Pagination = props => {
             alt="btnPrev"
           ></img>
         </div>
-
         <div className="pageBox">
           {pageList.map(page => {
             if (
               page.offsetBox ==
               Math.ceil(
-                (Number(offset) + 12) / (pageLength * pageProductNumber),
+                (Number(offset) + Number(pageProductNumber)) /
+                  (pageLength * pageProductNumber),
               )
             ) {
               return (
@@ -101,11 +103,10 @@ const Pagination = props => {
             }
           })}
         </div>
-
         <div
           className="btnNext btnArrow"
           onClick={() => {
-            goToPage(Number(offset) + pageProductNumber);
+            goToPage(Number(offset) + Number(pageProductNumber));
           }}
         >
           <img
@@ -117,7 +118,8 @@ const Pagination = props => {
           className="btnEnd btnArrow"
           onClick={() => {
             goToPage(
-              pageProductNumber * Math.floor(productCount / pageProductNumber),
+              pageProductNumber * Math.floor(productCount / pageProductNumber) -
+                pageProductNumber,
             );
           }}
         >

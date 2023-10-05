@@ -29,9 +29,9 @@ const ReviewGrade = props => {
     <div className="reviewGrade">
       <span className="reviewText">리뷰 평점</span>
       <p>
-        {data.rating}
+        {data}
         <span className="countStar">
-          <img src={getStarImage(data.rating)} alt="별점 5점" />
+          <img src={getStarImage(data)} alt="별점 5점" />
         </span>
       </p>
     </div>

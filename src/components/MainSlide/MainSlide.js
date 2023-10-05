@@ -7,7 +7,7 @@ const MainSlide = props => {
   useEffect(() => {
     const intervalId2 = setInterval(() => {
       setCurrentIndex(prevIndex => (prevIndex === 4 ? 0 : prevIndex + 1));
-    }, 1000);
+    }, 3000);
     return () => clearInterval(intervalId2);
   }, []);
 

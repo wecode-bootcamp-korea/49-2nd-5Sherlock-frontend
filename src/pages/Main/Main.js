@@ -279,8 +279,6 @@ const Main = () => {
   const minutes = today.getMinutes();
   const seconds = today.getSeconds();
   const formattedTime = `${hours}:${minutes}:${seconds}`;
-  console.log('메인에서 도네요');
-  console.log(bestData);
   return (
     <div className="Main">
       <Nav />
@@ -325,10 +323,16 @@ const Main = () => {
           <h2>다다일상 구독</h2>
           <p>다채로운 차 향기로 더욱 풍요로워지는 티 라이프를 만나보세요.</p>
           <div className="boxWrapper">
-            <div className="leftBox"></div>
+            <div className="leftBox">
+              <img src="/images/main/banner-m.png" alt="배너사진 중" />
+            </div>
             <div className="rightBox">
-              <div className="box box1"></div>
-              <div className="box box2"></div>
+              <div className="box box1">
+                <img src="/images/main/banner-s1.png" alt="배너사진 소1" />
+              </div>
+              <div className="box box2">
+                <img src="/images/main/banner-s2.png" alt="배너사진 소2" />
+              </div>
             </div>
           </div>
         </div>

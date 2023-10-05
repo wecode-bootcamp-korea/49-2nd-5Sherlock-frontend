@@ -1,5 +1,5 @@
 import React, { useState, useEffect, Link } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import './ProductDetail.scss';
 import clipboardCopy from 'clipboard-copy';
 
@@ -10,6 +10,8 @@ import Nav from '../../components/Nav/Nav';
 import ReviewGrade from '../../components/ReviewGrade/ReviewGrade';
 
 import Address from '../../components/Address/Address';
+
+import ProductReview from '../../components/ProductReview/ProductReview';
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -25,12 +27,42 @@ const ProductDetail = () => {
     packageService: true,
     categoryName: '티 세트',
     categoryId: 1,
-    descriptionImage: '/images/product-img1.png',
+    productImage: '/images/product-img1.png',
     token: 'dd',
     rating: '4.8',
+    isNew: true,
+    quantity: 1,
   };
 
-  const [data, setData] = useState({});
+  const myReviewData = {
+    message: 'quarySuccess',
+    data: {
+      reviewsList: [
+        {
+          id: 1,
+          content: '1번차 좋아요',
+          rating: 4.8,
+          url: '/images/review/reviewImage.jpg',
+          createdAt: '2023.09.30',
+          authorId: 1,
+          authorName: '오셜록',
+        },
+        {
+          id: 1,
+          content: '1번차 좋아요',
+          rating: 2.5,
+          url: '/images/review/reviewImage.jpg',
+          createdAt: '2023.09.30',
+          authorId: 1,
+          authorName: '오셜록',
+        },
+      ],
+      reviewsCount: 60,
+      averageRating: 4.5,
+    },
+  };
+
+  const [data, setData] = useState(myData);
   const [handleSelectToggle, sethandleSelectToggle] = useState(false);
   const [handleSelectToggle2, sethandleSelectToggle2] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -41,45 +73,31 @@ const ProductDetail = () => {
   const [isCartModalOpen, setIsCartModalOpen] = useState(false);
   const [isBuyModalOpen, setIsBuyModalOpen] = useState(false);
 
-  useEffect(() => {
-    fetch(`http://${Address.address}/products/${id}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        authorization: localStorage.getItem('token'),
-      },
-    })
-      .then(res => res.json())
-      .then(result => {
-        setData(result.data);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const offset = searchParams.get('offset');
 
-        if (result.message === 'querySuccess') {
-        } else {
-          alert('실패');
-        }
-      });
-  }, []);
-
-  useEffect(() => {
-    // fetch(`http://10.58.52.200:8000/products/1`, {
+  const getDetailList = () => {
+    // fetch(`http://${Address.address}/products/${id}`, {
     //   method: 'GET',
     //   headers: {
     //     'Content-Type': 'application/json;charset=utf-8',
     //     authorization: localStorage.getItem('token'),
     //   },
-    // }).then(() => setData(myData));
-    // //   .then(res => {
-    // //     if (res.status !== 200) {
-    // //       alert('실패');
-    // //     }
-    // //     return res.json();
-    // //   })
-    // //   .then(result => {
-    // //     setData(result.data[0]);
-    // //     console.log(result.data[0]);
-    // //   });
-  }, []);
-  localStorage.getItem('token');
+    // })
+    //   .then(res => res.json())
+    //   .then(result => {
+    //     setData(result.data);
+    //     if (result.message === 'querySuccess') {
+    //     } else {
+    //       alert('실패');
+    //     }
+    //   });
+  };
+
+  // useEffect(() => {
+  //   fetch(`http://${Address.address}/products/${id}`, {
+  // getDetailList();
+  // }, []);
 
   const copyToClipboard = () => {
     const currentURL = 'window.location.href';
@@ -155,9 +173,15 @@ const ProductDetail = () => {
             <div className="leftWrapper">
               <div className="productImgWrapper">
                 <div className="productImg">
-                  <p className="badge">추천</p>
+                  <p className="badge">{`${
+                    data.quantity === 0
+                      ? '일시품절'
+                      : '' && data.isNew
+                      ? '신제품'
+                      : ''
+                  }`}</p>
                   <img
-                    src={`${data.descriptionImage}`}
+                    src={`${data.productImage}`}
                     alt="제품상세 시크릿 티세트 이미지"
                   />
                 </div>
@@ -215,7 +239,7 @@ const ProductDetail = () => {
                 </div>
               </div>
               <div className="reviewWrapper">
-                <ReviewGrade data={data} />
+                <ReviewGrade data={data.rating} />
                 <div className="goReview">
                   <button>
                     REVIEW <span className="reviewNum">12 &gt;</span>
@@ -443,6 +467,13 @@ const ProductDetail = () => {
           )}
         </div>
       }
+      <ProductReview
+        reviewsList={myReviewData.data.reviewsList}
+        reviewsCount={myReviewData.data.reviewsCount}
+        averageRating={myReviewData.data.averageRating}
+        onClick={getDetailList}
+        offset={offset}
+      />
     </div>
   );
 };
