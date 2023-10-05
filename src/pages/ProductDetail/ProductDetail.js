@@ -89,11 +89,9 @@ const ProductDetail = () => {
       });
   };
 
-
   useEffect(() => {
     getDetailList();
   }, []);
-
 
   const copyToClipboard = () => {
     const currentURL = 'window.location.href';
@@ -158,14 +156,7 @@ const ProductDetail = () => {
     navigate('/cart');
   };
 
-  const order = () => {
-    const items = [{ id: data.id, quantity: productCount }];
-    navigate('/order', { state: { items, cart: false } });
-  };
-
   const pointReward = data.originalPrice / 100;
-
-
 
   const goLogin = () => {
     navigate('/login');
@@ -185,7 +176,6 @@ const ProductDetail = () => {
 
   return (
     <div className="productDetail">
-
       <div className="productDetailInner">
         <div className="orderWrapper">
           <div className="leftWrapper">
@@ -202,7 +192,6 @@ const ProductDetail = () => {
                   src={`${data.productImage}`}
                   alt="제품상세 시크릿 티세트 이미지"
                 />
-
               </div>
               <div className="relationTo">
                 <ul>
@@ -311,7 +300,6 @@ const ProductDetail = () => {
                       : null}
                     원
                   </span>
-
                 </span>
                 <span className="discount"> {data.discountRate}%</span>
                 <span className="lineText">{data.originalPrice}</span>
@@ -335,7 +323,6 @@ const ProductDetail = () => {
                   className={`packagingSelect ${
                     data.packageService ? 'on' : ''
                   }`}
-
                 >
                   <div className="selected" onClick={selectToggle2}>
                     <div className="selectedValue">
@@ -502,17 +489,10 @@ const ProductDetail = () => {
         )}
       </div>
       <ProductReview
-
         reviewsList={DUMMY_REVIEW_DATA.data.reviewsList}
         reviewsCount={DUMMY_REVIEW_DATA.data.reviewsCount}
         averageRating={DUMMY_REVIEW_DATA.data.averageRating}
-        onClick={getReview}
-        
-        
-        
-        
-        
-
+        // onClick={getReview}
         offset={offset}
       />
     </div>
