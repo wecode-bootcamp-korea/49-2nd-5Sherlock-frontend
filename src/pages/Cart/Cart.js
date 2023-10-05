@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import CheckBox from '../../components/CheckBox/CheckBox';
 import Timer from '../../components/Timer/Timer';
 import './Cart.scss';
-import Address from '../../components/Address/Address';
 
 const Cart = () => {
+  const navigate = useNavigate();
   const [productList, setProductList] = useState([]);
 
   useEffect(() => {
@@ -16,6 +17,15 @@ const Cart = () => {
         setProductList(data);
       });
   }, []);
+
+  const order = () => {
+    const items = [
+      { id: 2, quantity: 1 },
+      { id: 3, quantity: 2 },
+    ];
+
+    navigate('/order', { state: { items, cart: true } });
+  };
 
   return (
     <div className="cart">
@@ -51,7 +61,9 @@ const Cart = () => {
 
       <div className="cartBtnBox">
         <button className="getOptionItem">선택상품 주문하기</button>
-        <button className="getAllItems">전체상품 주문하기</button>
+        <button className="getAllItems" onClick={order}>
+          전체상품 주문하기
+        </button>
       </div>
       <div className="cartinfo">
         <img className="cartimg"></img>

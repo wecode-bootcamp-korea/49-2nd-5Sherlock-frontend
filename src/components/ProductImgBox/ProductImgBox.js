@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import './ProductImgBox.scss';
 import { useNavigate } from 'react-router-dom';
-import Address from '../Address/Address';
+import BASE_API from '../../config';
+import './ProductImgBox.scss';
 
 const ProductImgBox = ({ data, children, onClick }) => {
   const navigate = useNavigate();
@@ -22,7 +22,7 @@ const ProductImgBox = ({ data, children, onClick }) => {
   // };
 
   // const goCart = async () => {
-  //   return await fetch(`http://10.58.52.176:8000/cart`, {
+  //   return await fetch(`${BASE_API}/cart`, {
   //     method: 'POST',
   //     headers: {
   //       'Content-Type': 'application/json',
