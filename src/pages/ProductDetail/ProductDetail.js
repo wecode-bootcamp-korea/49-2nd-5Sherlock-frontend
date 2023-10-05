@@ -32,9 +32,10 @@ const ProductDetail = () => {
     rating: '4.8',
     isNew: true,
     quantity: 1,
+    id: 777,
   };
 
-  const myReviewData = {
+  const myReviewDataTest = {
     message: 'quarySuccess',
     data: {
       reviewsList: [
@@ -42,7 +43,7 @@ const ProductDetail = () => {
           id: 1,
           content: '1번차 좋아요',
           rating: 4.8,
-          url: '/images/review/reviewImage.jpg',
+          url: '/images/product-img1.jpg',
           createdAt: '2023.09.30',
           authorId: 1,
           authorName: '오셜록',
@@ -51,7 +52,7 @@ const ProductDetail = () => {
           id: 1,
           content: '1번차 좋아요',
           rating: 2.5,
-          url: '/images/review/reviewImage.jpg',
+          url: '/images/product-img1.jpg',
           createdAt: '2023.09.30',
           authorId: 1,
           authorName: '오셜록',
@@ -63,6 +64,7 @@ const ProductDetail = () => {
   };
 
   const [data, setData] = useState(myData);
+  const [myReviewData, setmyReviewData] = useState(myReviewDataTest);
   const [handleSelectToggle, sethandleSelectToggle] = useState(false);
   const [handleSelectToggle2, sethandleSelectToggle2] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -87,6 +89,24 @@ const ProductDetail = () => {
     //   .then(res => res.json())
     //   .then(result => {
     //     setData(result.data);
+    //     if (result.message === 'querySuccess') {
+    //     } else {
+    //       alert('실패');
+    //     }
+    //   });
+  };
+
+  const getReview = () => {
+    // fetch(`http://${Address.address}/products/review/${offset}`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json;charset=utf-8',
+    //     authorization: localStorage.getItem('token'),
+    //   },
+    // })
+    //   .then(res => res.json())
+    //   .then(result => {
+    //     setmyReviewData(result.data);
     //     if (result.message === 'querySuccess') {
     //     } else {
     //       alert('실패');
@@ -161,8 +181,24 @@ const ProductDetail = () => {
   };
 
   const goCart = () => {
-    navigate('/Cart');
+    navigate('/cart');
   };
+
+  const goLogin = () => {
+    navigate('/login');
+  };
+
+  const order = () => {
+    const items = [{ id: data.id, quantity: productCount }];
+    navigate('/order', { state: { items, cart: false } });
+  };
+
+  // const quary = [{ id: data.id, quantity: productCount }];
+  // const goToPosts = () =>
+  //   navigate({
+  //     pathname: '/order',
+  //     search: `?${setSearchParams(quary)}&cart=false`,
+  //   });
 
   return (
     <div className="productDetail">
@@ -174,12 +210,9 @@ const ProductDetail = () => {
               <div className="productImgWrapper">
                 <div className="productImg">
                   <p className="badge">{`${
-                    data.quantity === 0
-                      ? '일시품절'
-                      : '' && data.isNew
-                      ? '신제품'
-                      : ''
+                    data.quantity === 0 ? '일시품절' : ''
                   }`}</p>
+                  <p className="badge">{`${data.isNew ? '신제품' : ''}`}</p>
                   <img
                     src={`${data.productImage}`}
                     alt="제품상세 시크릿 티세트 이미지"
@@ -209,7 +242,7 @@ const ProductDetail = () => {
                           alt="무료배송 아이콘"
                         />
                       </i>
-                      3만원 이상 무료배송
+                      5만원 이상 무료배송
                     </li>
                     <li
                       className={`toPackaging ${data.provideBag ? 'on' : ''}`}
@@ -367,7 +400,7 @@ const ProductDetail = () => {
                 </p>
                 <span
                   className={`freeDelivery ${
-                    data.price * productCount + packaging >= 30000 ? 'on' : ''
+                    data.price * productCount + packaging >= 50000 ? 'on' : ''
                   }`}
                 >
                   무료배송
@@ -385,7 +418,7 @@ const ProductDetail = () => {
                 </button>
                 <button
                   className="btnBuy"
-                  onClick={data.token ? { goCart } : { openBuyModal }}
+                  onClick={data.token ? order : goLogin}
                 >
                   바로구매
                 </button>
@@ -471,7 +504,7 @@ const ProductDetail = () => {
         reviewsList={myReviewData.data.reviewsList}
         reviewsCount={myReviewData.data.reviewsCount}
         averageRating={myReviewData.data.averageRating}
-        onClick={getDetailList}
+        onClick={getReview}
         offset={offset}
       />
     </div>
