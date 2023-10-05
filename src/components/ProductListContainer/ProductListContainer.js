@@ -3,11 +3,11 @@ import './ProductListContainer.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import ProductListCard from '../ProductListCard/ProductListCard';
 
-const ProductListContainer = props => {
+const ProductListContainer = ({ data, onClick }) => {
   const [change, setChange] = useState(true);
 
   const navigate = useNavigate();
-  const { data } = props;
+
   const goToDetail = id => {
     navigate(`/productdetail/${id}`);
   };
@@ -19,14 +19,14 @@ const ProductListContainer = props => {
       return alert('로그인부터 하고와~');
     }
 
-    if (props.isLike === false) {
+    if (data.isLike === false) {
       fetch('http://10.58.52.96:8000/users/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
         },
         body: JSON.stringify({
-          id: props.id,
+          id: data.id,
           accessToken: '123',
         }),
       }).then(() => {
@@ -39,7 +39,7 @@ const ProductListContainer = props => {
           'Content-Type': 'application/json;charset=utf-8',
         },
         body: JSON.stringify({
-          id: props.id,
+          id: data.id,
           accessToken: '123',
         }),
       }).then(() => {
@@ -55,7 +55,7 @@ const ProductListContainer = props => {
   return (
     <div className="productListContainer">
       {data.map(data => (
-        <ProductListCard key={data.id} data={data} />
+        <ProductListCard key={data.id} data={data} onClick={onClick} />
       ))}
     </div>
   );

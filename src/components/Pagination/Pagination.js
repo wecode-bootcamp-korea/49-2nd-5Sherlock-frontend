@@ -10,6 +10,7 @@ const Pagination = ({
   pageProductNumber,
 }) => {
   const [searchParams, setSearchParams] = useSearchParams();
+
   let page = 1;
   if (productCount >= pageProductNumber) {
     page = Math.ceil(productCount / pageProductNumber);

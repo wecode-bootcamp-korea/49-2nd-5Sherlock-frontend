@@ -234,15 +234,16 @@ const Main = () => {
   const [bestData, setBestData] = useState({});
   const navigate = useNavigate();
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [cartNumber, setCartNumber] = useState();
 
-  useEffect(() => {
-    fetch(
+  const getList = async () => {
+    return await fetch(
       `http://${Address.address}/products/bestProducts${window.location.search}`,
       {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-          authorization: localStorage.getItem('token'),
+          'Content-Type': 'application/json',
+          authorization: window.localStorage.getItem('token'),
         },
       },
     )
@@ -250,6 +251,50 @@ const Main = () => {
       .then(data => {
         setBestData(data);
       });
+  };
+
+  const getCart = async () => {
+    return await fetch(`http://${Address.address}/carts/count`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: window.localStorage.getItem('token'),
+      },
+    })
+      .then(res => res.json())
+      .then(result => {
+        setCartNumber(result.cartItemCount);
+      });
+  };
+
+  const postCart = async id => {
+    return await fetch(`http://${Address.address}/carts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: window.localStorage.getItem('token'),
+      },
+      body: JSON.stringify({ productId: id, quantity: 1 }),
+    });
+  };
+
+  const postCartFunction = id => {
+    if (!window.localStorage.getItem('token')) {
+      alert('로그인을 해주세요.');
+      return;
+    }
+    console.log(id);
+    postCart(id);
+    getCart();
+  };
+
+  useEffect(() => {
+    if (!window.localStorage.getItem('token')) {
+      getList();
+      return;
+    }
+    getCart();
+    getList();
   }, []);
 
   const goToLogin = () => {
@@ -281,7 +326,7 @@ const Main = () => {
   const formattedTime = `${hours}:${minutes}:${seconds}`;
   return (
     <div className="Main">
-      <Nav />
+      <Nav cartNumber={cartNumber} />
       <div className="mainBannerSection">
         <MainSlide />
       </div>
