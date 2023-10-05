@@ -15,13 +15,11 @@ const Pagination = ({
   if (productCount >= pageProductNumber) {
     page = Math.ceil(productCount / pageProductNumber);
   }
-
   //   for(let i=1;i<=Math.ceil(productCount/(pageLength*pageProductNumber))){
   //     if(offset<=(i*(pageLength*pageProductNumber)-pageProductNumber)){
   //         offsetBox=i;
   //       }
   //   }
-
   let pageList = [];
   for (let i = 1; i < page + 1; i++) {
     if (i === 1) {
@@ -34,7 +32,6 @@ const Pagination = ({
       });
     }
   }
-
   const goToPage = param => {
     if (param < 0) {
       return;
@@ -46,7 +43,6 @@ const Pagination = ({
     } else if (param === productCount) {
       return;
     }
-
     searchParams.set('offset', param);
     searchParams.set('limit', pageProductNumber);
     setSearchParams(searchParams);
@@ -81,7 +77,6 @@ const Pagination = ({
             alt="btnPrev"
           ></img>
         </div>
-
         <div className="pageBox">
           {pageList.map(page => {
             if (
@@ -109,7 +104,6 @@ const Pagination = ({
             }
           })}
         </div>
-
         <div
           className="btnNext btnArrow"
           onClick={() => {
