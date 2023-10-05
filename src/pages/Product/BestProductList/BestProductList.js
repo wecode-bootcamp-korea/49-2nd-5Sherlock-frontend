@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import './BestProductList.scss';
-import { useNavigate, Link, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import GreenFilterButton from '../../../components/GreenFilterButton/GreenFilterButton';
 import { useSearchParams } from 'react-router-dom';
 import BestProductListContainer from '../../../components/BestProductListContainer/BestProductListContainer';
-import Nav from '../../../components/Nav/Nav';
-import Address from '../../../components/Address/Address';
+import BASE_API from '../../../config';
+import './BestProductList.scss';
 
 const BestProductList = () => {
   const location = useLocation();
@@ -13,7 +12,6 @@ const BestProductList = () => {
   const [filter, setFilter] = useState('closed');
   const [filterResult, setFilterResult] = useState('판매순');
   const [searchParams, setSearchParams] = useSearchParams();
-  const [cartNumber, setCartNumber] = useState();
   const data = {
     message: 'querySuccess',
     data: [
@@ -242,9 +240,8 @@ const BestProductList = () => {
   const sort = searchParams.get('sort');
 
   const getList = async () => {
-    console.log('get됐어');
     return await fetch(
-      `http://${Address.address}/products/bestProducts${window.location.search}`,
+      `${BASE_API}/products/bestProducts${window.location.search}`,
       {
         method: 'GET',
         headers: {
@@ -255,59 +252,35 @@ const BestProductList = () => {
     )
       .then(res => res.json())
       .then(data => {
-        console.log(data);
         setDataList(data);
-        // console.log(dataList);
-      });
-  };
-
-  const getCart = async () => {
-    return await fetch(`http://${Address.address}/carts/count`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: window.localStorage.getItem('token'),
-      },
-    })
-      .then(res => res.json())
-      .then(result => {
-        setCartNumber(result.cartItemCount);
       });
   };
 
   const postCart = async id => {
-    return await fetch(`http://${Address.address}/carts`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        authorization: window.localStorage.getItem('token'),
-      },
-      body: JSON.stringify({ productId: id, quantity: 1 }),
-    });
-  };
-
-  const postCartFunction = id => {
     if (!window.localStorage.getItem('token')) {
       alert('로그인을 해주세요.');
       return;
     }
-    console.log(id);
-    postCart(id);
-    getCart();
+
+    if (window.confirm('장바구니에 담으시겠습니까?')) {
+      const response = await fetch(`${BASE_API}/carts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          authorization: window.localStorage.getItem('token'),
+        },
+        body: JSON.stringify({ productId: id, quantity: 1 }),
+      });
+
+      if (response.ok) {
+        window.location.reload();
+      }
+    }
   };
 
   useEffect(() => {
     getList();
   }, [searchParams]);
-
-  useEffect(() => {
-    if (!window.localStorage.getItem('token')) {
-      getList();
-      return;
-    }
-    getCart();
-    getList();
-  }, []);
 
   // 배너 Img 설명
   let categoryImg;
@@ -393,7 +366,6 @@ const BestProductList = () => {
 
   return (
     <div className="bestProductList">
-      <Nav cartNumber={cartNumber} />
       <div className="bannerBox">
         <h2 className="bannerName">{categoryTitle}</h2>
         <img src={process.env.PUBLIC_URL + categoryImg} />
@@ -458,10 +430,7 @@ const BestProductList = () => {
       </div>
       <div className="container listContainer">
         <div className="containerInside">
-          <BestProductListContainer
-            data={dataList.data}
-            onClick={postCartFunction}
-          />
+          <BestProductListContainer data={dataList.data} onClick={postCart} />
         </div>
       </div>
     </div>

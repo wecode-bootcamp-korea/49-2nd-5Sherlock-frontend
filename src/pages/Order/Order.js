@@ -1,42 +1,41 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-import Nav from '../../components/Nav/Nav';
-import Address from '../../components/Address/Address';
+import React, { useEffect } from 'react';
+import { useLocation, Navigate } from 'react-router-dom';
+import BASE_API from '../../config';
 import './Order.scss';
 
 const Order = () => {
-  const [cartNumber, setCartNumber] = useState();
-
-  // const getCart = async () => {
-  //   return await fetch(`http://${Address.address}/carts/count`, {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       authorization: window.localStorage.getItem('token'),
-  //     },
-  //   })
-  //     .then(res => res.json())
-  //     .then(result => {
-  //       setCartNumber(result.cartItemCount);
-  //     });
-  // };
-
-  // useEffect(() => {
-  //   getCart();
-  // }, []);
-
   const location = useLocation();
-  console.log(location.state);
-  // useEffect(() => {
-  //   fetch(
-  //     `${BASE_API}/orders?items=${JSON.stringify(items).replaceAll('"', '')}`,
-  //   );
-  // }, []);
-  // if (!location.state) return <Navigate to="/" />;
-  // if (Object.keys(location.state).length === 0) return <Navigate to="/" />;
-  // const { items, cart } = location.state;
 
-  // console.log(location.state)
+  useEffect(() => {
+    fetch(
+      `${BASE_API}/orders?items=${JSON.stringify(items).replaceAll('"', '')}`,
+    );
+  }, []);
+
+  if (!location.state) return <Navigate to="/" />;
+
+  if (Object.keys(location.state).length === 0) return <Navigate to="/" />;
+
+  const { items, cart } = location.state;
+
+  console.log(location.state);
+  // const handlePayment = () => {
+  //   if (cart) {
+  //     fetch(
+  //       `${BASE_API}/장바구니결제?items=${JSON.stringify(items).replaceAll(
+  //         '"',
+  //         '',
+  //       )}&cart=${cart}`,
+  //     );
+  //   } else {
+  //     fetch(
+  //       `${BASE_API}/단일결제?items=${JSON.stringify(items).replaceAll(
+  //         '"',
+  //         '',
+  //       )}&cart=${cart}`,
+  //     );
+  //   }
+  // };
 
   return (
     <div className="order">

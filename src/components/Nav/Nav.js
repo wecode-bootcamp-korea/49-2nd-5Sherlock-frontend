@@ -1,14 +1,31 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import BASE_API from '../../config';
 import './Nav.scss';
-import { useNavigate, Link } from 'react-router-dom';
-import Address from '../Address/Address';
 
-const Nav = props => {
+const Nav = () => {
   const navigate = useNavigate();
-  const { cartNumber } = props;
-  // const [cartNumber, setCartNumber] = useState(0);
-
+  const [cartNumber, setCartNumber] = useState(0);
   const [openCheck, setOpenCheck] = useState('unclicked');
+
+  const getCartCount = async () => {
+    const response = await fetch(`${BASE_API}/carts/count`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: window.localStorage.getItem('token'),
+      },
+    });
+
+    const result = await response.json();
+    console.log(result.cartItemCount);
+    setCartNumber(result.cartItemCount);
+  };
+
+  useEffect(() => {
+    getCartCount();
+  }, []);
+
   const clickCheck = () => {
     if (openCheck === 'clicked') {
       setOpenCheck('unclicked');
@@ -28,7 +45,7 @@ const Nav = props => {
   const currentDay = currentDate.getDate();
 
   const goToFunction = param => {
-    if (param === '/cart' && !window.localStorage.getItem('token')) {
+    if (param === '/cart' && !isLoggedIn) {
       alert('로그인을 해주세요');
       return;
     }
@@ -39,6 +56,8 @@ const Nav = props => {
     localStorage.removeItem('token');
     window.location.reload();
   };
+
+  const isLoggedIn = localStorage.getItem('token');
 
   return (
     <div className="nav">
@@ -291,17 +310,17 @@ const Nav = props => {
                 </div>
               )}
 
-              <div
-                className="navIconCart"
-                onClick={() => {
-                  goToFunction('/cart');
-                }}
-              >
-                <img src={process.env.PUBLIC_URL + '/images/cart.svg'} />
-                <div className="navIconCartNumber">
-                  {cartNumber ? cartNumber : 0}
+              {isLoggedIn && (
+                <div
+                  className="navIconCart"
+                  onClick={() => {
+                    goToFunction('/cart');
+                  }}
+                >
+                  <img src={process.env.PUBLIC_URL + '/images/cart.svg'} />
+                  <div className="navIconCartNumber">{cartNumber}</div>
                 </div>
-              </div>
+              )}
 
               <div className="navIconMore">
                 <img
@@ -317,7 +336,11 @@ const Nav = props => {
                 </div>
               </div>
 
-              {!localStorage.getItem('token') ? (
+              {isLoggedIn ? (
+                <div className="navIconLogIn" onClick={logOut}>
+                  로그아웃
+                </div>
+              ) : (
                 <div
                   className="navIconLogIn"
                   onClick={() => {
@@ -345,12 +368,6 @@ const Nav = props => {
                       회원가입
                     </div>
                   </div>
-                </div>
-              ) : (
-                /////////////////////
-                /////////////////////
-                <div className="navIconLogIn" onClick={logOut}>
-                  로그아웃
                 </div>
               )}
 

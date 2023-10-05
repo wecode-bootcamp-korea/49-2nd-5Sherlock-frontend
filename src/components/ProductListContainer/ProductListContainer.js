@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import './ProductListContainer.scss';
 import { useNavigate, Link } from 'react-router-dom';
 import ProductListCard from '../ProductListCard/ProductListCard';
+import './ProductListContainer.scss';
 
 const ProductListContainer = ({ data, onClick }) => {
   const [change, setChange] = useState(true);
