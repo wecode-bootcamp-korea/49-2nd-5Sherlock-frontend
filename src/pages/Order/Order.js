@@ -1,9 +1,65 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import './Order.scss';
+import BASE_API from '../../config';
+
 const Order = () => {
-  const [cartNumber, setCartNumber] = useState();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [data, setData] = useState({});
+  const { items, cart } = location.state;
+  const [userInfo, setUserInfo] = useState({
+    customerName: '',
+    customerEmail: '',
+    customerPhone: '',
+    shipperName: '',
+
+    receiverName: '',
+    receiverPhoneNumber: '',
+    receiverAddress: '',
+    defaultAddress: '',
+    shippingMessage: '',
+    payment: '',
+  });
+
+  // const saveUserInfo = event => {
+  //   const {
+  //     customerName,
+  //     customerEmail,
+  //     customerPhone,
+  //     shipperName,
+  //     receiverName,
+  //     receiverPhoneNumber,
+  //     receiverAddress,
+  //     defaultAddress,
+  //     shippingMessage,
+  //     payment,
+  //   } = event.target;
+  //   setUserInfo({ ...userInfo, [name]: value });
+  // };
+  const getCart = async () => {
+    return await fetch(`${BASE_API}/orders?items=${JSON.stringify(items)}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: window.localStorage.getItem('token'),
+      },
+    })
+      .then(res => res.json())
+      .then(result => {
+        setData(result);
+      });
+  };
+
+  useEffect(() => {
+    getCart();
+  }, []);
+  if (!location.state) return navigate('/');
+  if (Object.keys(location.state).length === 0) {
+    return navigate('/');
+  }
+
   // const getCart = async () => {
   //   return await fetch(`http://${Address.address}/carts/count`, {
   //     method: 'GET',
@@ -20,17 +76,16 @@ const Order = () => {
   // useEffect(() => {
   //   getCart();
   // }, []);
-  const location = useLocation();
+
   console.log(location.state);
   // useEffect(() => {
   //   fetch(
   //     `${BASE_API}/orders?items=${JSON.stringify(items).replaceAll('"', '')}`,
   //   );
   // }, []);
-  // if (!location.state) return <Navigate to="/" />;
-  // if (Object.keys(location.state).length === 0) return <Navigate to="/" />;
-  // const { items, cart } = location.state;
-  // console.log(location.state)
+
+  console.log(data);
+
   return (
     <div className="order">
       <div className="orderInner">

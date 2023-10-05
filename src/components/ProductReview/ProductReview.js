@@ -10,9 +10,9 @@ const ProductReview = props => {
   const [maskedUserId, setMaskedUserId] = useState(''); // 마스킹된 아이디 상태
   console.log(`리뷰 리스트 : ${reviewsList}`);
   console.log(`리뷰 카운트 : ${reviewsCount}`);
-  console.log(averageRating);
-  console.log(onClick);
-  console.log(offset);
+
+  // console.log(onClick);
+  // console.log(offset);
   // const getList = async () => {
   //   return await fetch(
   //     `${BASE_API}/products?${searchParams.toString()}`,
@@ -39,8 +39,6 @@ const ProductReview = props => {
   //   }
   // }, [reviewsList]);
 
-  console.log(reviewsList);
-  // console.log(reviewsList.authorName);
   return (
     <div className="ProductReview">
       <div className="contour"></div>
@@ -67,7 +65,7 @@ const ProductReview = props => {
         </div>
         <div className="reviewList">
           <div className="listInner">
-            {reviewsList.map(info => (
+            {reviewsList?.map(info => (
               <div className="reviewList">
                 <div className="dateAndGrade">
                   <p className="date">{info.updatedAt}</p>
