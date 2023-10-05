@@ -18,8 +18,8 @@ const ProductList = () => {
 
   const getList = async () => {
     const response = await fetch(
-      `/data/listData.json`,
-      // `${BASE_API}/products?${searchParams.toString()}`,
+      // `/data/listData.json`,
+      `${BASE_API}/products?${searchParams.toString()}`,
       {
         method: 'GET',
         headers: {
@@ -30,8 +30,8 @@ const ProductList = () => {
     );
 
     const result = await response.json();
-    setDataList(result.data);
-    // setDataList(result);
+    // setDataList(result.data);
+    setDataList(result);
   };
 
   const postCart = async id => {
