@@ -3,7 +3,7 @@ import './ProductImgBox.scss';
 import { useNavigate } from 'react-router-dom';
 import Address from '../Address/Address';
 
-const ProductImgBox = ({ data, children }) => {
+const ProductImgBox = ({ data, children, onClick }) => {
   const navigate = useNavigate();
   const [productImg, setProductImg] = useState(data.productImg[0].url);
   const goToDetail = id => {
@@ -16,29 +16,26 @@ const ProductImgBox = ({ data, children }) => {
     setProductImg(data.productImg[0].url);
   };
 
-  const goToOrderBox = () => {
-    goCart();
-    console.log('장바구니 담김');
-  };
+  // const goToOrderBox = () => {
+  //   goCart();
+  //   console.log('장바구니 담김');
+  // };
 
-  const goCart = async () => {
-    // return await fetch(
-    //   `http://10.58.52.176:8000/cart?${searchParams.toString()}`,
-    //   {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       authorization: window.sessionStorage.getItem('token'),
-    //     },
-    //   },
-    // )
-    //   .then(res => res.json())
-    //   .then(data => {
-    // if(data.message==='querySuccess'){
-    //   alert('장바구니 추가되었습니다!')
-    // }
-    //   });
-  };
+  // const goCart = async () => {
+  //   return await fetch(`http://10.58.52.176:8000/cart`, {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       authorization: window.localStorage.getItem('token'),
+  //     },
+  //   })
+  //     .then(res => res.json())
+  //     .then(data => {
+  //       if (data.message === 'querySuccess') {
+  //         alert('장바구니 추가되었습니다!');
+  //       }
+  //     });
+  // };
 
   return (
     <div
@@ -55,7 +52,8 @@ const ProductImgBox = ({ data, children }) => {
         className="picCartBox"
         onClick={e => {
           e.stopPropagation();
-          goToOrderBox();
+          // goToOrderBox();
+          onClick(data.id);
         }}
       >
         <img

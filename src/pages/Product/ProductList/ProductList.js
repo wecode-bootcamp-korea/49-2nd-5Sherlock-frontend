@@ -234,7 +234,8 @@ const ProductList = () => {
     productCount: 150,
   };
 
-  const [dataList, setDataList] = useState({});
+  const [dataList, setDataList] = useState(data);
+  const [cartNumber, setCartNumber] = useState();
   const offset = searchParams.get('offset');
   const limit = searchParams.get('limit');
   const category = searchParams.get('category');
@@ -242,42 +243,70 @@ const ProductList = () => {
   const product_type = searchParams.get('product_type');
 
   const getList = async () => {
-    return await fetch(
-      `http://${Address.address}/products?${searchParams.toString()}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: window.sessionStorage.getItem('token'),
-        },
-      },
-    )
-      .then(res => res.json())
-      .then(data => {
-        setDataList(data);
-      });
+    // return await fetch(
+    //   `http://${Address.address}/products?${searchParams.toString()}`,
+    //   {
+    //     method: 'GET',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       authorization: window.sessionStorage.getItem('token'),
+    //     },
+    //   },
+    // )
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     setDataList(data);
+    //   });
   };
 
   const getCart = async () => {
-    return await fetch(
-      `http://${Address.address}/carts/count${searchParams.toString()}`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          authorization: window.sessionStorage.getItem('token'),
-        },
-      },
-    )
-      .then(res => res.json())
-      .then(data => {
-        setDataList(data);
-      });
+    // return await fetch(`http://${Address.address}/carts/count`, {
+    //   method: 'GET',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     authorization: window.localStorage.getItem('token'),
+    //   },
+    // })
+    //   .then(res => res.json())
+    //   .then(result => {
+    //     setCartNumber(result.cartItemCount);
+    //   });
+  };
+
+  const postCart = async id => {
+    // return await fetch(`http://${Address.address}/carts`, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //     authorization: window.localStorage.getItem('token'),
+    //   },
+    //   body: JSON.stringify({ productId: id, quantity: 1 }),
+    // });
+  };
+
+  const postCartFunction = id => {
+    // if (!window.localStorage.getItem('token')) {
+    //   alert('로그인을 해주세요.');
+    //   return;
+    // }
+    // console.log(id);
+    // postCart(id).then(() => {
+    //   getCart();
+    // });
   };
 
   useEffect(() => {
     getList();
   }, [searchParams]);
+
+  useEffect(() => {
+    if (!window.localStorage.getItem('token')) {
+      getList();
+      return;
+    }
+    getCart();
+    getList();
+  }, []);
 
   // 배너 Img 설명
   let categoryImg;
@@ -419,7 +448,7 @@ const ProductList = () => {
 
   return (
     <div className="productList">
-      <Nav />
+      <Nav cartNumber={cartNumber} />
       <div className="bannerBox">
         <h2 className="bannerName">{categoryTitle}</h2>
         <img src={process.env.PUBLIC_URL + categoryImg} />
@@ -546,12 +575,16 @@ const ProductList = () => {
                   </div>
                 ) : null}
               </div>
-              <ProductListContainer data={dataList.data} />
+              <ProductListContainer
+                data={dataList.data}
+                onClick={postCartFunction}
+              />
               <Pagination
                 productCount={dataList.productCount}
-                getList={getList}
+                onClick={getList}
                 offset={offset}
-                limit={limit}
+                pageLength="5"
+                pageProductNumber="3"
               />
             </div>
           </div>
