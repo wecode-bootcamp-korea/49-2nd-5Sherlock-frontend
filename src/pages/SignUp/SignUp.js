@@ -5,10 +5,8 @@ import CheckBox from '../../components/CheckBox/CheckBox';
 import Terms from '../../components/Terms/Terms';
 import BASE_API from '../../config';
 import './SignUp.scss';
-
 const idReg = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-const pwReg = /^[a-zA-Z0-9]{6,16}$/;
-
+const pwReg = /^[.@!#$%&'*+-/=?^_`{|}~\w\d]{9,}$/;
 const SignUp = () => {
   const navigate = useNavigate();
   const [joinUserInfo, setJoinUserInfo] = useState({
@@ -19,7 +17,6 @@ const SignUp = () => {
     password: '',
     confirmPassword: '',
   });
-
   const [errors, setErrors] = useState({});
   const [isChecked, setIsChecked] = useState(false);
   const handleCheckboxChange = () => {
@@ -27,21 +24,17 @@ const SignUp = () => {
   };
   const selectList = ['통신사 선택', 'KT', 'SKT', 'LG U+'];
   const [Selected, setSelected] = useState('');
-
   const handleSelect = e => {
     setSelected(e.target.value);
   };
-
   const saveJoinUserInfo = event => {
     const { name, value } = event.target;
     setJoinUserInfo({ ...joinUserInfo, [name]: value });
     setErrors({ ...errors, [name]: '' });
     validateField(name, value);
   };
-
   const validateField = (fieldName, value) => {
     const fieldErrors = {};
-
     switch (fieldName) {
       case 'name':
         if (value.length > 2) {
@@ -76,13 +69,10 @@ const SignUp = () => {
       default:
         break;
     }
-
     setErrors({ ...errors, ...fieldErrors });
   };
-
   const handleSignUp = e => {
     console.log('사인업');
-
     fetch(`${BASE_API}/users/signUp`, {
       method: 'POST',
       headers: {
@@ -107,10 +97,8 @@ const SignUp = () => {
         }
       });
   };
-
   const { name, phoneNumber, birthday, email, password, confirmPassword } =
     joinUserInfo;
-
   const isUserInputValid =
     name.length > 0 &&
     phoneNumber.length > 0 &&
@@ -119,7 +107,6 @@ const SignUp = () => {
     pwReg.test(password) &&
     password === confirmPassword &&
     isChecked;
-
   return (
     <div className="signUp">
       <header className="header">
@@ -145,7 +132,6 @@ const SignUp = () => {
             모든 브랜드 온/오프 매장에서 상품을 구매할 때마다 현금처럼 사용할 수
             있는 포인트 적립과 사용 등 다양한 혜택을 받으실 수 있습니다.
           </span>
-
           <form className="joinForm">
             <Input
               scale="first"
@@ -163,7 +149,6 @@ const SignUp = () => {
               onChange={saveJoinUserInfo}
             />
             {errors.birthday && <div className="error">{errors.birthday}</div>}
-
             <div className="phoneNumberInput">
               <select
                 onChange={handleSelect}
@@ -176,7 +161,6 @@ const SignUp = () => {
                   </option>
                 ))}
               </select>
-
               <Input
                 scale="first"
                 placeholder="휴대폰번호"
@@ -198,7 +182,7 @@ const SignUp = () => {
             {errors.email && <div className="error">{errors.email}</div>}
             <Input
               scale="first"
-              placeholder="비밀번호(6~16자)"
+              placeholder="비밀번호(9자 이상)"
               type="password"
               name="password"
               onChange={saveJoinUserInfo}
@@ -220,7 +204,6 @@ const SignUp = () => {
               label="개인정보 수집 및 이용 동의(필수)"
             ></CheckBox>
             <Terms></Terms>
-
             <button
               type="button"
               className="signupButton"
@@ -235,5 +218,4 @@ const SignUp = () => {
     </div>
   );
 };
-
 export default SignUp;
