@@ -9,16 +9,16 @@ const Nav = () => {
   const [openCheck, setOpenCheck] = useState('unclicked');
 
   const getCartCount = async () => {
-    // const response = await fetch(`${BASE_API}/carts/count`, {
-    //   method: 'GET',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //     authorization: window.localStorage.getItem('token'),
-    //   },
-    // });
-    // const result = await response.json();
-    // console.log(result.cartItemCount);
-    // setCartNumber(result.cartItemCount);
+    const response = await fetch(`${BASE_API}/carts/count`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        authorization: window.localStorage.getItem('token'),
+      },
+    });
+    const result = await response.json();
+    console.log(result.cartItemCount);
+    setCartNumber(result.cartItemCount);
   };
 
   useEffect(() => {

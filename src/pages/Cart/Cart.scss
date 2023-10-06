@@ -1,3 +1,7 @@
+.inner {
+  width: 1200px;
+  margin: auto;
+}
 .cart {
   display: flex;
   flex-direction: column;
@@ -13,7 +17,7 @@
     display: flex;
     justify-content: space-between;
     padding: 15px 20px;
-    width: 80%;
+    width: 100%;
     border-bottom: 2px solid #333;
     .checkAllBox {
       display: flex;
@@ -28,7 +32,6 @@
     width: 100%;
     align-items: center;
     flex-direction: column;
-    padding: 20px 8px;
     flex-direction: row;
   }
   .itemInfoBox {
@@ -37,6 +40,7 @@
     width: 100%;
   }
   .getBtnBox {
+    display: flex;
     width: 100px;
     text-align: center;
     background-color: #fff;
@@ -47,15 +51,23 @@
     margin-right: 50px;
     padding: 10px;
   }
-  .getOptionItem {
-    padding: 15px 40px;
-    background-color: #6c801a;
-    color: white;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 15px;
-    font-weight: 400px;
-    margin-top: 0px;
+  .cartBtnBox {
+    display: flex;
+    justify-content: center;
+    .getOptionItem {
+      padding: 15px 40px;
+      background-color: #6c801a;
+      color: white;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 15px;
+      font-weight: 400px;
+      margin-top: 0px;
+      &:hover {
+        background-color: #6c801a;
+        opacity: 0.5;
+      }
+    }
   }
   .cartMsg {
     width: 100%;
@@ -65,6 +77,7 @@
     color: #999;
     text-align: center;
     margin-top: 10px;
+    margin-bottom: 50px;
   }
   .onlyTodayBox {
     display: flex;

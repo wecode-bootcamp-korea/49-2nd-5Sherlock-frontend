@@ -111,7 +111,7 @@ const SignUp = () => {
     <div className="signUp">
       <header className="header">
         <div className="headerBox">
-          <div className="headerText">뷰티포인트 X 오셜록 쇼핑몰 회원가입</div>
+          <div className="headerText">오셜록 통합멤버십 회원가입</div>
           <img
             className="deleteBtn"
             src="/images/login-img1.png"
@@ -123,14 +123,12 @@ const SignUp = () => {
       <div className="joinBox">
         <div className="container">
           <span className="joinGuideText">
-            뷰티포인트 통합멤버십 회원가입을
-            <br />
-            환영합니다!
+            오셜록 통합멤버십 회원가입을 환영합니다!
           </span>
           <span className="joinGuideTextSmall">
-            마모레퍼시픽 통합멤버십 뷰티포인트에 가입하시면 오설록 쇼핑몰 외
-            모든 브랜드 온/오프 매장에서 상품을 구매할 때마다 현금처럼 사용할 수
-            있는 포인트 적립과 사용 등 다양한 혜택을 받으실 수 있습니다.
+            오셜록 통합멤버십에 가입하시면 오설록 쇼핑몰 온/오프라인 매장에서
+            상품을 구매할 때마다 현금처럼 사용할 수 있는 포인트 적립과 사용 등
+            다양한 혜택을 받으실 수 있습니다.
           </span>
           <form className="joinForm">
             <Input

@@ -4,7 +4,6 @@
   align-items: center;
   margin: 0;
   padding: 0;
-
   .header {
     display: flex;
     width: 100%;
@@ -24,12 +23,10 @@
       right: 20px;
     }
   }
-
   .loginBox {
     width: 480px;
     height: 100%;
   }
-
   .container {
     display: flex;
     flex-direction: column;
@@ -37,26 +34,22 @@
     // border: solid 1px black;
     justify-content: flex-start; /* 가로 중앙 정렬 */
     height: 100vh; /* 화면 높이에 따라 컨테이너를 중앙에 배치합니다. */
-
     .loginGuideText {
       font-size: 23px;
       font-weight: bold;
       padding: 10%;
       text-align: center;
     }
-
     .loginForm {
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
-
     .error {
       color: red; /* 에러 텍스트의 색상을 빨간색으로 지정 */
       font-size: 14px; /* 에러 텍스트의 글꼴 크기를 조정 */
       /* 원하는 다른 스타일 추가 */
     }
-
     .loginButton {
       margin-top: 30px;
       padding: 20px;
@@ -64,13 +57,11 @@
       color: white;
       border-radius: 4px;
       font-size: 15px;
-
       &:disabled {
         background-color: #f0f0f0;
         color: grey;
       }
     }
-
     .snsLogin {
       display: flex;
       justify-content: space-between;
@@ -80,7 +71,6 @@
       border-top: 1px solid #f0f0f0;
       border-bottom: 1px solid #f0f0f0;
     }
-
     .joinButton {
       display: flex;
       justify-content: space-between;
@@ -88,7 +78,6 @@
       margin-top: 50px;
       border: solid 1px #f0f0f0;
       border-radius: 4px;
-
       cursor: pointer;
       .a {
         font-size: 15px;
