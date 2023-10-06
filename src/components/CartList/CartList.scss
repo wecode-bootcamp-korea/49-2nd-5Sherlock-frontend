@@ -3,16 +3,17 @@
   align-items: center;
   margin-bottom: 10px;
   flex-direction: row;
-  margin-left: 50px;
   border-bottom: 1px solid #e6e6e6;
-  height: 100px;
+  padding: 20px;
   .checkBox {
-    margin-right: 5px;
-    margin-bottom: 85px;
+    margin-right: 25px;
   }
-  .image {
-    width: 100px;
-    height: 100px;
+  .imgBox {
+    width: 130px;
+    .image {
+      width: 100%;
+      display: block;
+    }
   }
   .itemInfo {
     display: flex;

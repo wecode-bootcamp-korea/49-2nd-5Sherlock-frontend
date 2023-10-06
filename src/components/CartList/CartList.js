@@ -63,7 +63,9 @@ const CartList = ({
             checked={selectedItems[item.productId] || false}
             onChange={() => handleCheckboxChange(item.productId)}
           />
-          <img className="image" src={item.url} alt={item.name} />
+          <div className="imgBox">
+            <img className="image" src={item.url} alt={item.name} />
+          </div>
           <div className="itemInfo">
             <div className="itemName">{item.name}</div>
             <div className="packingItem">{item.package}</div>

@@ -4,7 +4,6 @@ import CartList from '../../components/CartList/CartList';
 import Timer from '../../components/Timer/Timer';
 import './Cart.scss';
 import BASE_API from '../../config';
-
 function Cart() {
   const [selectAll, setSelectAll] = useState(false);
   const [selectedItems, setSelectedItems] = useState({});
@@ -54,7 +53,6 @@ function Cart() {
     console.log(items);
     navigate('/order', { state: { items, cart: true } });
   };
-
   const getCart = () => {
     fetch(`${BASE_API}/carts`, {
       method: 'GET',
@@ -74,7 +72,6 @@ function Cart() {
         console.error('Error fetching cart data:', error);
       });
   };
-
   // const getTodaySale = () => {
   //   fetch(`${BASE_API}/products/specialPriceProduct`, {
   //     method: 'GET',
@@ -90,7 +87,6 @@ function Cart() {
   //       console.error('Error fetching cart data:', error);
   //     });
   // };
-
   // 컴포넌트가 처음 렌더링될 때 장바구니 데이터를 가져오는 useEffect
   useEffect(() => {
     getCart();
@@ -105,44 +101,45 @@ function Cart() {
   }, [selectedItems, cartList]);
   return (
     <div className="cart">
-      <header className="header">
-        <div className="pageTitle">장바구니</div>
-      </header>
-      <div className="cartCheck">
-        <div className="checkAllBox">
-          <input
-            id="checkAll"
-            className="checkAll"
-            type="checkbox"
-            checked={selectAll || selectedCount === cartList.length}
-            onChange={handleSelectAllChange}
-          />
-          <label htmlFor="checkAll">전체선택</label>
+      <div className="inner">
+        <header className="header">
+          <div className="pageTitle">장바구니</div>
+        </header>
+        <div className="cartCheck">
+          <div className="checkAllBox">
+            <input
+              id="checkAll"
+              className="checkAll"
+              type="checkbox"
+              checked={selectAll || selectedCount === cartList.length}
+              onChange={handleSelectAllChange}
+            />
+            <label htmlFor="checkAll">전체선택</label>
+          </div>
         </div>
-      </div>
-      <div className="listBox">
-        <div className="itemInfoBox">
-          <CartList
-            cartList={cartList}
-            setCartList={setCartList}
-            selectAll={selectAll}
-            setSelectedItems={setSelectedItems}
-            selectedItems={selectedItems}
-          />
+        <div className="listBox">
+          <div className="itemInfoBox">
+            <CartList
+              cartList={cartList}
+              setCartList={setCartList}
+              selectAll={selectAll}
+              setSelectedItems={setSelectedItems}
+              selectedItems={selectedItems}
+            />
+          </div>
         </div>
-      </div>
-      <div className="cartBtnBox">
-        <button className="getOptionItem" onClick={sendData}>
-          주문하기
-        </button>
-      </div>
-      <div className="cartinfo">
-        <img className="cartimg"></img>
-      </div>
-      <div className="cartMsg">
-        장바구니에 보관된 상품은 3개월 후에 삭제 됩니다.
-      </div>
-      {/* <div className="onlyTodayBox">
+        <div className="cartBtnBox">
+          <button className="getOptionItem" onClick={sendData}>
+            주문하기
+          </button>
+        </div>
+        <div className="cartinfo">
+          <img className="cartimg"></img>
+        </div>
+        <div className="cartMsg">
+          장바구니에 보관된 상품은 3개월 후에 삭제 됩니다.
+        </div>
+        {/* <div className="onlyTodayBox">
         <div className="onlyToday">
           <div className="onlyTodayTitle">오늘만 이 가격</div>
           <div className="onlyTodayInfo">
@@ -161,6 +158,7 @@ function Cart() {
           </div>
         </div>
       </div> */}
+      </div>
     </div>
   );
 }

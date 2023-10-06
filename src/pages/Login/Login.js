@@ -3,10 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import Input from '../../components/Input/Input';
 import BASE_API from '../../config';
 import './Login.scss';
-
 const idReg = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 const pwReg = /^[.@!#$%&'*+-/=?^_`{|}~\w\d]{9,}$/;
-
 const Login = () => {
   const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState('');
@@ -14,11 +12,9 @@ const Login = () => {
     email: '',
     password: '',
   });
-
   const saveUserInfo = event => {
     const { name, value } = event.target;
     setUserInfo({ ...userInfo, [name]: value });
-
     if (name === 'email' && !idReg.test(value)) {
       setErrorMessage('이메일 형식이 올바르지 않습니다');
     } else if (name === 'password' && !pwReg.test(value)) {
@@ -27,7 +23,6 @@ const Login = () => {
       clearErrorMessage();
     }
   };
-
   const handleLogin = e => {
     e.preventDefault();
     fetch(`${BASE_API}/users/signIn`, {
@@ -46,7 +41,6 @@ const Login = () => {
       .then(result => {
         if (result.message === 'signInSuccess' && result.token) {
           localStorage.setItem('token', result.token);
-
           navigate('/');
           window.location.reload();
         } else {
@@ -57,10 +51,8 @@ const Login = () => {
   const clearErrorMessage = () => {
     setErrorMessage('');
   };
-
   const { email, password } = userInfo;
   const isUserInputValid = idReg.test(email) && pwReg.test(password);
-
   return (
     <div className="Login">
       <header className="header">
@@ -74,13 +66,10 @@ const Login = () => {
           />
         </div>
       </header>
-
       <div className="loginBox">
         <div className="container">
           <span className="loginGuideText">
-            아모레퍼시픽 뷰티포인트 통합회원
-            <br />
-            아이디로 로그인해주세요.
+            오셜록 계정으로 로그인해주세요.
           </span>
           <form className="loginForm">
             <Input
@@ -100,7 +89,6 @@ const Login = () => {
             />
             <div className="error">{errorMessage}</div>
           </form>
-
           <button
             className="loginButton"
             onClick={handleLogin}
@@ -135,5 +123,4 @@ const Login = () => {
     </div>
   );
 };
-
 export default Login;
