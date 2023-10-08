@@ -1,0 +1,240 @@
+.footer {
+  .onlineBar {
+    height: 63px;
+    background-color: #67625d;
+    width: 100%;
+
+    .onlineBarInside {
+      width: 1400px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+
+      .onlineBarRight {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 25px;
+
+        .loginBox {
+          width: 94px;
+          height: 40px;
+          margin: 0 6px 0 14px;
+          padding: 6px 0;
+          border: 1px solid #2a2a2a;
+          background-color: #3f3e3c;
+          font-size: 15px;
+          color: #fff;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          cursor: pointer;
+        }
+
+        .onlinebarIcon {
+          width: 40px;
+          height: 40px;
+          font-size: 21px;
+          background-color: #2a2a2a;
+          border-radius: 100%;
+          margin: 0 5px 0 14px;
+          color: #ccc;
+          border: 1px solid #2a2a2a;
+          cursor: pointer;
+          img {
+            width: 100%;
+            height: 100%;
+            padding: 8px;
+          }
+        }
+      }
+    }
+  }
+
+  .infBar {
+    height: 164px;
+    background-color: #fafafa;
+    width: 100%;
+
+    .infBarInside {
+      width: 1400px;
+      margin: 0 auto;
+      height: 100%;
+      padding-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      .infBarLeft {
+        display: flex;
+        .customer {
+          .customerTitle {
+            font-size: 16px;
+            color: #7b7b7b;
+          }
+
+          .customerEmail {
+            font-size: 18px;
+            color: #595959;
+            margin-top: 12px;
+          }
+
+          .customerPhone {
+            font-size: 33.7px;
+            color: #595959;
+            margin-top: 7px;
+          }
+
+          .customerTime {
+            font-size: 12px;
+            color: #828282;
+            margin-top: 7px;
+          }
+        }
+
+        .bigSale {
+          margin-left: 100px;
+
+          .bigSaleTitle {
+            font-size: 16px;
+            color: #7b7b7b;
+          }
+
+          .bigSaleEmail {
+            font-weight: 700;
+            color: #595959;
+            text-decoration: underline;
+            margin-top: 12px;
+            font-size: 17px;
+          }
+
+          .bigSalekakaotalkId {
+            font-weight: 700;
+            font-size: 13px;
+            color: #797979;
+            margin-top: 7px;
+          }
+
+          .bigSaleTime {
+            color: #6b6b6b;
+            font-size: 12px;
+            margin-top: 10px;
+          }
+        }
+      }
+
+      .infBarRight {
+        display: flex;
+        padding-top: 5px;
+        border-left: 1px solid #efefef;
+        height: 90px;
+        .infBarIcon {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          margin-left: 60px;
+          color: #505051;
+          font-size: 16px;
+          width: 80px;
+          text-align: center;
+          cursor: pointer;
+          img {
+            width: 45px;
+            height: 45px;
+            margin-bottom: 10px;
+          }
+        }
+      }
+    }
+  }
+
+  .mainFooterBar {
+    height: 221px;
+    background-color: #fff;
+    width: 100%;
+    padding-bottom: 35px;
+
+    .mainFooterBarInside {
+      width: 1400px;
+      margin: 0 auto;
+      height: 100%;
+      display: flex;
+      justify-content: space-between;
+      .leftBox {
+        display: flex;
+      }
+      .footerLogo {
+        width: 120px;
+        margin: 75px 35px 0 0;
+      }
+
+      .mainFooterLeft {
+        margin-top: 30px;
+        .companyNav {
+          ul {
+            display: flex;
+            color: #000;
+            li {
+              padding-left: 10px;
+              padding-right: 10px;
+              border-right: 1px solid #000;
+            }
+
+            li:nth-last-child(1) {
+              border: none;
+            }
+
+            .personalInf {
+              font-weight: bold;
+            }
+          }
+        }
+
+        .companyInf {
+          margin-top: 15px;
+          line-height: 1.3;
+
+          .infBtn {
+            padding: 5px 15px 5px 15px;
+
+            margin-left: 5px;
+            color: #828282;
+            background-color: #fafafa;
+            text-align: center;
+            border: 1px solid #ededed;
+          }
+        }
+      }
+
+      .safeService {
+        width: 330px;
+        height: auto;
+        margin-top: 30px;
+        padding: 15px 20px;
+        border: 1px solid #e8e8e8;
+        font-size: 14px;
+
+        .safeServiceTitle {
+          margin-bottom: 13px;
+          color: #828282;
+          font-weight: bold;
+        }
+
+        .safeServiceInfBox {
+          display: flex;
+          justify-content: bet;
+
+          .safeServiceIcon {
+            width: 48px;
+            margin: 4px 8px;
+            cursor: pointer;
+          }
+
+          .safeServiceInf {
+            line-height: 1.2;
+          }
+        }
+      }
+    }
+  }
+}

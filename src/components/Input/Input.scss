@@ -1,0 +1,22 @@
+.inputBox {
+  border-radius: 4px;
+  border: 1px solid #e0e0e0;
+  font-weight: 400;
+
+  &[scale='first'] {
+    width: 100%;
+    height: 56px;
+    padding: 19px 0px 15px 16px;
+    align-items: center;
+    font-size: 16px;
+    transition: border-color 0.3s;
+
+    &:hover {
+      border-color: black; /* 호버 or 인풋박스 클릭 시 테두리 색상 유지 */
+    }
+
+    &:focus {
+      outline: none; /* 기본 포커스 효과 제거 */
+    }
+  }
+}

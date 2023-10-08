@@ -1,0 +1,52 @@
+.cartList {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  flex-direction: row;
+  border-bottom: 1px solid #e6e6e6;
+  padding: 20px;
+  .checkBox {
+    margin-right: 25px;
+  }
+  .imgBox {
+    width: 130px;
+    .image {
+      width: 100%;
+      display: block;
+    }
+  }
+  .itemInfo {
+    display: flex;
+    flex-direction: column;
+    width: 130px;
+    margin-left: 15px;
+    .itemName {
+      font-size: 15px;
+      color: #727272;
+      font-weight: 500;
+    }
+    .packingItem {
+      font-size: 13px;
+      color: #666666;
+    }
+    .presentItem {
+      font-size: 11px;
+      color: #666666;
+      margin-top: 10px;
+    }
+  }
+  .countPrice {
+    display: flex;
+    .count {
+      padding: 10px;
+      margin-left: 50px;
+    }
+    .price {
+      padding: 10px;
+      margin-left: 70px;
+      padding-right: 150px;
+      font-size: 14px;
+      color: #333333;
+    }
+  }
+}
